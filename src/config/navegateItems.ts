@@ -17,32 +17,32 @@ export const getNavegateItems = ({
     {
       key: "/dashboard",
       label: "Dashboard",
-      icon: React.createElement(MdHome), // Corrigido com React.createElement
+      icon: React.createElement(MdHome),
     },
     {
       key: "/managers",
       label: "Gestores",
-      icon: React.createElement(FaUsersLine), // Corrigido com React.createElement
+      icon: React.createElement(FaUsersLine),
     },
     {
       key: "/machanics",
       label: "Mecanicos",
-      icon: React.createElement(FaUsersGear), // Corrigido com React.createElement
+      icon: React.createElement(FaUsersGear),
     },
     {
       key: "/customers",
       label: "Clientes",
-      icon: React.createElement(FaUsers), // Corrigido com React.createElement
+      icon: React.createElement(FaUsers),
     },
     {
       key: "/services",
       label: "Serviços",
-      icon: React.createElement(FaToolbox), // Corrigido com React.createElement
+      icon: React.createElement(FaToolbox),
     },
     {
       key: "/products",
       label: "Produtos",
-      icon: React.createElement(FaBox), // Corrigido com React.createElement
+      icon: React.createElement(FaBox),
     },
     {
       key: "/login",
