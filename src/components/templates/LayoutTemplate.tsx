@@ -22,7 +22,7 @@ export const LayoutTemplate: React.FC = () => {
       >
         <div className="flex items-center w-full truncate justify-center p-4 mb-3">
           <span className="font-extrabold text-xl text-[#FFF]">
-            {collapsed ? "SP" : "Starter App"}
+            {collapsed ? "TCH" : "Torque Tech"}
           </span>
         </div>
         <MenuNavigate />
