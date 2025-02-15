@@ -64,14 +64,16 @@ export const AddressForm = ({
                 options={stateOptions}
                 optionFilterProp="children"
                 filterOption={(input, option) =>
-                  (option?.label?.toLowerCase() ?? "").includes(
+                  ((option?.label as string)?.toLowerCase() ?? "").includes(
                     input.toLowerCase()
                   )
                 }
                 filterSort={(optionA, optionB) =>
-                  (optionA?.label ?? "")
+                  ((optionA?.label as string) ?? "")
                     .toLowerCase()
-                    .localeCompare((optionB?.label ?? "").toLowerCase())
+                    .localeCompare(
+                      ((optionB?.label as string) ?? "").toLowerCase()
+                    )
                 }
               />
             </Form.Item>

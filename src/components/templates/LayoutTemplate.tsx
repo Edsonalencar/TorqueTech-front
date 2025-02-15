@@ -1,4 +1,4 @@
-import { Button, Layout, Menu, theme } from "antd";
+import { Button, Layout, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";

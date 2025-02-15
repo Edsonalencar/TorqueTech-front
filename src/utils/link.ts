@@ -1,4 +1,4 @@
-import { config } from "@/config";
+import { config } from "@/config/env";
 
 const API_URL = config.FRONT_URL;
 

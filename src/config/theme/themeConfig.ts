@@ -3,14 +3,14 @@ import type { ThemeConfig } from "antd";
 export const theme: ThemeConfig = {
   token: {
     fontSize: 16,
-    colorPrimary: "#FFB300",
+    colorPrimary: "#49682F",
     borderRadius: 4,
   },
   components:{
     Menu:{
       iconSize:25,
-      colorBgContainer: "#FFB300",
-      colorPrimary: "#FFB300",
+      colorBgContainer: "#49682F",
+      colorPrimary: "#49682F",
       colorText: "#FFF",
     },
     Button:{

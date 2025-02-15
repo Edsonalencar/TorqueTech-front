@@ -5,7 +5,7 @@ import { InvalidArgException } from "./handler/InvalidArgException";
 import { UnauthorizedException } from "./handler/UnauthorizedExption";
 import { toast } from "react-toastify";
 import { apiAnchorTo, ArgsError, ResponseDTO } from "./interface";
-import { config } from "@/config";
+import { config } from "@/config/env";
 
 const nextAuthTokenName = config.NEXT_AUTH_TOKEN_NAME;
 const nextAuthRedirectName = config.NEXT_AUTH_REDIRECT_NAME;

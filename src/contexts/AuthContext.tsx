@@ -12,11 +12,11 @@ import { AbstractException } from "@/services/baseApi/handler/AbstractException"
 
 import { LoginType, UserType } from "@/types";
 import { handleError } from "@/utils/handleError";
-import { isTokenValid } from "@/utils/helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserService } from "@/services/userService/service";
+import { config } from "@/config/env";
+import { isTokenValid } from "@/utils/helpers";
 import { toast } from "react-toastify";
-import { config } from "@/config";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -58,24 +58,24 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
 
   const noValidAuthPaths = ["/login", "/register"];
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem(nextAuthTokenName);
-  //   const isNoValidAuthPath = noValidAuthPaths.includes(pathName);
+  useEffect(() => {
+    const token = localStorage.getItem(nextAuthTokenName);
+    const isNoValidAuthPath = noValidAuthPaths.includes(pathName);
 
-  //   if (token) {
-  //     handleJWTToken(token);
+    if (token) {
+      handleJWTToken(token);
 
-  //     if (!isTokenValid(token)) {
-  //       localStorage.removeItem(nextAuthTokenName);
-  //       navigate("/login");
-  //       toast.error("Sessão Expirada, favor fazer login novamente");
-  //       return;
-  //     }
-  //   } else if (!isNoValidAuthPath) {
-  //     navigate("/login");
-  //     toast.error("Ação não autorizada, favor fazer login!");
-  //   }
-  // }, [pathName]);
+      if (!isTokenValid(token)) {
+        localStorage.removeItem(nextAuthTokenName);
+        navigate("/login");
+        toast.error("Sessão Expirada, favor fazer login novamente");
+        return;
+      }
+    } else if (!isNoValidAuthPath) {
+      navigate("/login");
+      toast.error("Ação não autorizada, favor fazer login!");
+    }
+  }, [pathName]);
 
   const handleJWTToken = async (token: string) => {
     const { sub, UUID, ROLE, AUTHORITIES, name } = decodeJwt(token);

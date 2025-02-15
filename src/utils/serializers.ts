@@ -1,6 +1,3 @@
-import { UserStatus } from "@/types/authTypes";
-import { JobsStatus, ProductType } from "@/types/entitysType";
-
 export const parserDayToPt = (day: string) => {
   switch (day) {
     case "SUNDAY":

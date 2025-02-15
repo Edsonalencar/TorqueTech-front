@@ -5,7 +5,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { LoginType } from "@/types";
 import { AuthContext } from "@/contexts/AuthContext";
 import CryptoJS from "crypto-js";
-import { config } from "@/config";
+import { config } from "@/config/env";
 
 export const LoginForm = () => {
   const [form] = Form.useForm<LoginType>();

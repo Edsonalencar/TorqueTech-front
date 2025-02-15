@@ -1,10 +1,8 @@
 import { Line, ColumnConfig } from "@ant-design/plots";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 
-import { ItensGraph } from "@/services/dashboarService/dtos";
-
 interface Props {
-  data: ItensGraph[];
+  data: any[];
 }
 
 export default function FlowGraph({ data }: Props) {

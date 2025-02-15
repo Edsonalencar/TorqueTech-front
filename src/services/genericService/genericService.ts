@@ -9,7 +9,7 @@ export class GenericService {
     private api: IApiService,
     resolver?: IEndpointResolver // Opcional, usa DefaultEndpointResolver se não fornecido
   ) {
-    this.resolver = resolver ?? new DefaultEndpointResolver(url);
+    this.resolver = resolver ?? new DefaultEndpointResolver(this.url);
   }
 
   create = async <T, U = unknown>(
