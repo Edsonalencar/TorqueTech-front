@@ -4,6 +4,7 @@ import { Garage } from "../garageService/dto";
 
 export interface Customer {
   id: string;
+  email: string;
   status: UserStatus;
   profile: Profile;
   vehicles: Vehicle[];
