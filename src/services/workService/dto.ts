@@ -29,6 +29,7 @@ export interface Work {
   vehicle: Vehicle;
   customer: Customer;
   garage: Garage;
+  createdAt: string;
 }
 
 export interface WorkOrder {
@@ -39,4 +40,5 @@ export interface WorkOrder {
   description: string;
   cost: number;
   items: StockTransaction[];
+  createdAt: string;
 }
