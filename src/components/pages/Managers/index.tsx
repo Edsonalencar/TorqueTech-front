@@ -11,7 +11,7 @@ import { Manager } from "@/services/managersService/dto";
 import { ManagerService } from "@/services/managersService/service";
 import { UserStatus } from "@/types/authTypes";
 
-export const GestorPage: React.FC = () => {
+export const managerPage: React.FC = () => {
   const [resource, setResource] = useState<Pageable<Manager>>();
   const [status, setStatus] = useState<UserStatus>(UserStatus.ACTIVE);
   const [page, setPage] = useState<number>(0);

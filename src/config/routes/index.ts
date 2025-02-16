@@ -1,13 +1,25 @@
+import { CustomerPage } from "@/components/pages/Customer";
+import { DashboardPage } from "@/components/pages/Dashboard";
 import { LoginPage } from "@/components/pages/Login";
-import { StarterPage } from "@/components/pages/StarterPage";
+import { managerPage } from "@/components/pages/Managers";
+import { MechanicPage } from "@/components/pages/Mechanics";
+import { StockPage } from "@/components/pages/Stock";
+import { WorkPage } from "@/components/pages/Work";
 import { LayoutTemplate } from "@/components/templates/LayoutTemplate";
 import { RenderRouter } from "@/types";
 
 export const routes: RenderRouter[] = [
   { path: "/login", component: LoginPage },
   {
-    path: "/app",
+    path: "/dashboard",
     component: LayoutTemplate,
-    children: [{ path: "/app", component: StarterPage }],
+    children: [
+      { path: "/dashboard", component: DashboardPage },
+      { path: "/managers", component: managerPage },
+      { path: "/machanics", component: MechanicPage },
+      { path: "/customers", component: CustomerPage },
+      { path: "/services", component: WorkPage },
+      { path: "/stocks", component: StockPage },
+    ],
   },
 ];

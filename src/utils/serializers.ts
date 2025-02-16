@@ -1,3 +1,5 @@
+import { UserStatus } from "@/types/authTypes";
+
 export const parserDayToPt = (day: string) => {
   switch (day) {
     case "SUNDAY":
@@ -54,5 +56,16 @@ export const parseDay = (day: string) => {
       return "FRIDAY";
     case "Sáb":
       return "SATURDAY";
+  }
+};
+
+export const userStatusSerialize = (value?: UserStatus) => {
+  switch (value) {
+    case UserStatus.ACTIVE:
+      return "Ativo";
+    case UserStatus.INACTIVE:
+      return "Inativo";
+    default:
+      return "Ativo";
   }
 };

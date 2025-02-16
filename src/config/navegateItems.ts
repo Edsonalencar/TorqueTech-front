@@ -40,7 +40,7 @@ export const getNavegateItems = ({
       icon: React.createElement(FaToolbox),
     },
     {
-      key: "/products",
+      key: "/stocks",
       label: "Produtos",
       icon: React.createElement(FaBox),
     },
