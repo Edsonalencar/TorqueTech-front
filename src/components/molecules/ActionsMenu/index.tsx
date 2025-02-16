@@ -11,7 +11,8 @@ interface ActionMenuProps {
   onView?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
-  onDesable?: () => void;
+  onDisable?: () => void;
+  onEnable?: () => void;
   actions?: CustomActions[];
 }
 
@@ -19,14 +20,16 @@ export const ActionsMenu = ({
   onView,
   onEdit,
   onDelete,
-  onDesable,
+  onDisable,
+  onEnable,
   actions,
 }: ActionMenuProps) => {
   const items: MenuProps["items"] = [];
   onView && items.push({ key: "view", onClick: onView, label: "Visualizar" });
   onEdit && items.push({ key: "edit", onClick: onEdit, label: "Editar" });
-  onDesable &&
-    items.push({ key: "desable", onClick: onDesable, label: "Desativar" });
+  onDisable &&
+    items.push({ key: "desable", onClick: onDisable, label: "Desativar" });
+  onEnable && items.push({ key: "enable", onClick: onEnable, label: "Ativar" });
   onDelete &&
     items.push({ key: "delete", onClick: onDelete, label: "Excluir" });
 

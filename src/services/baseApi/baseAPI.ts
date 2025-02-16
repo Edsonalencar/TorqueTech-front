@@ -6,12 +6,13 @@ import { UnauthorizedException } from "./handler/UnauthorizedExption";
 import { toast } from "react-toastify";
 import { apiAnchorTo, ArgsError, ResponseDTO } from "./interface";
 import { config } from "@/config/env";
+import { IApiService } from "../genericService/interface";
 
 const nextAuthTokenName = config.NEXT_AUTH_TOKEN_NAME;
 const nextAuthRedirectName = config.NEXT_AUTH_REDIRECT_NAME;
 const FRONT_URL = config.FRONT_URL;
 
-export class BaseApi {
+export class BaseApi implements IApiService {
   public isExpired = false;
   private baseAPI = config.BACKEND_URL + "/api";
 
@@ -101,6 +102,14 @@ export class BaseApi {
     headers?: Record<string, string>
   ): Promise<T | undefined> {
     return this.request<T>("PUT", rota, { headers, body });
+  }
+
+  async patch<T, U>(
+    rota: string,
+    body?: U,
+    headers?: Record<string, string>
+  ): Promise<T | undefined> {
+    return this.request<T>("PATCH", rota, { headers, body });
   }
 
   async delete<T>(

@@ -3,27 +3,30 @@ export interface IApiService {
     url: string,
     data?: U,
     headers?: Record<string, string>
-  ): Promise<T>;
+  ): Promise<T | undefined>;
 
   put<T, U = unknown>(
     url: string,
     data: U,
     headers?: Record<string, string>
-  ): Promise<T>;
+  ): Promise<T | undefined>;
 
   patch<T, U = unknown>(
     url: string,
     data: U,
     headers?: Record<string, string>
-  ): Promise<T>;
+  ): Promise<T | undefined>;
 
-  delete<T>(url: string, headers?: Record<string, string>): Promise<T>;
+  delete<T>(
+    url: string,
+    headers?: Record<string, string>
+  ): Promise<T | undefined>;
 
   get<T>(
     url: string,
     queryParams?: Record<string, string | number>,
     headers?: Record<string, string>
-  ): Promise<T>;
+  ): Promise<T | undefined>;
 }
 
 export interface IEndpointResolver {

@@ -5,19 +5,23 @@ import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { Descriptions } from "antd";
 
 interface UserDetail extends Profile {
-  email: string;
+  email?: string;
   status?: UserStatus;
   owner?: User;
 }
 
 interface Props {
   data: UserDetail;
+  tittle?: React.ReactNode | string;
 }
 
-export const ProfileWitchEmailDescription: React.FC<Props> = ({ data }) => {
+export const ProfileWitchEmailDescription: React.FC<Props> = ({
+  data,
+  tittle,
+}) => {
   return (
     <Descriptions
-      title="Apicultor"
+      title={tittle}
       layout="vertical"
       bordered
       column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}

@@ -1,16 +1,22 @@
+import { BaseApi } from "../baseApi/baseAPI";
 import { DefaultEndpointResolver } from "./DefaultEndpointResolver";
 import { IApiService, IEndpointResolver, Page, ResponseDTO } from "./interface";
 
 export class GenericService {
   private resolver: IEndpointResolver;
+  private api: IApiService;
 
   constructor(
     private url: string,
-    private api: IApiService,
+    api?: IApiService,
     resolver?: IEndpointResolver // Opcional, usa DefaultEndpointResolver se não fornecido
   ) {
+    this.api = api ?? new BaseApi();
     this.resolver = resolver ?? new DefaultEndpointResolver(this.url);
   }
+
+  getApi = () => this.api;
+  getURL = () => this.resolver.getRoot();
 
   create = async <T, U = unknown>(
     data: U,
