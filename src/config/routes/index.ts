@@ -11,15 +11,15 @@ import { RenderRouter } from "@/types";
 export const routes: RenderRouter[] = [
   { path: "/login", component: LoginPage },
   {
-    path: "/dashboard",
+    path: "/app",
     component: LayoutTemplate,
     children: [
-      { path: "/dashboard", component: DashboardPage },
-      { path: "/managers", component: managerPage },
-      { path: "/machanics", component: MechanicPage },
-      { path: "/customers", component: CustomerPage },
-      { path: "/services", component: WorkPage },
-      { path: "/stocks", component: StockPage },
+      { path: "dashboard", component: DashboardPage },
+      { path: "managers", component: managerPage },
+      { path: "mechanics", component: MechanicPage },
+      { path: "customers", component: CustomerPage },
+      { path: "services", component: WorkPage },
+      { path: "stocks", component: StockPage },
     ],
   },
 ];

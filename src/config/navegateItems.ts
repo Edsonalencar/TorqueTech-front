@@ -15,32 +15,32 @@ export const getNavegateItems = ({
 }: NavegateItems): MenuProps["items"] => {
   return [
     {
-      key: "/dashboard",
+      key: "/app/dashboard",
       label: "Dashboard",
       icon: React.createElement(MdHome),
     },
     {
-      key: "/managers",
+      key: "/app/managers",
       label: "Gestores",
       icon: React.createElement(FaUsersLine),
     },
     {
-      key: "/machanics",
+      key: "/app/mechanics",
       label: "Mecanicos",
       icon: React.createElement(FaUsersGear),
     },
     {
-      key: "/customers",
+      key: "/app/customers",
       label: "Clientes",
       icon: React.createElement(FaUsers),
     },
     {
-      key: "/services",
+      key: "/app/services",
       label: "Serviços",
       icon: React.createElement(FaToolbox),
     },
     {
-      key: "/stocks",
+      key: "/app/stocks",
       label: "Produtos",
       icon: React.createElement(FaBox),
     },

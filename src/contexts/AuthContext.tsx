@@ -92,7 +92,7 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
     });
 
     if (pathName === "/login" || pathName === "/register") {
-      navigate("/dashboard");
+      navigate("/app/dashboard");
     }
   };
 

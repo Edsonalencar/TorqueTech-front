@@ -12,7 +12,7 @@ export const MenuNavigate: React.FC<MenuProps> = ({ ...rest }) => {
   const activePath = useMemo(() => {
     const path = location.pathname;
     const pathSplit = path.split("/");
-    return `/${pathSplit[1]}`;
+    return `/${pathSplit[1]}/${pathSplit[2]}`;
   }, [location.pathname]);
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
