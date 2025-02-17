@@ -25,6 +25,7 @@ type AuthContextType = {
   signOut: () => void;
   setUser: Function;
   verifyPermission: (permission: string) => boolean;
+  hasRole: (role: string) => boolean;
 };
 
 type AuthContextProviderProps = {
@@ -91,6 +92,8 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
       name: name as string,
     });
 
+    console.log("User", user);
+
     if (pathName === "/login" || pathName === "/register") {
       navigate("/app/dashboard");
     }
@@ -123,6 +126,11 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
     return authorities?.includes(permission) ?? false;
   }
 
+  function hasRole(value: string) {
+    const role = user?.role;
+    return role?.includes(value) ?? false;
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -132,6 +140,7 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
         signIn,
         signOut,
         verifyPermission,
+        hasRole,
       }}
     >
       {children}

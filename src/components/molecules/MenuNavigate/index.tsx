@@ -5,7 +5,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { getNavegateItems } from "../../../config/navegateItems";
 
 export const MenuNavigate: React.FC<MenuProps> = ({ ...rest }) => {
-  const { signOut } = useContext(AuthContext);
+  const { signOut, hasRole } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,7 +25,7 @@ export const MenuNavigate: React.FC<MenuProps> = ({ ...rest }) => {
       theme="light"
       mode="inline"
       selectedKeys={[activePath]}
-      items={getNavegateItems({ signOut })}
+      items={getNavegateItems({ signOut, hasRole })}
       onClick={handleMenuClick}
       style={{ borderInlineEnd: "none" }}
       {...rest}

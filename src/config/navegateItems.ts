@@ -5,15 +5,27 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
 import { FaUsersGear, FaUsersLine, FaBox } from "react-icons/fa6";
 import { FaUsers, FaToolbox } from "react-icons/fa";
+import { IconBaseProps } from "react-icons";
+
+export interface NavegateItem {
+  key: string;
+  label: string;
+  icon: React.FunctionComponentElement<IconBaseProps>;
+  show?: boolean;
+  onClick?: () => void;
+  style?: React.CSSProperties;
+}
 
 interface NavegateItems {
   signOut: () => void;
+  hasRole: (role: string) => boolean;
 }
 
 export const getNavegateItems = ({
   signOut,
+  hasRole,
 }: NavegateItems): MenuProps["items"] => {
-  return [
+  const items: NavegateItem[] = [
     {
       key: "/app/dashboard",
       label: "Dashboard",
@@ -23,6 +35,7 @@ export const getNavegateItems = ({
       key: "/app/managers",
       label: "Gestores",
       icon: React.createElement(FaUsersLine),
+      show: hasRole("ADMIN"),
     },
     {
       key: "/app/mechanics",
@@ -52,4 +65,6 @@ export const getNavegateItems = ({
       style: { position: "absolute", bottom: 0 },
     },
   ];
+
+  return items.filter((item) => item.show !== false);
 };
