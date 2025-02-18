@@ -3,11 +3,9 @@ import { InputPhone } from "@/components/atoms/Inputs/InputPhone";
 import { CreateGarageDTO } from "@/services/garageService/dto";
 import { Col, DatePicker, Form, FormProps, Input, Row } from "antd";
 
-interface Props extends FormProps<CreateGarageDTO> {
-  withAuth?: boolean;
-}
+interface Props extends FormProps<CreateGarageDTO> {}
 
-export const GarageForm = ({ withAuth = false, ...rest }: Props) => {
+export const GarageForm = ({ ...rest }: Props) => {
   return (
     <Form layout="vertical" {...rest}>
       <Row gutter={[16, 16]}>
@@ -81,32 +79,30 @@ export const GarageForm = ({ withAuth = false, ...rest }: Props) => {
         </Col>
       </Row>
 
-      {withAuth && (
-        <Row gutter={[16, 16]}>
-          <Col span={24} md={{ span: 16 }}>
-            <Form.Item
-              label="Email"
-              name={"username"}
-              key={"username"}
-              id="username"
-              rules={[{ required: true, message: "Campo obrigatório!" }]}
-            >
-              <Input placeholder="Usuário" />
-            </Form.Item>
-          </Col>
-          <Col span={24} md={{ span: 8 }}>
-            <Form.Item
-              label="Senha"
-              name={"password"}
-              key={"password"}
-              id="password"
-              rules={[{ required: true, message: "Campo obrigatório!" }]}
-            >
-              <Input.Password placeholder="Digite a senha" />
-            </Form.Item>
-          </Col>
-        </Row>
-      )}
+      <Row gutter={[16, 16]}>
+        <Col span={24} md={{ span: 16 }}>
+          <Form.Item
+            label="Email"
+            name={"username"}
+            key={"username"}
+            id="username"
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          >
+            <Input placeholder="Usuário" />
+          </Form.Item>
+        </Col>
+        <Col span={24} md={{ span: 8 }}>
+          <Form.Item
+            label="Senha"
+            name={"password"}
+            key={"password"}
+            id="password"
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          >
+            <Input.Password placeholder="Digite a senha" />
+          </Form.Item>
+        </Col>
+      </Row>
     </Form>
   );
 };

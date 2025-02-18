@@ -9,6 +9,7 @@ import { CreateGarageDTO, Garage } from "@/services/garageService/dto";
 import { GarageService } from "@/services/garageService/service";
 import { GarageForm } from "@/components/organisms/GarageForm";
 import { AddressForm } from "@/components/organisms/AddressForm";
+import { validateFormIsEmpty } from "@/utils/validations";
 
 export interface Props {
   isOpen: boolean;
@@ -30,11 +31,16 @@ export const CreateGarageModal = ({
     const formData = {
       ...data,
       document: cleanMask(data.document),
+      address: validateFormIsEmpty(data.address) ? data.address : undefined,
     };
+
+    console.log("formData", formData);
+    console.log("data", data);
 
     try {
       setLoading(true);
-      await GarageService.create(formData);
+      const res = await GarageService.create(formData);
+      if (!res) return;
       if (reload) await reload();
       closeModal();
     } catch (error) {
@@ -48,6 +54,7 @@ export const CreateGarageModal = ({
     const formData = {
       ...data,
       document: cleanMask(data.document),
+      address: validateFormIsEmpty(data.address) ? data.address : undefined,
     };
 
     try {
@@ -63,7 +70,7 @@ export const CreateGarageModal = ({
   };
 
   const submit = async () => {
-    const formValue = form.getFieldsValue();
+    const formValue = await form.validateFields();
 
     if (initialData?.id) update(initialData.id, formValue);
     else create(formValue);
@@ -100,7 +107,7 @@ export const CreateGarageModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        <GarageForm form={form} withAuth />
+        <GarageForm form={form} />
         <Typography.Title level={5}>Endereço {`(Opcional)`}</Typography.Title>
         <AddressForm form={form} />
       </Flex>
