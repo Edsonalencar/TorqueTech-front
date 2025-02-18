@@ -55,6 +55,7 @@ export const CreateGarageModal = ({
       ...data,
       document: cleanMask(data.document),
       address: validateFormIsEmpty(data.address) ? data.address : undefined,
+      ownerId: initialData?.owner?.id,
     };
 
     try {
@@ -88,6 +89,7 @@ export const CreateGarageModal = ({
         ...initialData,
         ...initialData.owner?.profile,
         username: initialData.owner?.auth?.username!!,
+        ownerName: initialData.owner?.profile?.name,
       };
 
       form.setFieldsValue(formValue);

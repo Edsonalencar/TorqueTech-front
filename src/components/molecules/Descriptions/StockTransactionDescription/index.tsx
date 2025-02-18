@@ -15,7 +15,6 @@ export const StockTransactionDescription: React.FC<Props> = ({
     <Descriptions
       title={title}
       layout="vertical"
-      bordered
       column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
     >
       <Descriptions.Item label="Tipo de Transação">

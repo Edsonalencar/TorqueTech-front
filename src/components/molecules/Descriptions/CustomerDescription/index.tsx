@@ -22,7 +22,6 @@ export const CustomerDescription: React.FC<Props> = ({ data, title }) => {
     <Descriptions
       title={title}
       layout="vertical"
-      bordered
       column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
     >
       {data.name && (

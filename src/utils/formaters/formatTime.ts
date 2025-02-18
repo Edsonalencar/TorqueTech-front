@@ -1,46 +1,49 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br"; // Importa o locale
+
+dayjs.locale("pt-br"); // Define o locale globalmente
 
 export const formatTime = (date?: string | Date, plusMinutes: number = 0) => {
-  if (!date) return '-';
+  if (!date) return "-";
 
-  if (typeof date === 'string' && /^(\d{2}):(\d{2}):(\d{2})$/.test(date)) {
+  if (typeof date === "string" && /^(\d{2}):(\d{2}):(\d{2})$/.test(date)) {
     return dayjs(`2000-01-01T${date}`)
-      .add(plusMinutes, 'minutes')
-      .format('HH:mm:ss');
+      .add(plusMinutes, "minutes")
+      .format("HH:mm:ss");
   }
 
-  return dayjs(date).add(plusMinutes, 'minutes').format('HH:mm:ss');
+  return dayjs(date).add(plusMinutes, "minutes").format("HH:mm:ss");
 };
 
 export const formatSimpleTime = (
   date?: string | Date,
-  plusMinutes: number = 0,
+  plusMinutes: number = 0
 ) => {
-  if (!date) return '-';
+  if (!date) return "-";
 
-  if (typeof date === 'string' && /^(\d{2}):(\d{2}):(\d{2})$/.test(date)) {
+  if (typeof date === "string" && /^(\d{2}):(\d{2}):(\d{2})$/.test(date)) {
     return dayjs(`2000-01-01T${date}`)
-      .add(plusMinutes, 'minutes')
-      .format('HH:mm');
+      .add(plusMinutes, "minutes")
+      .format("HH:mm");
   }
 
-  return dayjs(date).add(plusMinutes, 'minutes').format('HH:mm');
+  return dayjs(date).add(plusMinutes, "minutes").format("HH:mm");
 };
 
 export const formatDateAndTime = (
   date?: string | Date,
-  plusMinutes: number = 0,
+  plusMinutes: number = 0
 ) => {
-  if (!date) return '-';
+  if (!date) return "-";
   return dayjs(date)
-    .add(plusMinutes, 'minutes')
-    .format('DD [de] MMMM [de] YYYY [às] HH:mm');
+    .add(plusMinutes, "minutes")
+    .format("DD [de] MMMM [de] YYYY [às] HH:mm");
 };
 
 export const formatTimeRange = (
   date1?: string | Date | null,
-  date2?: string | Date | null,
+  date2?: string | Date | null
 ) => {
-  if (!date1 || !date2) return '-';
+  if (!date1 || !date2) return "-";
   return `${formatSimpleTime(date1)} até ${formatSimpleTime(date2)}`;
 };

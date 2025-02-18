@@ -1,4 +1,5 @@
 import { AdminPage } from "@/components/pages/Admin";
+import { ViewAdminPage } from "@/components/pages/Admin/View";
 import { CustomerPage } from "@/components/pages/Customer";
 import { DashboardPage } from "@/components/pages/Dashboard";
 import { LoginPage } from "@/components/pages/Login";
@@ -27,6 +28,9 @@ export const routes: RenderRouter[] = [
   {
     path: "/admin",
     component: LayoutAdminTemplate,
-    children: [{ path: "/admin", component: AdminPage }],
+    children: [
+      { path: "/admin", component: AdminPage },
+      { path: "/admin/:uuid", component: ViewAdminPage },
+    ],
   },
 ];

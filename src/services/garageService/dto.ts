@@ -21,6 +21,7 @@ export interface Garage {
   cnpj: string;
   owner: User;
   address: Address;
+  createdAt: string;
 }
 
 export enum RoleType {

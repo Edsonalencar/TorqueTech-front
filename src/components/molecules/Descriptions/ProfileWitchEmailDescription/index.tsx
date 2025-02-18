@@ -1,3 +1,4 @@
+import { UserStatusTag } from "@/components/atoms/UserStatusTag";
 import { Profile, User, UserStatus } from "@/types/authTypes";
 import { formatCpfCnpj, formatPhone } from "@/utils/formaters/format";
 import { formatDate } from "@/utils/formaters/formatDate";
@@ -12,25 +13,26 @@ interface UserDetail extends Profile {
 
 interface Props {
   data: UserDetail;
-  tittle?: React.ReactNode | string;
+  title?: React.ReactNode | string;
 }
 
 export const ProfileWitchEmailDescription: React.FC<Props> = ({
   data,
-  tittle,
+  title,
 }) => {
   return (
     <Descriptions
-      title={tittle}
+      title={title}
       layout="vertical"
-      bordered
       column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
     >
       {data.name && (
         <Descriptions.Item label="Nome">{data.name}</Descriptions.Item>
       )}
 
-      <Descriptions.Item label="Status">{data.status}</Descriptions.Item>
+      <Descriptions.Item label="Status">
+        <UserStatusTag status={data.status} />
+      </Descriptions.Item>
       {data.email && (
         <Descriptions.Item label="Email">{data.email}</Descriptions.Item>
       )}
@@ -44,9 +46,6 @@ export const ProfileWitchEmailDescription: React.FC<Props> = ({
         <Descriptions.Item label="Telefone">
           {formatPhone(data.phone)}
         </Descriptions.Item>
-      )}
-      {data.email && (
-        <Descriptions.Item label="Email">{data.email}</Descriptions.Item>
       )}
       {data.birthDate && (
         <Descriptions.Item label="Data de Nascimento">

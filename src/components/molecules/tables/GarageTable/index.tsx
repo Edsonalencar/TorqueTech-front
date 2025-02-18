@@ -3,6 +3,7 @@ import { ColumnProps } from "antd/es/table";
 import { formatCpfCnpj } from "@/utils/formaters/format";
 import { Garage } from "@/services/garageService/dto";
 import { UserStatus } from "@/types/authTypes";
+import { UserStatusTag } from "@/components/atoms/UserStatusTag";
 
 interface Props extends TableProps<Garage> {
   onView?: (garage: Garage) => void;
@@ -22,10 +23,24 @@ export const GarageTable = ({ onView, ...rest }: Props) => {
       ),
     },
     {
-      title: "Responsável",
+      title: "Proprietário",
       dataIndex: "owner",
       key: "owner",
-      render: (_, { owner }) => owner.profile?.name,
+      render: (_, { owner }) => (
+        <p
+          className=" w-full truncate flex items-center gap-2"
+          title={owner.profile?.name}
+        >
+          {owner.profile?.name}
+          <UserStatusTag status={owner.status} />
+        </p>
+      ),
+    },
+    {
+      title: "Email",
+      dataIndex: "owner",
+      key: "owner",
+      render: (_, { owner }) => owner.auth?.username,
     },
     {
       title: "Nome",
@@ -37,12 +52,6 @@ export const GarageTable = ({ onView, ...rest }: Props) => {
       dataIndex: "cnpj",
       key: "cnpj",
       render: (cnpj) => formatCpfCnpj(cnpj),
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (_, { owner }) => UserStatus[owner.status!!],
     },
     {
       title: "Ações",

@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Typography } from "antd";
+import { Button, Card, Flex, Radio, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { BasePagination } from "@/components/atoms/BasePagination";
@@ -9,6 +9,7 @@ import { Pageable } from "@/types";
 import { GarageService } from "@/services/garageService/service";
 import { UserStatus } from "@/types/authTypes";
 import { useNavigate } from "react-router-dom";
+import Search from "antd/es/input/Search";
 
 export const AdminPage = () => {
   const [createGarageModal, setCreateGarageModal] = useState<boolean>(false);
@@ -16,18 +17,20 @@ export const AdminPage = () => {
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [resource, setResource] = useState<Pageable<Garage>>();
+  const [status, setStatus] = useState<UserStatus>(UserStatus.ACTIVE);
 
   const navigate = useNavigate();
 
   const handleView = (value: Garage) => {
-    navigate(`/app/managers/${value.owner.id}`);
+    navigate(`/admin/${value.id}`);
   };
 
-  const fetchPage = async (name?: string) => {
+  const fetchPage = async (query?: string) => {
     setLoading(true);
     try {
       const { data } = await GarageService.getPage(page, {
-        name,
+        query,
+        status,
       });
       console.log("fetchGarage", data);
       setResource(data);
@@ -49,7 +52,7 @@ export const AdminPage = () => {
       );
       await fetchPage();
     } catch (error) {
-      console.error("handleDisable", error);
+      console.error("Handle garage disable", error);
     } finally {
       setLoading(false);
     }
@@ -57,7 +60,7 @@ export const AdminPage = () => {
 
   useEffect(() => {
     fetchPage();
-  }, [page]);
+  }, [page, status]);
 
   return (
     <Card>
@@ -65,6 +68,20 @@ export const AdminPage = () => {
         <Flex justify="space-between">
           <Typography.Title level={4}>Garagens</Typography.Title>
           <Flex gap={8}>
+            <Radio.Group
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              buttonStyle="solid"
+            >
+              <Radio.Button value="ACTIVE">Ativos</Radio.Button>
+              <Radio.Button value="INACTIVE">Inativos</Radio.Button>
+            </Radio.Group>
+            <Search
+              placeholder="Pesquise um nome da garagem ou do proprietário..."
+              allowClear
+              onSearch={(value) => fetchPage(value)}
+              style={{ width: 304 }}
+            />
             <Button
               type="primary"
               icon={<PlusOutlined />}
