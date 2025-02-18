@@ -22,10 +22,10 @@ export class UserService {
     return res as ResponseDTO<string>;
   }
 
-  updateStatus = async (userId: string, status: UserStatus) => {
+  static async updateStatus(userId: string, status: UserStatus) {
     const res = await API.put(`/users/${userId}/status`, {
       status,
     });
     return res as ResponseDTO<User>;
-  };
+  }
 }

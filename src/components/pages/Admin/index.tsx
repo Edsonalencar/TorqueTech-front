@@ -10,6 +10,7 @@ import { GarageService } from "@/services/garageService/service";
 import { UserStatus } from "@/types/authTypes";
 import { useNavigate } from "react-router-dom";
 import Search from "antd/es/input/Search";
+import { UserService } from "@/services/userService/service";
 
 export const AdminPage = () => {
   const [createGarageModal, setCreateGarageModal] = useState<boolean>(false);
@@ -43,9 +44,10 @@ export const AdminPage = () => {
 
   const handleChangeStatus = async (value: Garage) => {
     setLoading(true);
+
     try {
-      await GarageService.disable(
-        value.id as string,
+      await UserService.updateStatus(
+        value.owner.id as string,
         value.owner?.status == UserStatus.ACTIVE
           ? UserStatus.INACTIVE
           : UserStatus.ACTIVE

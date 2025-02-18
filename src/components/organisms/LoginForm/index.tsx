@@ -15,9 +15,9 @@ export const LoginForm = () => {
   const secret = config.SECRET_KEY;
 
   useEffect(() => {
-    const rememberMe = localStorage.getItem("nectar_remember");
-    const username = localStorage.getItem("nectar_username");
-    const password = localStorage.getItem("nectar_password");
+    const rememberMe = localStorage.getItem("stoque_remember");
+    const username = localStorage.getItem("stoque__username");
+    const password = localStorage.getItem("stoque__password");
 
     const remember = rememberMe == "true";
 
@@ -48,13 +48,13 @@ export const LoginForm = () => {
           secret
         ).toString();
 
-        localStorage.setItem("nectar_remember", values.remember.toString());
-        localStorage.setItem("nectar_username", values.username.toString());
-        localStorage.setItem("nectar_password", encryptPass);
+        localStorage.setItem("stoque_remember", values.remember.toString());
+        localStorage.setItem("stoque_username", values.username.toString());
+        localStorage.setItem("stoque_password", encryptPass);
       } else {
-        localStorage.removeItem("nectar_remember");
-        localStorage.removeItem("nectar_username");
-        localStorage.removeItem("nectar_password");
+        localStorage.removeItem("stoque_remember");
+        localStorage.removeItem("stoque_username");
+        localStorage.removeItem("stoque_password");
       }
 
       if (!result) toast.success("Login efetuado com sucesso!");
