@@ -17,6 +17,7 @@ import { UserService } from "@/services/userService/service";
 import { config } from "@/config/env";
 import { isTokenValid } from "@/utils/helpers";
 import { toast } from "react-toastify";
+import { RoleType } from "@/services/garageService/dto";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -95,7 +96,8 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
     console.log("User", user);
 
     if (pathName === "/login" || pathName === "/register") {
-      navigate("/app/dashboard");
+      if (user?.role == "ROLE_SUPER_ADMIN") navigate("/admin");
+      else navigate("/app/dashboard");
     }
   };
 
