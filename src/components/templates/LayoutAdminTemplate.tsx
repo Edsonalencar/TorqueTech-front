@@ -12,7 +12,7 @@ export const LayoutAdminTemplate: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout>
+    <Layout className="h-screen">
       <Header
         style={{
           padding: `0 1rem`,
