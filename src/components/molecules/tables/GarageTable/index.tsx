@@ -2,14 +2,24 @@ import { Table, TableProps, Typography } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { formatCpfCnpj } from "@/utils/formaters/format";
 import { Garage } from "@/services/garageService/dto";
-import { UserStatus } from "@/types/authTypes";
 import { UserStatusTag } from "@/components/atoms/UserStatusTag";
+import { ActionsMenu } from "../../ActionsMenu";
+import { UserStatus } from "@/types/authTypes";
 
 interface Props extends TableProps<Garage> {
-  onView?: (garage: Garage) => void;
+  onEdit?: (value: Garage) => void;
+  onView?: (value: Garage) => void;
+  onDisable?: (value: Garage) => void;
+  onEnable?: (value: Garage) => void;
 }
 
-export const GarageTable = ({ onView, ...rest }: Props) => {
+export const GarageTable = ({
+  onView,
+  onDisable,
+  onEdit,
+  onEnable,
+  ...rest
+}: Props) => {
   const columns: ColumnProps<Garage>[] = [
     {
       title: "Ind.",
@@ -58,9 +68,20 @@ export const GarageTable = ({ onView, ...rest }: Props) => {
       dataIndex: "actions",
       key: "actions",
       render: (_, item) => (
-        <Typography.Link onClick={() => onView?.(item)}>
-          Ver Detalhes
-        </Typography.Link>
+        <ActionsMenu
+          onEdit={onEdit ? () => onEdit?.(item) : undefined}
+          onView={onView ? () => onView?.(item) : undefined}
+          onDisable={
+            onDisable && item.owner.status != UserStatus.INACTIVE
+              ? () => onDisable?.(item)
+              : undefined
+          }
+          onEnable={
+            onEnable && item.owner.status != UserStatus.ACTIVE
+              ? () => onEnable?.(item)
+              : undefined
+          }
+        />
       ),
     },
   ];

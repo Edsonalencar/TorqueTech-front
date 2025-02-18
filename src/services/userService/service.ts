@@ -1,3 +1,4 @@
+import { User, UserStatus } from "@/types/authTypes";
 import { LoginType } from "../../types";
 import { BaseApi } from "../baseApi/baseAPI";
 import { AbstractException } from "../baseApi/handler/AbstractException";
@@ -20,4 +21,11 @@ export class UserService {
 
     return res as ResponseDTO<string>;
   }
+
+  updateStatus = async (userId: string, status: UserStatus) => {
+    const res = await API.put(`/users/${userId}/status`, {
+      status,
+    });
+    return res as ResponseDTO<User>;
+  };
 }

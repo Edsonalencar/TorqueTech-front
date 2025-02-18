@@ -98,6 +98,9 @@ export const AdminPage = () => {
             pagination={false}
             loading={loading}
             onView={handleView}
+            onEdit={(value) => setSelectedEditGarage(value)}
+            onDisable={handleChangeStatus}
+            onEnable={handleChangeStatus}
           />
           <BasePagination page={page} setPage={setPage} pageable={resource} />
         </Flex>
