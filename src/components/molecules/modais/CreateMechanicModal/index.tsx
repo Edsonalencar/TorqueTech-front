@@ -79,7 +79,7 @@ export const CreateMechanicModal = ({
     if (initialData && isOpen) {
       const formValue = {
         ...initialData.user?.profile,
-        email: initialData.user?.auth?.username,
+        username: initialData.user?.auth?.username,
       };
 
       form.setFieldsValue(formValue);
