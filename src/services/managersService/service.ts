@@ -6,4 +6,4 @@ var instance = new BaseApi() as IApiService;
 
 export class IManagerService extends GenericService {}
 
-export const ManagerService = new IManagerService("/managers", instance);
+export const ManagerService = new IManagerService("/manager", instance);

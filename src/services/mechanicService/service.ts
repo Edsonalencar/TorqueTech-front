@@ -6,4 +6,4 @@ var instance = new BaseApi() as IApiService;
 
 export class IMechanicService extends GenericService {}
 
-export const MechanicService = new IMechanicService("/mechanics", instance);
+export const MechanicService = new IMechanicService("/mechanic", instance);
