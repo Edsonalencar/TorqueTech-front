@@ -99,7 +99,7 @@ export const CreateMechanicModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        <UserForm form={form} withAuth />
+        <UserForm form={form} withAuth requiredPassword={!initialData} />
       </Flex>
     </Modal>
   );

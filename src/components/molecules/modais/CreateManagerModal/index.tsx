@@ -79,7 +79,7 @@ export const CreateManagerModal = ({
     if (initialData && isOpen) {
       const formValue = {
         ...initialData.user?.profile,
-        email: initialData.user?.auth?.username,
+        username: initialData.user?.auth?.username,
       };
 
       form.setFieldsValue(formValue);
@@ -99,7 +99,7 @@ export const CreateManagerModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        <UserForm form={form} withAuth />
+        <UserForm form={form} withAuth requiredPassword={!initialData} />
       </Flex>
     </Modal>
   );

@@ -3,9 +3,11 @@ import { InputPhone } from "@/components/atoms/Inputs/InputPhone";
 import { CreateGarageDTO } from "@/services/garageService/dto";
 import { Col, DatePicker, Form, FormProps, Input, Row } from "antd";
 
-interface Props extends FormProps<CreateGarageDTO> {}
+interface Props extends FormProps<CreateGarageDTO> {
+  requiredPassword?: boolean;
+}
 
-export const GarageForm = ({ ...rest }: Props) => {
+export const GarageForm = ({ requiredPassword = true, ...rest }: Props) => {
   return (
     <Form layout="vertical" {...rest}>
       <Row gutter={[16, 16]}>
@@ -97,7 +99,9 @@ export const GarageForm = ({ ...rest }: Props) => {
             name={"password"}
             key={"password"}
             id="password"
-            rules={[{ required: true, message: "Campo obrigatório!" }]}
+            rules={[
+              { required: requiredPassword, message: "Campo obrigatório!" },
+            ]}
           >
             <Input.Password placeholder="Digite a senha" />
           </Form.Item>

@@ -109,7 +109,7 @@ export const CreateGarageModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        <GarageForm form={form} />
+        <GarageForm form={form} requiredPassword={!initialData} />
         <Typography.Title level={5}>Endereço {`(Opcional)`}</Typography.Title>
         <AddressForm form={form} />
       </Flex>
