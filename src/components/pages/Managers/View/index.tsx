@@ -14,7 +14,7 @@ export const ViewManagerPage: React.FC = () => {
   const [resource, setResource] = useState<Manager>();
   const [canEdit, setCanEdit] = useState(false);
 
-  const { id } = useParams();
+  const { uuid } = useParams();
 
   const fetchResource = async (resourceId: string) => {
     setResourceLoading(true);
@@ -29,13 +29,13 @@ export const ViewManagerPage: React.FC = () => {
   };
 
   const reload = async () => {
-    if (!id) return;
-    await fetchResource(id);
+    if (!uuid) return;
+    await fetchResource(uuid);
   };
 
   useEffect(() => {
-    if (id) fetchResource(id);
-  }, [id]);
+    if (uuid) fetchResource(uuid);
+  }, [uuid]);
 
   return (
     <>
@@ -45,7 +45,7 @@ export const ViewManagerPage: React.FC = () => {
         <ToBack />
         <Card>
           <ProfileWitchEmailDescription
-            tittle={
+            title={
               <Flex gap={16} justify="space-between">
                 <Typography.Title level={5}>Gestor</Typography.Title>
                 <Button

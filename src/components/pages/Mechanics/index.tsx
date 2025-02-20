@@ -10,6 +10,7 @@ import { UserStatus } from "@/types/authTypes";
 import { Mechanic } from "@/services/mechanicService/dto";
 import { MechanicService } from "@/services/mechanicService/service";
 import { MechanicTable } from "@/components/molecules/tables/MachanicTable";
+import { UserService } from "@/services/userService/service";
 
 export const MechanicPage: React.FC = () => {
   const [resource, setResource] = useState<Pageable<Mechanic>>();
@@ -24,7 +25,7 @@ export const MechanicPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleView = (Mechanic: Mechanic) => {
-    navigate(`/gestor/${Mechanic.user?.id}`);
+    navigate(`/app/mechanics/${Mechanic?.id}`);
   };
 
   const fetchPage = async (name?: string) => {
@@ -43,16 +44,19 @@ export const MechanicPage: React.FC = () => {
     }
   };
 
-  const handleChangeStatus = async (Mechanic: Mechanic) => {
+  const handleChangeStatus = async (value: Mechanic) => {
     setLoading(true);
+
     try {
-      await MechanicService.disable(
-        Mechanic.id as string,
-        Mechanic.user?.status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
+      await UserService.updateStatus(
+        value.user!!.id as string,
+        value.user?.status == UserStatus.ACTIVE
+          ? UserStatus.INACTIVE
+          : UserStatus.ACTIVE
       );
       await fetchPage();
     } catch (error) {
-      console.error("handleDisable", error);
+      console.error("Handle garage disable", error);
     } finally {
       setLoading(false);
     }

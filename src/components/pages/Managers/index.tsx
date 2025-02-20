@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Manager } from "@/services/managersService/dto";
 import { ManagerService } from "@/services/managersService/service";
 import { UserStatus } from "@/types/authTypes";
+import { UserService } from "@/services/userService/service";
 
 export const managerPage: React.FC = () => {
   const [resource, setResource] = useState<Pageable<Manager>>();
@@ -23,7 +24,7 @@ export const managerPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleView = (manager: Manager) => {
-    navigate(`/gestor/${manager.user?.id}`);
+    navigate(`/app/managers/${manager?.id}`);
   };
 
   const fetchPage = async (name?: string) => {
@@ -42,16 +43,19 @@ export const managerPage: React.FC = () => {
     }
   };
 
-  const handleChangeStatus = async (manager: Manager) => {
+  const handleChangeStatus = async (value: Manager) => {
     setLoading(true);
+
     try {
-      await ManagerService.disableManager(
-        manager.id as string,
-        manager.user?.status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
+      await UserService.updateStatus(
+        value.user!!.id as string,
+        value.user?.status == UserStatus.ACTIVE
+          ? UserStatus.INACTIVE
+          : UserStatus.ACTIVE
       );
       await fetchPage();
     } catch (error) {
-      console.error("handleDisable", error);
+      console.error("Handle garage disable", error);
     } finally {
       setLoading(false);
     }
