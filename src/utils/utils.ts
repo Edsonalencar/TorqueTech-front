@@ -95,7 +95,6 @@ export const convertRcFileToFile = (rcFile: RcFile): File => {
   return new File([rcFile], rcFile.name, { type: rcFile.type });
 };
 
-
 export const booleanSelectOptions = [
   { label: "Sim", value: true },
   { label: "Não", value: false },
@@ -129,4 +128,22 @@ export const stateOptions = [
   { value: "SP", label: "São Paulo" },
   { value: "SE", label: "Sergipe" },
   { value: "TO", label: "Tocantins" },
+];
+
+export const vehicleCategoryOptions = [
+  { value: "PASSENGER_CAR", label: "Carro de Passeio" },
+  { value: "ELECTRIC_CAR", label: "Carro Elétrico" },
+  { value: "PICKUP_TRUCK", label: "Caminhonete" },
+  { value: "VAN", label: "Van" },
+  { value: "LIGHT_TRUCK", label: "Caminhão Leve" },
+  { value: "HEAVY_TRUCK", label: "Caminhão Pesado" },
+  { value: "BUS", label: "Ônibus" },
+  { value: "MOTORCYCLE", label: "Motocicleta" },
+  { value: "SCOOTER", label: "Scooter" },
+  { value: "ATV", label: "Veículo Off-Road (ATV)" },
+  { value: "UTV", label: "Veículo Utilitário (UTV)" },
+  { value: "AGRICULTURAL", label: "Veículo Agrícola" },
+  { value: "CONSTRUCTION", label: "Veículo de Construção" },
+  { value: "EMERGENCY", label: "Veículo de Emergência" },
+  { value: "MILITARY", label: "Veículo Militar" },
 ];
