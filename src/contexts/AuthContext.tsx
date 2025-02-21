@@ -93,10 +93,8 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
       name: name as string,
     });
 
-    console.log("User", user);
-
     if (pathName === "/login" || pathName === "/register") {
-      if (user?.role == "ROLE_SUPER_ADMIN") navigate("/admin");
+      if (ROLE == "ROLE_SUPER_ADMIN") navigate("/admin");
       else navigate("/app/dashboard");
     }
   };
