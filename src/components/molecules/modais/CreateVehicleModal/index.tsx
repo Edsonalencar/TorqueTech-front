@@ -1,50 +1,46 @@
 import { useEffect, useState } from "react";
-import { Flex, Form, Modal } from "antd";
+import { Form, Modal } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
-import { VehicleTypeService } from "@/services/vehicleTypeService/service";
-import { VehicleTypeForm } from "@/components/organisms/VehicleTypeForm";
-import {
-  CreateVehicleTypeDTO,
-  VehicleType,
-} from "@/services/vehicleTypeService/dto";
+import { CreateVehicleDTO, Vehicle } from "@/services/vehicleService/dto";
+import { VehicleService } from "@/services/vehicleService/service";
 
 export interface Props {
   isOpen: boolean;
   onClose: () => void;
-  initialData?: VehicleType;
+  initialData?: Vehicle;
   reload?: () => Promise<void>;
 }
 
-export const CreateVehicleTypeModal = ({
+export const CreateVehicleModal = ({
   isOpen,
   onClose,
   initialData,
   reload,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [form] = Form.useForm<CreateVehicleTypeDTO>();
+  const [form] = Form.useForm<CreateVehicleDTO>();
 
-  const create = async (data: CreateVehicleTypeDTO) => {
+  const create = async (data: CreateVehicleDTO) => {
     try {
       setLoading(true);
-      await VehicleTypeService.create(data);
+      await VehicleService.create(data);
       if (reload) await reload();
       closeModal();
     } catch (error) {
-      console.error("Create Mechanic", error);
+      console.error("Create Vehicle", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const update = async (id: string, data: CreateVehicleTypeDTO) => {
+  const update = async (id: string, data: CreateVehicleDTO) => {
     try {
       setLoading(true);
-      await VehicleTypeService.update(id, data);
+      await VehicleService.update(id, data);
       if (reload) await reload();
       closeModal();
     } catch (error) {
-      console.error("Update Mechanic", error);
+      console.error("Update Vehicle", error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +67,7 @@ export const CreateVehicleTypeModal = ({
 
   return (
     <Modal
-      title={`${initialData ? "Editar" : "Adicionar"} Tipos de Veículos`}
+      title={`${initialData ? "Editar" : "Adicionar"} Veículo`}
       open={isOpen}
       onOk={submit}
       onClose={closeModal}
@@ -81,9 +77,9 @@ export const CreateVehicleTypeModal = ({
     >
       <LoadingContent isLoading={loading} />
 
-      <Flex gap={15} vertical className="mt-5">
+      {/* <Flex gap={15} vertical className="mt-5">
         <VehicleTypeForm form={form} />
-      </Flex>
+      </Flex> */}
     </Modal>
   );
 };
