@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Flex, Form, Modal } from "antd";
+import { Button, Flex, Form, Input, Modal, Space, Typography } from "antd";
 
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 
@@ -9,6 +9,8 @@ import { UserType } from "@/types";
 import { cleanMask } from "@/utils/formaters/format";
 import { CreateCustomerDTO, Customer } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
+import { AddressForm } from "@/components/organisms/AddressForm";
+import { Address } from "@/types/authTypes";
 
 export interface Props {
   isOpen: boolean;
@@ -24,9 +26,11 @@ export const CreateCustomerModal = ({
   reload,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [form] = Form.useForm<CreateCustomerDTO>();
 
-  const create = async (data: UserType) => {
+  const [profileForm] = Form.useForm<UserType>();
+  const [addressForm] = Form.useForm<Address>();
+
+  const create = async (data: CreateCustomerDTO) => {
     const formData = {
       ...data,
       document: cleanMask(data.document),
@@ -63,21 +67,22 @@ export const CreateCustomerModal = ({
   };
 
   const submit = async () => {
-    const formValue = form.getFieldsValue();
+    // const formValue = form.getFieldsValue();
 
-    if (initialData?.id) update(initialData.id, formValue);
-    else create(formValue);
+    // if (initialData?.id) update(initialData.id, formValue);
+    // else create(formValue);
     closeModal();
   };
 
   const closeModal = () => {
-    form.resetFields();
+    profileForm.resetFields();
+    addressForm.resetFields();
     onClose();
   };
 
   useEffect(() => {
     if (initialData && isOpen) {
-      form.setFieldsValue(initialData);
+      profileForm.setFieldsValue(initialData);
     }
   }, [initialData, isOpen]);
 
@@ -94,7 +99,51 @@ export const CreateCustomerModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        Aqui haverá um cadastro
+        <Typography.Title level={5}>Dados do Cliente</Typography.Title>
+        <UserForm form={profileForm} />
+
+        <Typography.Title level={5}>Endereço</Typography.Title>
+        <AddressForm
+          form={addressForm}
+          address={initialData?.profile.address}
+        />
+
+        <Typography.Title level={5}>Veiculos</Typography.Title>
+        <Form.List name="vehicles">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Space
+                  key={key}
+                  style={{ display: "flex", marginBottom: 8 }}
+                  align="baseline"
+                >
+                  <Form.Item
+                    {...restField}
+                    name={[name, "first"]}
+                    rules={[{ required: true, message: "Missing first name" }]}
+                  >
+                    <Input placeholder="First Name" />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "last"]}
+                    rules={[{ required: true, message: "Missing last name" }]}
+                  >
+                    <Input placeholder="Last Name" />
+                  </Form.Item>
+                  {/* <MinusCircleOutlined onClick={() => remove(name)} /> */}
+                </Space>
+              ))}
+
+              <Form.Item>
+                <Button type="dashed" onClick={() => add()} block>
+                  Add field
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
       </Flex>
     </Modal>
   );
