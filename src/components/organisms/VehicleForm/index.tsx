@@ -2,6 +2,8 @@ import { InputLicensePlate } from "@/components/atoms/Inputs/InputCpf";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { CreateVehicleTypeModal } from "@/components/molecules/modais/CreateVehicleTypeModal";
+import { Customer } from "@/services/customerService/dto";
+import { CustomerService } from "@/services/customerService/service";
 import { CreateVehicleDTO } from "@/services/vehicleService/dto";
 import { VehicleType } from "@/services/vehicleTypeService/dto";
 import { VehicleTypeService } from "@/services/vehicleTypeService/service";
@@ -15,15 +17,18 @@ import { useEffect, useState } from "react";
 interface Props extends FormProps<CreateVehicleDTO> {
   newVehicleTypeOpen?: boolean;
   setNewVehicleTypeOpen?: (value: boolean) => void;
+  witchCustomer?: boolean;
 }
 
 export const VehicleForm = ({
   newVehicleTypeOpen,
   setNewVehicleTypeOpen,
+  witchCustomer = true,
   ...rest
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
 
   const brandOptions = vehicleColorOptions.map((brand) => ({
     value: brand.label,
@@ -56,6 +61,22 @@ export const VehicleForm = ({
     }
   };
 
+  const fetchCustomers = async () => {
+    setLoading(true);
+    try {
+      const { data } = await CustomerService.get();
+      setCustomers(data);
+    } catch (error) {
+      console.error("fetchCustomers", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (witchCustomer) fetchCustomers();
+  }, [witchCustomer]);
+
   useEffect(() => {
     fetchResource();
   }, []);
@@ -64,6 +85,23 @@ export const VehicleForm = ({
     <>
       <LoadingContent isLoading={loading} />
       <Form layout="vertical" {...rest}>
+        {witchCustomer && (
+          <Form.Item
+            label="Cliente"
+            name={"customerId"}
+            key={"customerId"}
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          >
+            <SelectSearchInput
+              placeholder="Selecione o cliente"
+              options={customers.map((customer) => ({
+                value: customer.id,
+                label: customer.profile.name,
+              }))}
+            />
+          </Form.Item>
+        )}
+
         <Form.Item
           label="Veículo"
           name={"vehicleType"}
