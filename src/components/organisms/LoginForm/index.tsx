@@ -14,10 +14,14 @@ export const LoginForm = () => {
   const { signIn } = useContext(AuthContext);
   const secret = config.SECRET_KEY;
 
+  const rememberKey = "stoque_remember";
+  const usernameKey = "stoque_username";
+  const passwordKey = "stoque_password";
+
   useEffect(() => {
-    const rememberMe = localStorage.getItem("stoque_remember");
-    const username = localStorage.getItem("stoque__username");
-    const password = localStorage.getItem("stoque__password");
+    const rememberMe = localStorage.getItem(rememberKey);
+    const username = localStorage.getItem(usernameKey);
+    const password = localStorage.getItem(passwordKey);
 
     const remember = rememberMe == "true";
 
@@ -48,13 +52,13 @@ export const LoginForm = () => {
           secret
         ).toString();
 
-        localStorage.setItem("stoque_remember", values.remember.toString());
-        localStorage.setItem("stoque_username", values.username.toString());
-        localStorage.setItem("stoque_password", encryptPass);
+        localStorage.setItem(rememberKey, values.remember.toString());
+        localStorage.setItem(usernameKey, values.username.toString());
+        localStorage.setItem(passwordKey, encryptPass);
       } else {
-        localStorage.removeItem("stoque_remember");
-        localStorage.removeItem("stoque_username");
-        localStorage.removeItem("stoque_password");
+        localStorage.removeItem(rememberKey);
+        localStorage.removeItem(usernameKey);
+        localStorage.removeItem(passwordKey);
       }
 
       if (!result) toast.success("Login efetuado com sucesso!");
@@ -71,6 +75,7 @@ export const LoginForm = () => {
 
   return (
     <Form
+      form={form}
       className="mt-10 w-full"
       name="login"
       initialValues={{ remember: true }}
