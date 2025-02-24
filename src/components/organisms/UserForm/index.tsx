@@ -1,8 +1,8 @@
 import { FormProps } from "antd";
 import { Col, Form, Input, Row } from "antd";
 import { Profile } from "@/types/authTypes";
-import { InputCpf } from "@/components/atoms/Inputs/InputCpf";
 import { InputPhone } from "@/components/atoms/Inputs/InputPhone";
+import { InputCpf } from "@/components/atoms/Inputs/InputCpf";
 
 interface Props extends FormProps<Profile> {
   withAuth?: boolean;

@@ -1,15 +1,15 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Input } from "antd";
-import type { InputProps } from "antd/es/input";
-import { formatLicensePlate } from "@/utils/formaters/format";
+import { Input } from 'antd';
+import type { InputProps } from 'antd/es/input';
+import { formatCpf } from '@/utils/formaters/format';
 
-export const InputLicensePlate: FC<InputProps> = ({ onChange, ...rest }) => {
+export const InputCpf: FC<InputProps> = ({ onChange, ...rest }) => {
   return (
     <Input
       {...rest}
       onChange={(event) => {
-        event.target.value = formatLicensePlate(event.target?.value ?? "");
+        event.target.value = formatCpf(event.target?.value ?? '');
 
         if (!onChange) return;
         onChange(event);

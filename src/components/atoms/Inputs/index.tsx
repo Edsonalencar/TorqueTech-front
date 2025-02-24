@@ -1,6 +1,6 @@
 import { InputCep } from "./InputCep";
 import { InputCnpj } from "./InputCnpj";
-import { InputCpf } from "./InputCpf";
+import { InputCpf } from "./InputLicensePlate";
 import { InputCpfCnpj } from "./InputCpfCnpj";
 import { InputMoney } from "./InputMoney";
 import { InputTelephone } from "./InputTelephone";

@@ -1,4 +1,4 @@
-import { InputLicensePlate } from "@/components/atoms/Inputs/InputCpf";
+import { InputLicensePlate } from "@/components/atoms/Inputs/InputLicensePlate";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { CreateVehicleTypeModal } from "@/components/molecules/modais/CreateVehicleTypeModal";
