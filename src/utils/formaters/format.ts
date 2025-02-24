@@ -58,6 +58,22 @@ export const formatCpf = (value?: string) => {
   }
 };
 
+export const formatLicensePlate = (value?: string) => {
+  try {
+    if (!value) throw new Error('missing value');
+
+    return value
+      .toUpperCase()
+      .replace(/[^A-Z0-9]/g, '') // Remove caracteres não alfanuméricos
+      .replace(/^([A-Z]{3})(\d)([A-Z]?)(\d{2})$/, '$1-$2$3$4') // Formato Mercosul (AAA-0A00)
+      .replace(/^([A-Z]{3})(\d{4})$/, '$1-$2') // Formato antigo (AAA-0000)
+      .slice(0, 8); // Garante o tamanho máximo correto
+  } catch (error: any) {
+    console.warn('formatCarPlate:', error?.message);
+    return '';
+  }
+};
+
 export const formatCnpj = (value: string) => {
   try {
     if (!value) throw new Error('missing value');

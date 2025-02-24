@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Form, Modal } from "antd";
+import { Flex, Form, Modal } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { CreateVehicleDTO, Vehicle } from "@/services/vehicleService/dto";
 import { VehicleService } from "@/services/vehicleService/service";
+import { VehicleForm } from "@/components/organisms/VehicleForm";
+import { CreateVehicleTypeModal } from "../CreateVehicleTypeModal";
 
 export interface Props {
   isOpen: boolean;
@@ -17,6 +19,7 @@ export const CreateVehicleModal = ({
   initialData,
   reload,
 }: Props) => {
+  const [newVehicleTypeOpen, setNewVehicleTypeOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm<CreateVehicleDTO>();
 
@@ -68,7 +71,7 @@ export const CreateVehicleModal = ({
   return (
     <Modal
       title={`${initialData ? "Editar" : "Adicionar"} Veículo`}
-      open={isOpen}
+      open={isOpen && !newVehicleTypeOpen}
       onOk={submit}
       onClose={closeModal}
       onCancel={closeModal}
@@ -77,9 +80,13 @@ export const CreateVehicleModal = ({
     >
       <LoadingContent isLoading={loading} />
 
-      {/* <Flex gap={15} vertical className="mt-5">
-        <VehicleTypeForm form={form} />
-      </Flex> */}
+      <Flex gap={15} vertical className="mt-5">
+        <VehicleForm
+          form={form}
+          newVehicleTypeOpen={newVehicleTypeOpen}
+          setNewVehicleTypeOpen={setNewVehicleTypeOpen}
+        />
+      </Flex>
     </Modal>
   );
 };

@@ -147,3 +147,23 @@ export const vehicleCategoryOptions = [
   { value: "EMERGENCY", label: "Veículo de Emergência" },
   { value: "MILITARY", label: "Veículo Militar" },
 ];
+
+export const vehicleColorOptions = [
+  { value: "WHITE", label: "Branco" },
+  { value: "BLACK", label: "Preto" },
+  { value: "SILVER", label: "Prata" },
+  { value: "GRAY", label: "Cinza" },
+  { value: "RED", label: "Vermelho" },
+  { value: "BLUE", label: "Azul" },
+  { value: "GREEN", label: "Verde" },
+  { value: "YELLOW", label: "Amarelo" },
+  { value: "ORANGE", label: "Laranja" },
+  { value: "BROWN", label: "Marrom" },
+  { value: "BEIGE", label: "Bege" },
+  { value: "PURPLE", label: "Roxo" },
+  { value: "PINK", label: "Rosa" },
+  { value: "GOLD", label: "Dourado" },
+  { value: "CHAMPAGNE", label: "Champanhe" },
+  { value: "BORDEAUX", label: "Bordô" },
+  { value: "TURQUOISE", label: "Turquesa" }
+];
