@@ -28,6 +28,10 @@ export const CustomerPage: React.FC = () => {
     navigate(`/app/customers/${Customer?.id}`);
   };
 
+  const handleCreateOrUpdate = (Customer?: Customer) => {
+    navigate(`/app/customers/create/${Customer?.id ?? ""}`);
+  };
+
   const fetchPage = async (name?: string) => {
     setLoading(true);
     try {
@@ -63,7 +67,7 @@ export const CustomerPage: React.FC = () => {
             <Button
               type="primary"
               icon={<PlusOutlined />}
-              onClick={() => setCreateCustomerModal(true)}
+              onClick={() => handleCreateOrUpdate()}
             >
               Novo Cliente
             </Button>

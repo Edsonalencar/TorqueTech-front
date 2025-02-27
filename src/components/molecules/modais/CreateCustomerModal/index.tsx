@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-
-import { Button, Flex, Form, Input, Modal, Space, Typography } from "antd";
-
+import { Flex, Form, Modal, Typography } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
-
 import { UserForm } from "@/components/organisms/UserForm";
 import { UserType } from "@/types";
 import { cleanMask } from "@/utils/formaters/format";
@@ -99,7 +96,6 @@ export const CreateCustomerModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        <Typography.Title level={5}>Dados do Cliente</Typography.Title>
         <UserForm form={profileForm} />
 
         <Typography.Title level={5}>Endereço</Typography.Title>
@@ -107,43 +103,6 @@ export const CreateCustomerModal = ({
           form={addressForm}
           address={initialData?.profile.address}
         />
-
-        <Typography.Title level={5}>Veiculos</Typography.Title>
-        <Form.List name="vehicles">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <Space
-                  key={key}
-                  style={{ display: "flex", marginBottom: 8 }}
-                  align="baseline"
-                >
-                  <Form.Item
-                    {...restField}
-                    name={[name, "first"]}
-                    rules={[{ required: true, message: "Missing first name" }]}
-                  >
-                    <Input placeholder="First Name" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "last"]}
-                    rules={[{ required: true, message: "Missing last name" }]}
-                  >
-                    <Input placeholder="Last Name" />
-                  </Form.Item>
-                  {/* <MinusCircleOutlined onClick={() => remove(name)} /> */}
-                </Space>
-              ))}
-
-              <Form.Item>
-                <Button type="dashed" onClick={() => add()} block>
-                  Add field
-                </Button>
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
       </Flex>
     </Modal>
   );
