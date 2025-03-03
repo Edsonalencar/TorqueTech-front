@@ -8,6 +8,7 @@ import { CreateCustomerDTO, Customer } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
 import { AddressForm } from "@/components/organisms/AddressForm";
 import { Address } from "@/types/authTypes";
+import { validateFormIsEmpty } from "@/utils/validations";
 
 export interface Props {
   isOpen: boolean;
@@ -25,27 +26,9 @@ export const CreateCustomerModal = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const [profileForm] = Form.useForm<UserType>();
-  const [addressForm] = Form.useForm<Address>();
+  const [addressForm] = Form.useForm<{ address: Address }>();
 
-  const create = async (data: CreateCustomerDTO) => {
-    const formData = {
-      ...data,
-      document: cleanMask(data.document),
-    };
-
-    try {
-      setLoading(true);
-      await CustomerService.create(formData);
-      if (reload) await reload();
-      closeModal();
-    } catch (error) {
-      console.error("create Jobs", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const update = async (id: string, data: UserType) => {
+  const update = async (id: string, data: CreateCustomerDTO) => {
     const formData = {
       ...data,
       document: cleanMask(data.document),
@@ -64,11 +47,17 @@ export const CreateCustomerModal = ({
   };
 
   const submit = async () => {
-    // const formValue = form.getFieldsValue();
+    const profileData = await profileForm.validateFields();
+    const addressData = await addressForm.validateFields();
 
-    // if (initialData?.id) update(initialData.id, formValue);
-    // else create(formValue);
-    closeModal();
+    const formValue: CreateCustomerDTO = {
+      ...profileData,
+      address: validateFormIsEmpty(addressData.address)
+        ? addressData.address
+        : undefined,
+    };
+
+    if (initialData?.id) update(initialData.id, formValue);
   };
 
   const closeModal = () => {
@@ -79,7 +68,11 @@ export const CreateCustomerModal = ({
 
   useEffect(() => {
     if (initialData && isOpen) {
-      profileForm.setFieldsValue(initialData);
+      profileForm.setFieldsValue({
+        ...initialData.profile,
+        username: initialData.email,
+      });
+      addressForm.setFieldsValue({ address: initialData.profile.address });
     }
   }, [initialData, isOpen]);
 

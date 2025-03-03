@@ -7,7 +7,6 @@ import { CustomerTable } from "@/components/molecules/tables/CustomerTable";
 import { BasePagination } from "@/components/atoms/BasePagination";
 import { useNavigate } from "react-router-dom";
 import { UserStatus } from "@/types/authTypes";
-import { UserService } from "@/services/userService/service";
 import { Customer } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
 import { CreateCustomerModal } from "@/components/molecules/modais/CreateCustomerModal";
@@ -24,12 +23,12 @@ export const CustomerPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleView = (Customer: Customer) => {
-    navigate(`/app/customers/${Customer?.id}`);
+  const handleView = (customer: Customer) => {
+    navigate(`/app/customers/${customer?.id}`);
   };
 
-  const handleCreateOrUpdate = (Customer?: Customer) => {
-    navigate(`/app/customers/create/${Customer?.id ?? ""}`);
+  const handleCreateOrUpdate = (customer?: Customer) => {
+    navigate(`/app/customers/create/${customer?.id ?? ""}`);
   };
 
   const fetchPage = async (name?: string) => {
@@ -39,7 +38,6 @@ export const CustomerPage: React.FC = () => {
         status,
         name,
       });
-      console.log("fetchCustomers", data);
       setResource(data);
     } catch (error) {
       console.error("fetchCustomers", error);
@@ -58,6 +56,14 @@ export const CustomerPage: React.FC = () => {
         <Flex justify="space-between">
           <Typography.Title level={4}>Clientes</Typography.Title>
           <Flex gap={8}>
+            <Radio.Group
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              buttonStyle="solid"
+            >
+              <Radio.Button value="ACTIVE">Ativos</Radio.Button>
+              <Radio.Button value="INACTIVE">Inativos</Radio.Button>
+            </Radio.Group>
             <Search
               placeholder="Pesquise pelo nome..."
               allowClear

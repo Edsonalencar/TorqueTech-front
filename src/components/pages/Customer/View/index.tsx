@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import { Customer } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
+import { CreateCustomerModal } from "@/components/molecules/modais/CreateCustomerModal";
 
 export const ViewCustomerPage: React.FC = () => {
   const [resourceLoading, setResourceLoading] = useState(false);
@@ -65,6 +66,13 @@ export const ViewCustomerPage: React.FC = () => {
           />
         </Card>
       </Flex>
+
+      <CreateCustomerModal
+        isOpen={canEdit}
+        onClose={() => setCanEdit(false)}
+        initialData={resource}
+        reload={reload}
+      />
     </>
   );
 };
