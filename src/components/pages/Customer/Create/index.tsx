@@ -24,12 +24,13 @@ import {
   Space,
   Typography,
 } from "antd";
-import { Address } from "cluster";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMinusCircle } from "react-icons/fi";
 import { ToBack } from "@/components/atoms/ToBack";
 import { CreateVehicleDTO } from "@/services/vehicleService/dto";
+import { validateFormIsEmpty } from "@/utils/validations";
+import { Address } from "@/types/authTypes";
 
 interface Props {}
 
@@ -37,19 +38,20 @@ export const CreateCustomerPage: React.FC<Props> = ({}) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [profileForm] = Form.useForm<UserType>();
-  const [addressForm] = Form.useForm<Address>();
-  const [vehiclesForm] = Form.useForm<{ vehicles: CreateVehicleDTO }>();
+  const [addressForm] = Form.useForm<{ address: Address }>();
+  const [vehiclesForm] = Form.useForm<{ vehicles: CreateVehicleDTO[] }>();
 
   const navegate = useNavigate();
 
   const [newVehicleTypeOpen, setNewVehicleTypeOpen] = useState<boolean>(false);
   const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([]);
 
-  const brandOptions = vehicleColorOptions.map((brand) => ({
+  const baseColorOptions = vehicleColorOptions.map((brand) => ({
     value: brand.label,
   }));
 
-  const [options, setOptions] = useState<{ value: string }[]>(brandOptions);
+  const [colorOptions, setColorOptions] =
+    useState<{ value: string }[]>(baseColorOptions);
 
   const toList = () => {
     navegate("/app/customers");
@@ -57,7 +59,7 @@ export const CreateCustomerPage: React.FC<Props> = ({}) => {
 
   const handleSearch = (value: string) => {
     if (!value) {
-      setOptions(brandOptions);
+      setColorOptions(baseColorOptions);
       return;
     }
 
@@ -65,7 +67,7 @@ export const CreateCustomerPage: React.FC<Props> = ({}) => {
       brand.toLowerCase().includes(value.toLowerCase())
     ).map((brand) => ({ value: brand }));
 
-    setOptions(filteredOptions);
+    setColorOptions(filteredOptions);
   };
 
   const fetchVehicleType = async () => {
@@ -98,16 +100,19 @@ export const CreateCustomerPage: React.FC<Props> = ({}) => {
   };
 
   const submit = async () => {
-    const profile = await profileForm.validateFields();
-    const address = await addressForm.validateFields();
-    const vehicles = await vehiclesForm.validateFields();
+    const profileData = await profileForm.validateFields();
+    const addressData = await addressForm.validateFields();
+    const vehiclesData = await vehiclesForm.validateFields();
 
-    console.log("profile", profile);
-    console.log("address", address);
-    console.log("vehicles", vehicles);
+    const formValue: CreateCustomerDTO = {
+      ...profileData,
+      ...vehiclesData,
+      address: validateFormIsEmpty(addressData.address)
+        ? addressData.address
+        : undefined,
+    };
 
-    // if (uuid) update(uuid, formValue);
-    // else create(formValue);
+    create(formValue);
   };
 
   useEffect(() => {
@@ -118,103 +123,115 @@ export const CreateCustomerPage: React.FC<Props> = ({}) => {
     <>
       <LoadingContent isLoading={loading} />
 
-      <ToBack />
-      <Card>
-        <Flex gap={15} vertical className="mt-5">
-          <Typography.Title level={5}>Dados do Cliente</Typography.Title>
-          <UserForm form={profileForm} />
+      <Flex gap={20} vertical>
+        <ToBack />
+        <Card>
+          <Flex gap={15} vertical className="mt-5">
+            <Typography.Title level={5}>Dados do Cliente</Typography.Title>
+            <UserForm form={profileForm} />
 
-          <Typography.Title level={5}>Endereço</Typography.Title>
-          <AddressForm form={addressForm} />
+            <Typography.Title level={5}>Endereço</Typography.Title>
+            <AddressForm form={addressForm} />
 
-          <Form layout="vertical">
-            <Typography.Title level={5}>Veiculos</Typography.Title>
-            <Form.List name="vehicles">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: 8,
-                      }}
-                      align="baseline"
-                    >
-                      <Form.Item
-                        label="Veículo"
-                        name={"vehicleType"}
-                        key={"vehicleType"}
-                        rules={[
-                          { required: true, message: "Campo obrigatório!" },
-                        ]}
-                      >
-                        <SelectSearchInput
-                          placeholder="Selecione a categoria do veículo"
-                          options={vehicleTypes.map((vehicleType) => ({
-                            value: vehicleType.id,
-                            label: formatVehicleType(vehicleType),
-                          }))}
-                          onAdd={() => setNewVehicleTypeOpen?.(true)}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        label="Placa"
-                        name={"licensePlate"}
-                        key={"licensePlate"}
-                        rules={[
-                          { required: true, message: "Campo obrigatório!" },
-                        ]}
-                      >
-                        <InputLicensePlate placeholder="Placa do veículo" />
-                      </Form.Item>
-                      <Form.Item
-                        label="Cor"
-                        name={"color"}
-                        key={"color"}
-                        rules={[
-                          { required: true, message: "Campo obrigatório!" },
-                        ]}
-                      >
-                        <AutoComplete
-                          style={{ width: "100%" }}
-                          options={options}
-                          onSearch={handleSearch}
-                          placeholder="Cor do veículo"
-                        />
-                      </Form.Item>
+            <Form form={vehiclesForm} layout="vertical">
+              <Typography.Title level={5}>Veiculos</Typography.Title>
+              <Form.List name="vehicles">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name }) => (
+                      <Row gutter={[16, 16]}>
+                        <Col span={24} md={{ span: 8 }}>
+                          <Form.Item
+                            label="Veículo"
+                            name={[name, "vehicleTypeId"]}
+                            key={key + "_vehicleTypeId"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <SelectSearchInput
+                              placeholder="Selecione a categoria do veículo"
+                              options={vehicleTypes.map((vehicleType) => ({
+                                value: vehicleType.id,
+                                label: formatVehicleType(vehicleType),
+                              }))}
+                              onAdd={() => setNewVehicleTypeOpen?.(true)}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 8 }}>
+                          <Form.Item
+                            label="Placa"
+                            name={[name, "licensePlate"]}
+                            key={key + "_licensePlate"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <InputLicensePlate placeholder="Placa do veículo" />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 6 }}>
+                          <Form.Item
+                            label="Cor"
+                            name={[name, "color"]}
+                            key={key + "_color"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <AutoComplete
+                              style={{ width: "100%" }}
+                              options={colorOptions}
+                              onSearch={handleSearch}
+                              placeholder="Cor do veículo"
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 2 }}>
+                          <Flex
+                            align="center"
+                            justify="center"
+                            className="h-full"
+                          >
+                            <Button
+                              onClick={() => remove(name)}
+                              block
+                              size="small"
+                              type="text"
+                            >
+                              <FiMinusCircle />
+                            </Button>
+                          </Flex>
+                        </Col>
+                      </Row>
+                    ))}
 
-                      <Button onClick={() => remove(name)} block type="text">
-                        <FiMinusCircle />
+                    <Form.Item>
+                      <Button type="primary" onClick={() => add()} block>
+                        Adicionar Veículo
                       </Button>
-                    </Space>
-                  ))}
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </Form>
 
-                  <Form.Item>
-                    <Button type="primary" onClick={() => add()} block>
-                      Adicionar Veículo
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
-          </Form>
-
-          <Row gutter={[16, 16]} justify="end">
-            <Col span={24} md={6} lg={3}>
-              <Button onClick={toList} className=" w-full">
-                Cancelar
-              </Button>
-            </Col>
-            <Col span={24} md={6} lg={3}>
-              <Button type="primary" onClick={submit} className=" w-full">
-                Salvar
-              </Button>
-            </Col>
-          </Row>
-        </Flex>
-      </Card>
+            <Row gutter={[16, 16]} justify="end">
+              <Col span={24} md={6} lg={3}>
+                <Button onClick={toList} className=" w-full">
+                  Cancelar
+                </Button>
+              </Col>
+              <Col span={24} md={6} lg={3}>
+                <Button type="primary" onClick={submit} className=" w-full">
+                  Salvar
+                </Button>
+              </Col>
+            </Row>
+          </Flex>
+        </Card>
+      </Flex>
 
       <CreateVehicleTypeModal
         isOpen={!!newVehicleTypeOpen}

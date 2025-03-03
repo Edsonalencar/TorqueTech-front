@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export interface VehicleType {
   id: string;
   model: string;
@@ -9,7 +11,7 @@ export interface VehicleType {
 export interface CreateVehicleTypeDTO {
   model: string;
   brand: string;
-  year: number;
+  year: string | Dayjs;
   category: VehicleTypeCategory;
 }
 

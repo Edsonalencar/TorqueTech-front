@@ -62,7 +62,6 @@ export const getNavegateItems = ({
       label: "Sair",
       icon: React.createElement(FaSignOutAlt),
       onClick: signOut,
-      style: { position: "absolute", bottom: 0 },
     },
   ];
 

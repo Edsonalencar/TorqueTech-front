@@ -1,6 +1,7 @@
-import { ComponentProps } from 'react';
-import { Button, Divider, Select } from 'antd';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { ComponentProps } from "react";
+import { Button, Divider, Select, theme } from "antd";
+
+import { AiOutlinePlus } from "react-icons/ai";
 
 interface SelectSearchInputProps extends ComponentProps<typeof Select> {
   placeholder: string;
@@ -15,18 +16,22 @@ export const SelectSearchInput = ({
   onAdd,
   ...rest
 }: SelectSearchInputProps) => {
+  const {
+    token: { colorPrimary },
+  } = theme.useToken();
+
   return (
     <Select
       showSearch
       placeholder={placeholder}
       optionFilterProp="children"
       filterOption={(input, option) =>
-        (option?.label?.toLowerCase() ?? '').includes(input.toLowerCase())
+        (option?.label?.toLowerCase() ?? "").includes(input.toLowerCase())
       }
       filterSort={(optionA, optionB) =>
-        (optionA?.label ?? '')
+        (optionA?.label ?? "")
           .toLowerCase()
-          .localeCompare((optionB?.label ?? '').toLowerCase())
+          .localeCompare((optionB?.label ?? "").toLowerCase())
       }
       options={options}
       dropdownRender={(menu) => (
@@ -34,14 +39,14 @@ export const SelectSearchInput = ({
           {menu}
           {onAdd && (
             <>
-              <Divider style={{ margin: '8px 0' }} />
+              <Divider style={{ margin: "8px 0" }} />
               <Button
                 type="text"
                 icon={<AiOutlinePlus size={12} />}
                 style={{
-                  color: '#3539A2',
+                  color: colorPrimary,
                   fontWeight: 600,
-                  width: '100%',
+                  width: "100%",
                 }}
                 onClick={onAdd}
               >

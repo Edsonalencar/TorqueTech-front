@@ -80,29 +80,35 @@ export const UpdateCustomerPage: React.FC<Props> = ({}) => {
   return (
     <>
       <LoadingContent isLoading={loading} />
-      <ToBack />
-      <Card>
-        <Flex gap={15} vertical className="mt-5">
-          <Typography.Title level={5}>Dados do Cliente</Typography.Title>
-          <UserForm form={profileForm} />
 
-          <Typography.Title level={5}>Endereço</Typography.Title>
-          <AddressForm form={addressForm} address={resource?.profile.address} />
+      <Flex gap={20} vertical>
+        <ToBack />
+        <Card>
+          <Flex gap={15} vertical className="mt-5">
+            <Typography.Title level={5}>Dados do Cliente</Typography.Title>
+            <UserForm form={profileForm} />
 
-          <Row gutter={[16, 16]} justify="end">
-            <Col span={24} md={6} lg={3}>
-              <Button onClick={toList} className=" w-full">
-                Cancelar
-              </Button>
-            </Col>
-            <Col span={24} md={6} lg={3}>
-              <Button type="primary" onClick={submit} className=" w-full">
-                Salvar
-              </Button>
-            </Col>
-          </Row>
-        </Flex>
-      </Card>
+            <Typography.Title level={5}>Endereço</Typography.Title>
+            <AddressForm
+              form={addressForm}
+              address={resource?.profile.address}
+            />
+
+            <Row gutter={[16, 16]} justify="end">
+              <Col span={24} md={6} lg={3}>
+                <Button onClick={toList} className=" w-full">
+                  Cancelar
+                </Button>
+              </Col>
+              <Col span={24} md={6} lg={3}>
+                <Button type="primary" onClick={submit} className=" w-full">
+                  Salvar
+                </Button>
+              </Col>
+            </Row>
+          </Flex>
+        </Card>
+      </Flex>
     </>
   );
 };

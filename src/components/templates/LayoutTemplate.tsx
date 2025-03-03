@@ -13,7 +13,7 @@ export const LayoutTemplate: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout hasSider className="h-screen">
+    <Layout hasSider className="min-h-screen">
       <Sider
         trigger={null}
         collapsible

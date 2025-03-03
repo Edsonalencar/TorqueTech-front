@@ -7,6 +7,7 @@ import {
   CreateVehicleTypeDTO,
   VehicleType,
 } from "@/services/vehicleTypeService/dto";
+import dayjs from "dayjs";
 
 export interface Props {
   isOpen: boolean;
@@ -53,8 +54,13 @@ export const CreateVehicleTypeModal = ({
   const submit = async () => {
     const formValue = await form.validateFields();
 
-    if (initialData?.id) update(initialData.id, formValue);
-    else create(formValue);
+    const data: CreateVehicleTypeDTO = {
+      ...formValue,
+      year: dayjs(formValue.year).format("YYYY"),
+    };
+
+    if (initialData?.id) update(initialData.id, data);
+    else create(data);
     closeModal();
   };
 
@@ -65,7 +71,10 @@ export const CreateVehicleTypeModal = ({
 
   useEffect(() => {
     if (initialData && isOpen) {
-      form.setFieldsValue(initialData);
+      form.setFieldsValue({
+        ...initialData,
+        year: dayjs(initialData.year),
+      });
     }
   }, [initialData, isOpen]);
 
