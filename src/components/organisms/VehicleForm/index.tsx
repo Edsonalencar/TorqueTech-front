@@ -104,8 +104,8 @@ export const VehicleForm = ({
 
         <Form.Item
           label="Veículo"
-          name={"vehicleType"}
-          key={"vehicleType"}
+          name={"vehicleTypeId"}
+          key={"vehicleTypeId"}
           rules={[{ required: true, message: "Campo obrigatório!" }]}
         >
           <SelectSearchInput

@@ -13,7 +13,7 @@ export const AddressDescription: React.FC<AddressDescriptionProps> = ({
     <Descriptions
       title="Endereço"
       layout="vertical"
-      column={{ xxl: 2, xl: 2, lg: 1, md: 1, sm: 1, xs: 1 }}
+      column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
     >
       {address.street && (
         <Descriptions.Item label="Rua">{address.street}</Descriptions.Item>

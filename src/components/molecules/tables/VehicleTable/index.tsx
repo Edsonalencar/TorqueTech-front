@@ -1,12 +1,13 @@
 import { Vehicle } from "@/services/vehicleService/dto";
 import { Table, TableProps, Typography } from "antd";
 import { ColumnProps } from "antd/es/table";
+import dayjs from "dayjs";
 
 interface Props extends TableProps<Vehicle> {
-  onView?: (vehicle: Vehicle) => void;
+  onEdit?: (vehicle: Vehicle) => void;
 }
 
-export const VehicleTable = ({ onView, ...rest }: Props) => {
+export const VehicleTable = ({ onEdit, ...rest }: Props) => {
   const columns: ColumnProps<Vehicle>[] = [
     {
       title: "Placa",
@@ -15,27 +16,28 @@ export const VehicleTable = ({ onView, ...rest }: Props) => {
     },
     {
       title: "Modelo",
-      dataIndex: "model",
-      key: "model",
+      dataIndex: "vehicleType_model",
+      key: "vehicleType_model",
+      render: (_, { vehicleType }) => vehicleType.model,
     },
     {
       title: "Marca",
-      dataIndex: "brand",
-      key: "brand",
+      dataIndex: "vehicleType_brand",
+      key: "vehicleType_brand",
+      render: (_, { vehicleType }) => vehicleType.brand,
     },
     {
       title: "Ano",
-      dataIndex: "year",
-      key: "year",
+      dataIndex: "vehicleType_year",
+      key: "vehicleType_year",
+      render: (_, { vehicleType }) => vehicleType.year,
     },
     {
       title: "Ações",
       dataIndex: "actions",
       key: "actions",
       render: (_, item) => (
-        <Typography.Link onClick={() => onView?.(item)}>
-          Ver Detalhes
-        </Typography.Link>
+        <Typography.Link onClick={() => onEdit?.(item)}>Editar</Typography.Link>
       ),
     },
   ];

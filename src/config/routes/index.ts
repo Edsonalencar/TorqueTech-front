@@ -2,7 +2,6 @@ import { AdminPage } from "@/components/pages/Admin";
 import { ViewAdminPage } from "@/components/pages/Admin/View";
 import { CustomerPage } from "@/components/pages/Customer";
 import { CreateCustomerPage } from "@/components/pages/Customer/Create";
-import { UpdateCustomerPage } from "@/components/pages/Customer/Update";
 import { ViewCustomerPage } from "@/components/pages/Customer/View";
 import { DashboardPage } from "@/components/pages/Dashboard";
 import { LoginPage } from "@/components/pages/Login";
@@ -29,7 +28,6 @@ export const routes: RenderRouter[] = [
       { path: "mechanics/:uuid", component: ViewMechanicPage },
       { path: "customers", component: CustomerPage },
       { path: "customers/create", component: CreateCustomerPage },
-      { path: "customers/update/:uuid", component: UpdateCustomerPage },
       { path: "customers/:uuid", component: ViewCustomerPage },
       { path: "services", component: WorkPage },
       { path: "stocks", component: StockPage },

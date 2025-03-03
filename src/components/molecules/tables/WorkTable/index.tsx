@@ -3,12 +3,31 @@ import { ColumnProps } from "antd/es/table";
 import { Work, WorkStatus } from "@/services/workService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { formatDate } from "@/utils/formaters/formatDate";
+import { formatLicensePlate } from "@/utils/formaters/format";
+import { ActionsMenu } from "../../ActionsMenu";
 
 interface Props extends TableProps<Work> {
   onView?: (work: Work) => void;
+  onUpdateStatus?: (work: Work) => void;
+  onEdit?: (work: Work) => void;
+  onConclude?: (work: Work) => void;
+  onCancel?: (work: Work) => void;
 }
 
-export const WorkTable = ({ onView, ...rest }: Props) => {
+export const WorkTable = ({
+  onView,
+  onCancel,
+  onConclude,
+  onEdit,
+  onUpdateStatus,
+  ...rest
+}: Props) => {
+  const handler = (item: Work, func?: Function) => {
+    if (!func) return undefined;
+
+    return () => func(item);
+  };
+
   const columns: ColumnProps<Work>[] = [
     {
       title: "Titulo",
@@ -24,7 +43,10 @@ export const WorkTable = ({ onView, ...rest }: Props) => {
       title: "Veículo",
       dataIndex: "vehicle",
       key: "vehicle",
-      render: (_, { vehicle }) => `${vehicle?.brand} / ${vehicle?.model}`,
+      render: (_, { vehicle }) =>
+        `${vehicle?.vehicleType.brand} / ${
+          vehicle?.vehicleType.model
+        } - ${formatLicensePlate(vehicle.licensePlate)}`,
     },
     {
       title: "Iniciado em",
@@ -55,9 +77,19 @@ export const WorkTable = ({ onView, ...rest }: Props) => {
       dataIndex: "actions",
       key: "actions",
       render: (_, item) => (
-        <Typography.Link onClick={() => onView?.(item)}>
-          Ver Detalhes
-        </Typography.Link>
+        <ActionsMenu
+          onView={handler(item, onView)}
+          onEdit={handler(item, onEdit)}
+          onCancel={handler(item, onCancel)}
+          onConclude={handler(item, onConclude)}
+          actions={[
+            {
+              label: "Atua. Status",
+              onClick: () => onUpdateStatus?.(item),
+              show: !!onUpdateStatus,
+            },
+          ]}
+        />
       ),
     },
   ];

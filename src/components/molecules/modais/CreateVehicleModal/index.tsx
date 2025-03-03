@@ -9,6 +9,7 @@ export interface Props {
   isOpen: boolean;
   onClose: () => void;
   initialData?: Vehicle;
+  customerId?: string;
   reload?: () => Promise<void>;
 }
 
@@ -16,6 +17,7 @@ export const CreateVehicleModal = ({
   isOpen,
   onClose,
   initialData,
+  customerId,
   reload,
 }: Props) => {
   const [newVehicleTypeOpen, setNewVehicleTypeOpen] = useState<boolean>(false);
@@ -51,8 +53,13 @@ export const CreateVehicleModal = ({
   const submit = async () => {
     const formValue = await form.validateFields();
 
-    if (initialData?.id) update(initialData.id, formValue);
-    else create(formValue);
+    const data: CreateVehicleDTO = {
+      ...formValue,
+      customerId,
+    };
+
+    if (initialData?.id) update(initialData.id, data);
+    else create(data);
     closeModal();
   };
 
@@ -63,7 +70,11 @@ export const CreateVehicleModal = ({
 
   useEffect(() => {
     if (initialData && isOpen) {
-      form.setFieldsValue(initialData);
+      form.setFieldsValue({
+        ...initialData,
+        vehicleTypeId: initialData.vehicleType.id,
+        customerId: initialData?.customer?.id,
+      });
     }
   }, [initialData, isOpen]);
 
@@ -84,6 +95,7 @@ export const CreateVehicleModal = ({
           form={form}
           newVehicleTypeOpen={newVehicleTypeOpen}
           setNewVehicleTypeOpen={setNewVehicleTypeOpen}
+          witchCustomer={!customerId}
         />
       </Flex>
     </Modal>
