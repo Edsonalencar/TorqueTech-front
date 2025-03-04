@@ -1,3 +1,4 @@
+import { User } from "@/types/authTypes";
 import { Dayjs } from "dayjs";
 
 export interface VehicleType {
@@ -5,6 +6,7 @@ export interface VehicleType {
   model: string;
   brand: string;
   year: number;
+  owner: User;
   createdAt?: string;
 }
 
