@@ -54,7 +54,7 @@ export const StockOutputPage = () => {
       <Card>
         <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <Typography.Title level={4}>Entrada estoque</Typography.Title>
+            <Typography.Title level={4}>Saída estoque</Typography.Title>
             <Flex gap={8}>
               <SelectSearchInput
                 placeholder="Filtre por catégoria"
@@ -73,7 +73,7 @@ export const StockOutputPage = () => {
                 icon={<PlusOutlined />}
                 onClick={() => setCreateStockTransactionModal(true)}
               >
-                Saída de Estoque
+                Novo
               </Button>
             </Flex>
           </Flex>

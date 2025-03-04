@@ -73,7 +73,7 @@ export const StockInputPage = () => {
                 icon={<PlusOutlined />}
                 onClick={() => setCreateStockTransactionModal(true)}
               >
-                Entrada de Estoque
+                Novo
               </Button>
             </Flex>
           </Flex>

@@ -30,6 +30,16 @@ export const WorkTable = ({
 
   const columns: ColumnProps<Work>[] = [
     {
+      title: "Ind.",
+      dataIndex: "id",
+      key: "id",
+      render: (_, item) => (
+        <Typography.Link onClick={() => onView?.(item)}>
+          {item.id?.substring(0, 8)}
+        </Typography.Link>
+      ),
+    },
+    {
       title: "Titulo",
       dataIndex: "name",
       key: "name",

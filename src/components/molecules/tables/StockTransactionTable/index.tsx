@@ -15,6 +15,22 @@ interface Props extends TableProps<StockTransaction> {
 export const StockTransactionTable = ({ onView, ...rest }: Props) => {
   const columns: ColumnProps<StockTransaction>[] = [
     {
+      title: "Ind.",
+      dataIndex: "id",
+      key: "id",
+      render: (_, item) => (
+        <Typography.Link onClick={() => onView?.(item)}>
+          {item.id?.substring(0, 8)}
+        </Typography.Link>
+      ),
+    },
+    {
+      title: "Data da Transação",
+      dataIndex: "transactionDate",
+      key: "transactionDate",
+      render: (date) => formatDateAndTime(date),
+    },
+    {
       title: "Categoria",
       dataIndex: "category",
       key: "category",
@@ -43,12 +59,7 @@ export const StockTransactionTable = ({ onView, ...rest }: Props) => {
       key: "total",
       render: (_, record) => formatCurrency(record.unitPrice * record.quantity),
     },
-    {
-      title: "Data da Transação",
-      dataIndex: "transactionDate",
-      key: "transactionDate",
-      render: (date) => formatDateAndTime(date),
-    },
+
     {
       title: "Ações",
       dataIndex: "actions",
