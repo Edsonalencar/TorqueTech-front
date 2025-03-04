@@ -1,7 +1,7 @@
 import { Table, TableProps, Typography } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
-import { StockItem } from "@/services/stockService/dto";
+import { StockItem } from "@/services/stockTransactionService/dto";
 
 interface Props extends TableProps<StockItem> {
   onView?: (item: StockItem) => void;

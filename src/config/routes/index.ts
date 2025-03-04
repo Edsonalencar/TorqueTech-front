@@ -9,7 +9,8 @@ import { managerPage } from "@/components/pages/Managers";
 import { ViewManagerPage } from "@/components/pages/Managers/View";
 import { MechanicPage } from "@/components/pages/Mechanics";
 import { ViewMechanicPage } from "@/components/pages/Mechanics/View";
-import { StockPage } from "@/components/pages/Stock";
+import { StockInputPage } from "@/components/pages/stock/Input";
+import { StockOutputPage } from "@/components/pages/stock/Output";
 import { WorkPage } from "@/components/pages/Work";
 import { LayoutAdminTemplate } from "@/components/templates/LayoutAdminTemplate";
 import { LayoutTemplate } from "@/components/templates/LayoutTemplate";
@@ -30,7 +31,8 @@ export const routes: RenderRouter[] = [
       { path: "customers/create", component: CreateCustomerPage },
       { path: "customers/:uuid", component: ViewCustomerPage },
       { path: "services", component: WorkPage },
-      { path: "stocks", component: StockPage },
+      { path: "stocks/entrada", component: StockInputPage },
+      { path: "stocks/saida", component: StockOutputPage },
     ],
   },
   {

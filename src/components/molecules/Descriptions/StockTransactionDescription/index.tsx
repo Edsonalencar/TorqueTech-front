@@ -1,4 +1,4 @@
-import { StockTransaction, TransactionType } from "@/services/stockService/dto";
+import { StockTransaction, TransactionType } from "@/services/stockTransactionService/dto";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { Descriptions } from "antd";
 

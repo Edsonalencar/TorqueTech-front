@@ -179,3 +179,17 @@ export const workStatusOptions = [
   { value: "INVOICED", label: "Faturado" },
   { value: "PAID", label: "Pago" },
 ];
+
+export const transactionCategoryInOptions = [
+  { value: "PURCHASE", label: "Compra de Estoque" },
+  { value: "RETURN", label: "Devolução ao Estoque" },
+  { value: "TRANSFER", label: "Transferência Recebida" },
+  { value: "WARRANTY_REPLACEMENT", label: "Substituição por Garantia" },
+];
+
+export const transactionCategoryOutOptions = [
+  { value: "SALE", label: "Venda de Itens" },
+  { value: "WORK_ORDER", label: "Uso em Ordem de Serviço" },
+  { value: "DISPOSAL", label: "Descarte de Itens" },
+  { value: "TRANSFER", label: "Transferência Enviada" },
+];

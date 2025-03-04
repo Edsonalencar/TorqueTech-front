@@ -1,3 +1,7 @@
+import {
+  TransactionCategoryIn,
+  TransactionCategoryOut,
+} from "@/services/stockTransactionService/dto";
 import { UserStatus } from "@/types/authTypes";
 
 export const parserDayToPt = (day: string) => {
@@ -67,5 +71,30 @@ export const userStatusSerialize = (value?: UserStatus) => {
       return "Inativo";
     default:
       return "Ativo";
+  }
+};
+
+export const transactionCategorySerialize = (
+  value?: TransactionCategoryOut | TransactionCategoryIn
+): string => {
+  switch (value) {
+    case TransactionCategoryOut.SALE:
+      return "Venda de Itens";
+    case TransactionCategoryOut.WORK_ORDER:
+      return "Uso em Ordem de Serviço";
+    case TransactionCategoryOut.DISPOSAL:
+      return "Descarte de Itens";
+    case TransactionCategoryOut.TRANSFER:
+      return "Transferência Enviada";
+    case TransactionCategoryIn.PURCHASE:
+      return "Compra de Estoque";
+    case TransactionCategoryIn.RETURN:
+      return "Devolução ao Estoque";
+    case TransactionCategoryIn.TRANSFER:
+      return "Transferência Recebida";
+    case TransactionCategoryIn.WARRANTY_REPLACEMENT:
+      return "Substituição por Garantia";
+    default:
+      return "Desconhecido";
   }
 };

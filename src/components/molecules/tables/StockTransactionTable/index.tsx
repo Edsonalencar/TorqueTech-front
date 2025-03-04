@@ -1,8 +1,12 @@
 import { Table, TableProps, Typography } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
-import { StockTransaction, TransactionType } from "@/services/stockService/dto";
+import {
+  StockTransaction,
+  TransactionType,
+} from "@/services/stockTransactionService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
+import { transactionCategorySerialize } from "@/utils/serializers";
 
 interface Props extends TableProps<StockTransaction> {
   onView?: (transaction: StockTransaction) => void;
@@ -11,10 +15,10 @@ interface Props extends TableProps<StockTransaction> {
 export const StockTransactionTable = ({ onView, ...rest }: Props) => {
   const columns: ColumnProps<StockTransaction>[] = [
     {
-      title: "Tipo",
-      dataIndex: "transactionType",
-      key: "transactionType",
-      render: (type: TransactionType) => TransactionType[type],
+      title: "Categoria",
+      dataIndex: "category",
+      key: "category",
+      render: (_, { category }) => transactionCategorySerialize(category),
     },
     {
       title: "Item",

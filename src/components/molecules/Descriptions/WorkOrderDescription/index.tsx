@@ -1,4 +1,4 @@
-import { StockTransaction } from "@/services/stockService/dto";
+import { StockTransaction } from "@/services/stockTransactionService/dto";
 import { WorkOrder, WorkOrderStatus } from "@/services/workService/dto";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { Descriptions } from "antd";

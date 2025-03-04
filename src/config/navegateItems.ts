@@ -6,11 +6,13 @@ import { MdHome } from "react-icons/md";
 import { FaUsersGear, FaUsersLine, FaBox } from "react-icons/fa6";
 import { FaUsers, FaToolbox } from "react-icons/fa";
 import { IconBaseProps } from "react-icons";
+import { LuFolderSymlink, LuFolderUp } from "react-icons/lu";
 
 export interface NavegateItem {
   key: string;
   label: string;
   icon: React.FunctionComponentElement<IconBaseProps>;
+  children?: NavegateItem[];
   show?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
@@ -54,8 +56,20 @@ export const getNavegateItems = ({
     },
     {
       key: "/app/stocks",
-      label: "Produtos",
+      label: "Estoque",
       icon: React.createElement(FaBox),
+      children: [
+        {
+          key: "/app/stocks/entrada",
+          label: "Entrada",
+          icon: React.createElement(LuFolderSymlink),
+        },
+        {
+          key: "/app/stocks/saida",
+          label: "Saída",
+          icon: React.createElement(LuFolderUp),
+        },
+      ],
     },
     {
       key: "/login",

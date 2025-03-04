@@ -2,7 +2,7 @@ import { User } from "@/types/authTypes";
 import { Vehicle } from "../vehicleService/dto";
 import { Customer } from "../customerService/dto";
 import { Garage } from "../garageService/dto";
-import { StockTransaction } from "../stockService/dto";
+import { StockTransaction } from "../stockTransactionService/dto";
 
 export enum WorkStatus {
   PENDING = "PENDING", // Serviço criado, aguardando início
