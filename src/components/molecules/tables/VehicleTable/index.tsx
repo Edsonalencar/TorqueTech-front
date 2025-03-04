@@ -1,7 +1,7 @@
 import { Vehicle } from "@/services/vehicleService/dto";
+import { formatLicensePlate } from "@/utils/formaters/format";
 import { Table, TableProps, Typography } from "antd";
 import { ColumnProps } from "antd/es/table";
-import dayjs from "dayjs";
 
 interface Props extends TableProps<Vehicle> {
   onEdit?: (vehicle: Vehicle) => void;
@@ -13,6 +13,7 @@ export const VehicleTable = ({ onEdit, ...rest }: Props) => {
       title: "Placa",
       dataIndex: "licensePlate",
       key: "licensePlate",
+      render: (_, { licensePlate }) => formatLicensePlate(licensePlate),
     },
     {
       title: "Modelo",
@@ -31,6 +32,12 @@ export const VehicleTable = ({ onEdit, ...rest }: Props) => {
       dataIndex: "vehicleType_year",
       key: "vehicleType_year",
       render: (_, { vehicleType }) => vehicleType.year,
+    },
+    {
+      title: "Cor",
+      dataIndex: "color",
+      key: "color",
+      render: (_, { color }) => color,
     },
     {
       title: "Ações",
