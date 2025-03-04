@@ -65,7 +65,7 @@ export const StockOutputPage = () => {
                 allowClear
               />
               <Search
-                placeholder="Pesquise um produtor..."
+                placeholder="Pesquise um item..."
                 allowClear
                 onSearch={(value) => fetchPage(value)}
                 style={{ width: 304 }}
