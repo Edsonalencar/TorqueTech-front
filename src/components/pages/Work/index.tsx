@@ -21,6 +21,8 @@ export const WorkPage = () => {
               onSelect={(value) => setStatus(value as WorkStatus)}
               options={workStatusOptions}
               className="w-48"
+              onClear={() => setStatus(undefined)}
+              allowClear
             />
             <Search
               placeholder="Pesquise um produtor..."

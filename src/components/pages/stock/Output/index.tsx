@@ -61,6 +61,8 @@ export const StockOutputPage = () => {
                 onSelect={(value) => setStatus(value as TransactionCategoryIn)}
                 options={transactionCategoryOutOptions}
                 className="w-56"
+                onClear={() => setStatus(undefined)}
+                allowClear
               />
               <Search
                 placeholder="Pesquise um produtor..."
