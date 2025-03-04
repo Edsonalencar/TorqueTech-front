@@ -7,6 +7,7 @@ import { FaUsersGear, FaUsersLine, FaBox } from "react-icons/fa6";
 import { FaUsers, FaToolbox } from "react-icons/fa";
 import { IconBaseProps } from "react-icons";
 import { LuFolderSymlink, LuFolderUp } from "react-icons/lu";
+import { FaGear } from "react-icons/fa6";
 
 export interface NavegateItem {
   key: string;
@@ -70,6 +71,11 @@ export const getNavegateItems = ({
           icon: React.createElement(LuFolderUp),
         },
       ],
+    },
+    {
+      key: "/app/config",
+      label: "Configurações",
+      icon: React.createElement(FaGear),
     },
     {
       key: "/login",

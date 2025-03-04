@@ -3,6 +3,7 @@ import { LoginType } from "../../types";
 import { BaseApi } from "../baseApi/baseAPI";
 import { AbstractException } from "../baseApi/handler/AbstractException";
 import { ResponseDTO } from "../baseApi/interface";
+import { CreateOrUpdateUserDTO } from "./dto";
 
 const API = new BaseApi();
 
@@ -26,6 +27,21 @@ export class UserService {
     const res = await API.put(`/users/${userId}/status`, {
       status,
     });
+    return res as ResponseDTO<User>;
+  }
+
+  static async getById(userId: string) {
+    const res = await API.get(`/users/${userId}`);
+    return res as ResponseDTO<User>;
+  }
+
+  static async create(data: CreateOrUpdateUserDTO) {
+    const res = await API.post(`/users/register`, data);
+    return res as ResponseDTO<User>;
+  }
+
+  static async update(userId: string, data: CreateOrUpdateUserDTO) {
+    const res = await API.put(`/users/${userId}`, data);
     return res as ResponseDTO<User>;
   }
 }

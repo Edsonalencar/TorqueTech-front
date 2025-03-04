@@ -11,7 +11,7 @@ interface Props extends TableProps<TableType> {
   onToggleStatus?: (item: TableType) => void;
 }
 
-export const localStockTable = ({ onEdit, onToggleStatus, ...rest }: Props) => {
+export const LocalStockTable = ({ onEdit, onToggleStatus, ...rest }: Props) => {
   const handler = (item: TableType, func?: Function) => {
     if (!func) return undefined;
 

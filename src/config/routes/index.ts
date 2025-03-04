@@ -1,5 +1,8 @@
 import { AdminPage } from "@/components/pages/Admin";
+import { AdminConfigPage } from "@/components/pages/Admin/Config";
 import { ViewAdminPage } from "@/components/pages/Admin/View";
+import { AdminViewUserPage } from "@/components/pages/Admin/ViewUser";
+import { ConfigPage } from "@/components/pages/Config";
 import { CustomerPage } from "@/components/pages/Customer";
 import { CreateCustomerPage } from "@/components/pages/Customer/Create";
 import { ViewCustomerPage } from "@/components/pages/Customer/View";
@@ -33,6 +36,7 @@ export const routes: RenderRouter[] = [
       { path: "services", component: WorkPage },
       { path: "stocks/entrada", component: StockInputPage },
       { path: "stocks/saida", component: StockOutputPage },
+      { path: "config", component: ConfigPage },
     ],
   },
   {
@@ -41,6 +45,8 @@ export const routes: RenderRouter[] = [
     children: [
       { path: "/admin", component: AdminPage },
       { path: "/admin/:uuid", component: ViewAdminPage },
+      { path: "user/:uuid", component: AdminViewUserPage },
+      { path: "config", component: AdminConfigPage },
     ],
   },
 ];
