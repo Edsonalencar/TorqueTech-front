@@ -165,5 +165,17 @@ export const vehicleColorOptions = [
   { value: "GOLD", label: "Dourado" },
   { value: "CHAMPAGNE", label: "Champanhe" },
   { value: "BORDEAUX", label: "Bordô" },
-  { value: "TURQUOISE", label: "Turquesa" }
+  { value: "TURQUOISE", label: "Turquesa" },
+];
+
+export const workStatusOptions = [
+  { value: "PENDING", label: "Aguardando Início" },
+  { value: "IN_PROGRESS", label: "Em Andamento" },
+  { value: "WAITING_PARTS", label: "Aguardando Peças" },
+  { value: "ON_HOLD", label: "Pausado" },
+  { value: "COMPLETED", label: "Concluído" },
+  { value: "CANCELED", label: "Cancelado" },
+  { value: "DELIVERED", label: "Entregue ao Cliente" },
+  { value: "INVOICED", label: "Faturado" },
+  { value: "PAID", label: "Pago" },
 ];

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/plots": "^2.3.2",
+    "@hello-pangea/dnd": "^18.0.1",
     "antd": "^5.22.2",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",

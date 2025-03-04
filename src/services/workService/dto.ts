@@ -5,9 +5,16 @@ import { Garage } from "../garageService/dto";
 import { StockTransaction } from "../stockService/dto";
 
 export enum WorkStatus {
-  PENDING = "PENDING",
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
+  PENDING = "PENDING", // Serviço criado, aguardando início
+  IN_PROGRESS = "IN_PROGRESS", // Serviço em andamento
+  WAITING_PARTS = "WAITING_PARTS", // Aguardando peças ou materiais
+  ON_HOLD = "ON_HOLD", // Pausado por algum motivo (aguardando aprovação do cliente, pagamento, etc.)
+  COMPLETED = "COMPLETED", // Serviço concluído
+  CANCELED = "CANCELED", // Serviço cancelado
+  DELIVERED = "DELIVERED", // Veículo foi entregue ao cliente
+  INVOICED = "INVOICED", // Fatura gerada, aguardando pagamento
+  PAID = "PAID", // Pagamento efetuado
+  CANCELLED = "CANCELLED", // Serviço cancelado (duplicado de CANCELED)
 }
 
 export enum WorkOrderStatus {
