@@ -5,7 +5,7 @@ export interface CreateLocalStockRequest {
   description?: string;
 }
 
-export interface Local {
+export interface LocalStock {
   id: string;
   name: string;
   description?: string;
