@@ -12,6 +12,11 @@ export enum UserStatus {
   INACTIVE = "INACTIVE",
 }
 
+export enum ActiveStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
+
 export interface Auth {
   id?: string;
   username?: string;

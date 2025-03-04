@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 import { Address } from "@/types/authTypes";
+import { ItemCategory } from "@/services/itemStockService/dto";
 
 export async function copyText(link?: string) {
   if (!link) return;
@@ -192,4 +193,37 @@ export const transactionCategoryOutOptions = [
   { value: "WORK_ORDER", label: "Uso em Ordem de Serviço" },
   { value: "DISPOSAL", label: "Descarte de Itens" },
   { value: "TRANSFER", label: "Transferência Enviada" },
+];
+
+export const itemCategoryOptions = [
+  { value: ItemCategory.ENGINE_PARTS, label: "Peças do Motor" },
+  { value: ItemCategory.TRANSMISSION, label: "Sistema de Transmissão" },
+  { value: ItemCategory.SUSPENSION, label: "Suspensão e Direção" },
+  { value: ItemCategory.BRAKES, label: "Sistema de Freios" },
+  { value: ItemCategory.ELECTRICAL, label: "Elétrica e Eletrônicos" },
+  { value: ItemCategory.FILTERS, label: "Filtros" },
+  { value: ItemCategory.LUBRICANTS, label: "Óleos e Lubrificantes" },
+  { value: ItemCategory.EXHAUST_SYSTEM, label: "Sistema de Escape" },
+  { value: ItemCategory.COOLING_SYSTEM, label: "Sistema de Arrefecimento" },
+  { value: ItemCategory.TIRES_WHEELS, label: "Pneus e Rodas" },
+  { value: ItemCategory.TOOLS, label: "Ferramentas e Equipamentos" },
+  { value: ItemCategory.ACCESSORIES, label: "Acessórios" },
+  { value: ItemCategory.BODY_PARTS, label: "Carroceria e Estruturas" },
+  { value: ItemCategory.FUEL_SYSTEM, label: "Sistema de Combustível" },
+  { value: ItemCategory.LIGHTING, label: "Iluminação" },
+  { value: ItemCategory.AIR_CONDITIONING, label: "Ar-condicionado" },
+  { value: ItemCategory.HYDRAULIC_SYSTEM, label: "Sistema Hidráulico" },
+  { value: ItemCategory.TRACTOR_SPECIFIC, label: "Peças para Tratores" },
+  { value: ItemCategory.TRUCK_SPECIFIC, label: "Peças para Caminhões" },
+  { value: ItemCategory.MOTORCYCLE_SPECIFIC, label: "Peças para Motos" },
+  { value: ItemCategory.HEAVY_EQUIPMENT, label: "Peças para Máquinas Pesadas" },
+  {
+    value: ItemCategory.ELECTRONIC_COMPONENTS,
+    label: "Componentes Eletrônicos",
+  },
+  { value: ItemCategory.SAFETY_EQUIPMENT, label: "Equipamentos de Segurança" },
+  {
+    value: ItemCategory.WORKSHOP_SUPPLIES,
+    label: "Materiais de Consumo para Oficina",
+  },
 ];

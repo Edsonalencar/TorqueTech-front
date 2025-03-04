@@ -1,6 +1,16 @@
 import { User } from "@/types/authTypes";
 import { Garage } from "../garageService/dto";
 
+export interface InputStockTransactionRequest {
+  itemId: string;
+  localId: string;
+  acquisitionUnitPrice: number;
+  price: number;
+  quantity: number;
+  category: TransactionCategoryIn;
+  transactionAt: string;
+}
+
 export interface GetPageStockTransactionRequest {
   size?: number;
   itemsIs?: string[];

@@ -1,3 +1,4 @@
+import { ItemCategory } from "@/services/itemStockService/dto";
 import {
   TransactionCategoryIn,
   TransactionCategoryOut,
@@ -94,6 +95,61 @@ export const transactionCategorySerialize = (
       return "Transferência Recebida";
     case TransactionCategoryIn.WARRANTY_REPLACEMENT:
       return "Substituição por Garantia";
+    default:
+      return "Desconhecido";
+  }
+};
+
+export const itemCategorySerialize = (value?: ItemCategory): string => {
+  switch (value) {
+    case ItemCategory.ENGINE_PARTS:
+      return "Peças do Motor";
+    case ItemCategory.TRANSMISSION:
+      return "Sistema de Transmissão";
+    case ItemCategory.SUSPENSION:
+      return "Suspensão e Direção";
+    case ItemCategory.BRAKES:
+      return "Sistema de Freios";
+    case ItemCategory.ELECTRICAL:
+      return "Elétrica e Eletrônicos";
+    case ItemCategory.FILTERS:
+      return "Filtros";
+    case ItemCategory.LUBRICANTS:
+      return "Óleos e Lubrificantes";
+    case ItemCategory.EXHAUST_SYSTEM:
+      return "Sistema de Escape";
+    case ItemCategory.COOLING_SYSTEM:
+      return "Sistema de Arrefecimento";
+    case ItemCategory.TIRES_WHEELS:
+      return "Pneus e Rodas";
+    case ItemCategory.TOOLS:
+      return "Ferramentas e Equipamentos";
+    case ItemCategory.ACCESSORIES:
+      return "Acessórios";
+    case ItemCategory.BODY_PARTS:
+      return "Carroceria e Estruturas";
+    case ItemCategory.FUEL_SYSTEM:
+      return "Sistema de Combustível";
+    case ItemCategory.LIGHTING:
+      return "Iluminação";
+    case ItemCategory.AIR_CONDITIONING:
+      return "Ar-condicionado";
+    case ItemCategory.HYDRAULIC_SYSTEM:
+      return "Sistema Hidráulico";
+    case ItemCategory.TRACTOR_SPECIFIC:
+      return "Peças para Tratores";
+    case ItemCategory.TRUCK_SPECIFIC:
+      return "Peças para Caminhões";
+    case ItemCategory.MOTORCYCLE_SPECIFIC:
+      return "Peças para Motos";
+    case ItemCategory.HEAVY_EQUIPMENT:
+      return "Peças para Máquinas Pesadas";
+    case ItemCategory.ELECTRONIC_COMPONENTS:
+      return "Componentes Eletrônicos";
+    case ItemCategory.SAFETY_EQUIPMENT:
+      return "Equipamentos de Segurança";
+    case ItemCategory.WORKSHOP_SUPPLIES:
+      return "Materiais de Consumo para Oficina";
     default:
       return "Desconhecido";
   }
