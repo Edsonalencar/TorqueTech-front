@@ -1,9 +1,18 @@
 import { User } from "@/types/authTypes";
 import { Garage } from "../garageService/dto";
+import { StockItem } from "../stockItemService/dto";
+
+export interface OutputStockTransactionRequest {
+  stockItemId: string;
+  quantity: number;
+  price: number;
+  category: TransactionCategoryOut;
+  transactionAt: string;
+}
 
 export interface InputStockTransactionRequest {
   itemId: string;
-  localId: string;
+  localId?: string;
   acquisitionUnitPrice: number;
   price: number;
   quantity: number;
@@ -19,22 +28,6 @@ export interface GetPageStockTransactionRequest {
   transactionType?: TransactionType;
   category?: TransactionCategoryIn | TransactionCategoryOut;
   query?: string;
-}
-
-export interface Item {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  garage: Garage;
-}
-
-export interface StockItem {
-  id: string;
-  item: Item;
-  price: number;
-  quantity: number;
-  garage: Garage;
 }
 
 export interface StockTransaction {

@@ -1,0 +1,101 @@
+import { useEffect, useState } from "react";
+import { Flex, Form, Modal } from "antd";
+import { LoadingContent } from "@/components/atoms/LoadingContent";
+import {
+  OutputStockTransactionRequest,
+  StockTransaction,
+  TransactionCategoryOut,
+} from "@/services/stockTransactionService/dto";
+import { StockTransactionService } from "@/services/stockTransactionService/service";
+import { OutputStockTransactionForm } from "@/components/organisms/OutputStockTransactionForm";
+
+export interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  initialData?: StockTransaction;
+  reload?: () => Promise<void>;
+}
+
+type ResourceType = OutputStockTransactionRequest;
+const Service = StockTransactionService;
+
+export const OutputStockTransactionModal = ({
+  isOpen,
+  onClose,
+  initialData,
+  reload,
+}: Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [form] = Form.useForm<ResourceType>();
+
+  const create = async (data: ResourceType) => {
+    try {
+      setLoading(true);
+      await Service.createOutput(data);
+      if (reload) await reload();
+      closeModal();
+    } catch (error) {
+      console.error("Create [OutputStockTransactionModal]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const update = async (id: string, data: ResourceType) => {
+    try {
+      setLoading(true);
+      await Service.updateOutput(id, data);
+      if (reload) await reload();
+      closeModal();
+    } catch (error) {
+      console.error("Update [OutputStockTransactionModal]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const submit = async () => {
+    const formValue = await form.validateFields();
+
+    const data: ResourceType = {
+      ...formValue,
+    };
+
+    if (initialData?.id) update(initialData.id, data);
+    else create(data);
+    closeModal();
+  };
+
+  const closeModal = () => {
+    form.resetFields();
+    onClose();
+  };
+
+  useEffect(() => {
+    if (initialData && isOpen) {
+      form.setFieldsValue({
+        ...initialData,
+        stockItemId: initialData.item.id,
+        category: initialData.category as TransactionCategoryOut,
+      });
+    }
+  }, [initialData, isOpen]);
+
+  return (
+    <Modal
+      title={`${initialData ? "Editar" : "Adicionar"} Transação de Estoque`}
+      open={isOpen}
+      onOk={submit}
+      onClose={closeModal}
+      onCancel={closeModal}
+      okText="Salvar"
+      width={800}
+    >
+      <LoadingContent isLoading={loading} />
+
+      <Flex gap={15} vertical className="mt-5">
+        <OutputStockTransactionForm form={form} />
+      </Flex>
+    </Modal>
+  );
+};

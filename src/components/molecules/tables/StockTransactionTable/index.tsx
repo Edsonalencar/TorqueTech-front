@@ -7,12 +7,25 @@ import {
 } from "@/services/stockTransactionService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { transactionCategorySerialize } from "@/utils/serializers";
+import { ActionsMenu } from "../../ActionsMenu";
 
 interface Props extends TableProps<StockTransaction> {
   onView?: (transaction: StockTransaction) => void;
+  onCancel?: (transaction: StockTransaction) => void;
+  onEdit?: (transaction: StockTransaction) => void;
 }
 
-export const StockTransactionTable = ({ onView, ...rest }: Props) => {
+export const StockTransactionTable = ({
+  onView,
+  onCancel,
+  onEdit,
+  ...rest
+}: Props) => {
+  const handler = (item: StockTransaction, func?: Function) => {
+    if (!func) return undefined;
+    return () => func(item);
+  };
+
   const columns: ColumnProps<StockTransaction>[] = [
     {
       title: "Ind.",
@@ -65,9 +78,11 @@ export const StockTransactionTable = ({ onView, ...rest }: Props) => {
       dataIndex: "actions",
       key: "actions",
       render: (_, item) => (
-        <Typography.Link onClick={() => onView?.(item)}>
-          Ver Detalhes
-        </Typography.Link>
+        <ActionsMenu
+          onView={handler(item, onView)}
+          onEdit={handler(item, onEdit)}
+          onCancel={handler(item, onCancel)}
+        />
       ),
     },
   ];

@@ -13,8 +13,10 @@ import { Pageable } from "@/types";
 import { transactionCategoryOutOptions } from "@/utils/utils";
 import { Card, Flex, Typography, Button } from "antd";
 import Search from "antd/es/input/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
+import { OutputStockTransactionModal } from "@/components/molecules/modais/OutputStockTransactionModal";
+import { toast } from "react-toastify";
 
 export const StockOutputPage = () => {
   const [resource, setResource] = useState<Pageable<StockTransaction>>();
@@ -27,6 +29,23 @@ export const StockOutputPage = () => {
     useState<boolean>(false);
   const [selectedStockTransactionManager, setSelectedStockTransactionManager] =
     useState<StockTransaction>();
+
+  const handlerView = (item: StockTransaction) => {
+    console.log("handlerView", item);
+  };
+
+  const handlerCancel = async (item: StockTransaction) => {
+    setLoading(true);
+    try {
+      await StockTransactionService.cancel(item.id);
+      toast.success("Transação cancelada com sucesso");
+      fetchPage();
+    } catch (error) {
+      console.error("fetchManagers", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchPage = async (name?: string) => {
     setLoading(true);
@@ -47,6 +66,10 @@ export const StockOutputPage = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPage();
+  }, [page, status]);
 
   return (
     <>
@@ -85,12 +108,27 @@ export const StockOutputPage = () => {
               dataSource={resource?.content ?? []}
               pagination={false}
               loading={loading}
+              onView={handlerView}
+              onCancel={handlerCancel}
+              onEdit={(item) => setSelectedStockTransactionManager(item)}
             />
 
             <BasePagination page={page} setPage={setPage} pageable={resource} />
           </Flex>
         </Flex>
       </Card>
+
+      <OutputStockTransactionModal
+        isOpen={
+          createStockTransactionModal || !!selectedStockTransactionManager
+        }
+        onClose={() => {
+          setCreateStockTransactionModal(false);
+          setSelectedStockTransactionManager(undefined);
+        }}
+        initialData={selectedStockTransactionManager}
+        reload={fetchPage}
+      />
     </>
   );
 };
