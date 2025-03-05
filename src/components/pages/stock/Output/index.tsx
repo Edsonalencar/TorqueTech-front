@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { OutputStockTransactionModal } from "@/components/molecules/modais/OutputStockTransactionModal";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const StockOutputPage = () => {
   const [resource, setResource] = useState<Pageable<StockTransaction>>();
@@ -30,8 +31,10 @@ export const StockOutputPage = () => {
   const [selectedStockTransactionManager, setSelectedStockTransactionManager] =
     useState<StockTransaction>();
 
+  const navigate = useNavigate();
+
   const handlerView = (item: StockTransaction) => {
-    console.log("handlerView", item);
+    navigate(`/app/stocks/${item?.id}`);
   };
 
   const handlerCancel = async (item: StockTransaction) => {

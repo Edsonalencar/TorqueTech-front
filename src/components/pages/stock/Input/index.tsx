@@ -17,6 +17,7 @@ import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { transactionCategoryInOptions } from "@/utils/utils";
 import { toast } from "react-toastify";
 import { InputStockTransactionModal } from "@/components/molecules/modais/InputStockTransactionModal";
+import { useNavigate } from "react-router-dom";
 
 export const StockInputPage = () => {
   const [resource, setResource] = useState<Pageable<StockTransaction>>();
@@ -30,8 +31,10 @@ export const StockInputPage = () => {
   const [selectedStockTransactionManager, setSelectedStockTransactionManager] =
     useState<StockTransaction>();
 
+  const navigate = useNavigate();
+
   const handlerView = (item: StockTransaction) => {
-    console.log("handlerView", item);
+    navigate(`/app/stocks/${item?.id}`);
   };
 
   const handlerCancel = async (item: StockTransaction) => {
