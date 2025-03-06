@@ -1,61 +1,28 @@
 import { InputMoney } from "@/components/atoms/Inputs/InputMoney";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
-import { LoadingContent } from "@/components/atoms/LoadingContent";
-import { CreateItemStockModal } from "@/components/molecules/modais/CreateItemStockModal";
-import { CreateLocalModal } from "@/components/molecules/modais/CreateLocalModal";
 import { ItemStock } from "@/services/itemStockService/dto";
-import { ItemStockService } from "@/services/itemStockService/service";
-import { LocalStockService } from "@/services/localStockService/service";
+import { LocalStock } from "@/services/localStockService/dto";
 import { InputStockTransactionRequest } from "@/services/stockTransactionService/dto";
 import { transactionCategoryInOptions } from "@/utils/utils";
 import { FormProps } from "antd";
 import { Col, Form, InputNumber, Row, DatePicker } from "antd";
-import { useEffect, useState } from "react";
 
-interface Props extends FormProps<InputStockTransactionRequest> {}
+interface Props extends FormProps<InputStockTransactionRequest> {
+  onAddItem?: () => void;
+  onAddLocal?: () => void;
+  itemsStock?: ItemStock[];
+  localStock?: LocalStock[];
+}
 
-export const InputStockTransactionForm = ({ ...rest }: Props) => {
-  const [addLocalModalVisible, setAddLocalModalVisible] = useState(false);
-  const [addItemModalVisible, setAddItemModalVisible] = useState(false);
-
-  const [itemsStock, setItemsStock] = useState<ItemStock[]>([]);
-  const [localStock, setLocalStock] = useState<ItemStock[]>([]);
-
-  const [localLoading, setLocalLoading] = useState(false);
-  const [itemLoading, setItemLoading] = useState(false);
-
-  const fetchLocal = async () => {
-    setLocalLoading(true);
-    try {
-      const { data } = await LocalStockService.get();
-      setLocalStock(data);
-    } catch (error) {
-      console.error("fetchLocal [StockTransactionInForm]", error);
-    } finally {
-      setLocalLoading(false);
-    }
-  };
-
-  const fetchItems = async () => {
-    setItemLoading(true);
-    try {
-      const { data } = await ItemStockService.get();
-      setItemsStock(data);
-    } catch (error) {
-      console.error("fetchItems [StockTransactionInForm]", error);
-    } finally {
-      setItemLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchLocal();
-    fetchItems();
-  }, []);
-
+export const InputStockTransactionForm = ({
+  onAddItem,
+  onAddLocal,
+  itemsStock,
+  localStock,
+  ...rest
+}: Props) => {
   return (
     <>
-      <LoadingContent isLoading={localLoading || itemLoading} />
       <Form layout="vertical" {...rest}>
         <Row gutter={[16, 16]}>
           <Col span={24} md={{ span: 12 }}>
@@ -73,10 +40,11 @@ export const InputStockTransactionForm = ({ ...rest }: Props) => {
             >
               <SelectSearchInput
                 placeholder="Selecione o item"
-                options={itemsStock.map((item) => ({
+                options={itemsStock?.map((item) => ({
                   value: item.id,
                   label: item.name,
                 }))}
+                onAdd={onAddItem}
               />
             </Form.Item>
           </Col>
@@ -96,10 +64,11 @@ export const InputStockTransactionForm = ({ ...rest }: Props) => {
             >
               <SelectSearchInput
                 placeholder="Selecione o local"
-                options={localStock.map((item) => ({
+                options={localStock?.map((item) => ({
                   value: item.id,
                   label: item.name,
                 }))}
+                onAdd={onAddLocal}
               />
             </Form.Item>
           </Col>
@@ -214,18 +183,6 @@ export const InputStockTransactionForm = ({ ...rest }: Props) => {
           </Col>
         </Row>
       </Form>
-
-      <CreateLocalModal
-        isOpen={addLocalModalVisible}
-        onClose={() => setAddLocalModalVisible(false)}
-        reload={fetchLocal}
-      />
-
-      <CreateItemStockModal
-        isOpen={addItemModalVisible}
-        onClose={() => setAddItemModalVisible(false)}
-        reload={fetchItems}
-      />
     </>
   );
 };

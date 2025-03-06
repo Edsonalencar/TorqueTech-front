@@ -18,10 +18,24 @@ import { transactionCategoryInOptions } from "@/utils/utils";
 import { toast } from "react-toastify";
 import { InputStockTransactionModal } from "@/components/molecules/modais/InputStockTransactionModal";
 import { useNavigate } from "react-router-dom";
+import { ItemStock } from "@/services/itemStockService/dto";
+import { LocalStock } from "@/services/localStockService/dto";
+import { LocalStockService } from "@/services/localStockService/service";
+import { ItemStockService } from "@/services/itemStockService/service";
+import { CreateLocalModal } from "@/components/molecules/modais/CreateLocalModal";
+import { CreateItemStockModal } from "@/components/molecules/modais/CreateItemStockModal";
 
 export const StockInputPage = () => {
   const [resource, setResource] = useState<Pageable<StockTransaction>>();
   const [status, setStatus] = useState<TransactionCategoryIn>();
+  const [itemsStock, setItemsStock] = useState<ItemStock[]>([]);
+  const [localStock, setLocalStock] = useState<LocalStock[]>([]);
+
+  const [addLocalModalVisible, setAddLocalModalVisible] = useState(false);
+  const [addItemModalVisible, setAddItemModalVisible] = useState(false);
+
+  const [localLoading, setLocalLoading] = useState(false);
+  const [itemLoading, setItemLoading] = useState(false);
 
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -69,6 +83,35 @@ export const StockInputPage = () => {
       setLoading(false);
     }
   };
+
+  const fetchLocal = async () => {
+    setLocalLoading(true);
+    try {
+      const { data } = await LocalStockService.get();
+      setLocalStock(data);
+    } catch (error) {
+      console.error("fetchLocal [StockTransactionInForm]", error);
+    } finally {
+      setLocalLoading(false);
+    }
+  };
+
+  const fetchItems = async () => {
+    setItemLoading(true);
+    try {
+      const { data } = await ItemStockService.get();
+      setItemsStock(data);
+    } catch (error) {
+      console.error("fetchItems [StockTransactionInForm]", error);
+    } finally {
+      setItemLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLocal();
+    fetchItems();
+  }, []);
 
   useEffect(() => {
     fetchPage();
@@ -123,7 +166,9 @@ export const StockInputPage = () => {
 
       <InputStockTransactionModal
         isOpen={
-          createStockTransactionModal || !!selectedStockTransactionManager
+          (createStockTransactionModal || !!selectedStockTransactionManager) &&
+          !addItemModalVisible &&
+          !addLocalModalVisible
         }
         onClose={() => {
           setCreateStockTransactionModal(false);
@@ -131,6 +176,22 @@ export const StockInputPage = () => {
         }}
         initialData={selectedStockTransactionManager}
         reload={fetchPage}
+        itemsStock={itemsStock}
+        localStock={localStock}
+        onAddItem={() => setAddItemModalVisible(true)}
+        onAddLocal={() => setAddLocalModalVisible(true)}
+      />
+
+      <CreateLocalModal
+        isOpen={!!addLocalModalVisible}
+        onClose={() => setAddLocalModalVisible?.(false)}
+        reload={fetchLocal}
+      />
+
+      <CreateItemStockModal
+        isOpen={!!addItemModalVisible}
+        onClose={() => setAddItemModalVisible?.(false)}
+        reload={fetchItems}
       />
     </>
   );

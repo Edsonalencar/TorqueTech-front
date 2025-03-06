@@ -14,7 +14,6 @@ interface Props extends FormProps<OutputStockTransactionRequest> {}
 
 export const OutputStockTransactionForm = ({ ...rest }: Props) => {
   const [stockItems, setStockItems] = useState<StockItem[]>([]);
-  const [stockItem, setStockItem] = useState<StockItem[]>([]);
 
   const [loading, setLoading] = useState(false);
 

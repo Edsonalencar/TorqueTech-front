@@ -8,12 +8,19 @@ import {
 } from "@/services/stockTransactionService/dto";
 import { StockTransactionService } from "@/services/stockTransactionService/service";
 import { InputStockTransactionForm } from "@/components/organisms/InputStockTransactionForm";
+import { LocalStock } from "@/services/localStockService/dto";
+import { ItemStock } from "@/services/itemStockService/dto";
 
 export interface Props {
   isOpen: boolean;
   onClose: () => void;
   initialData?: StockTransaction;
   reload?: () => Promise<void>;
+
+  onAddItem?: () => void;
+  onAddLocal?: () => void;
+  itemsStock?: ItemStock[];
+  localStock?: LocalStock[];
 }
 
 type ResourceType = InputStockTransactionRequest;
@@ -24,6 +31,11 @@ export const InputStockTransactionModal = ({
   onClose,
   initialData,
   reload,
+
+  itemsStock,
+  localStock,
+  onAddItem,
+  onAddLocal,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm<ResourceType>();
@@ -95,7 +107,13 @@ export const InputStockTransactionModal = ({
       <LoadingContent isLoading={loading} />
 
       <Flex gap={15} vertical className="mt-5">
-        <InputStockTransactionForm form={form} />
+        <InputStockTransactionForm
+          form={form}
+          onAddItem={onAddItem}
+          onAddLocal={onAddLocal}
+          itemsStock={itemsStock}
+          localStock={localStock}
+        />
       </Flex>
     </Modal>
   );
