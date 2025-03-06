@@ -9,6 +9,7 @@ import { ItemStock } from "@/services/itemStockService/dto";
 import { ItemStockService } from "@/services/itemStockService/service";
 import { ItemStockTable } from "@/components/molecules/tables/ItemStockTable";
 import { CreateItemStockModal } from "@/components/molecules/modais/CreateItemStockModal";
+import { toast } from "react-toastify";
 
 type ConfigType = ItemStock;
 const Service = ItemStockService;
@@ -30,10 +31,32 @@ export const ItemStockConfig = () => {
       });
       setResource(data);
     } catch (error) {
-      console.error("fetchPage [VehicleTypeConfig]", error);
+      console.error("fetchPage [ItemStockConfig]", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateStatus = async (valueId: string, status: ActiveStatus) => {
+    setLoading(true);
+    try {
+      await Service.updateStatus(valueId, { status });
+      toast.success("Status atualizado com sucesso!");
+      fetchPage();
+    } catch (error) {
+      console.error("fetchPage [ItemStockConfig]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlerStatus = async (item: ConfigType) => {
+    const status =
+      item.status === ActiveStatus.ACTIVE
+        ? ActiveStatus.INACTIVE
+        : ActiveStatus.ACTIVE;
+
+    await updateStatus(item.id, status);
   };
 
   useEffect(() => {
@@ -76,6 +99,7 @@ export const ItemStockConfig = () => {
             pagination={false}
             loading={loading}
             onEdit={(entity) => setSelectedEdit(entity)}
+            onToggleStatus={handlerStatus}
           />
           <BasePagination page={page} setPage={setPage} pageable={resource} />
         </Flex>

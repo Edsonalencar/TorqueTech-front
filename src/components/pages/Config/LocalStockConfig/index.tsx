@@ -9,6 +9,7 @@ import { LocalStock } from "@/services/localStockService/dto";
 import { LocalStockService } from "@/services/localStockService/service";
 import { LocalStockTable } from "@/components/molecules/tables/localStockTable";
 import { CreateLocalModal } from "@/components/molecules/modais/CreateLocalModal";
+import { toast } from "react-toastify";
 
 type ConfigType = LocalStock;
 const Service = LocalStockService;
@@ -34,6 +35,28 @@ export const LocalStockConfig = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateStatus = async (valueId: string, status: ActiveStatus) => {
+    setLoading(true);
+    try {
+      await Service.updateStatus(valueId, { status });
+      toast.success("Status atualizado com sucesso!");
+      fetchPage();
+    } catch (error) {
+      console.error("fetchPage [VehicleTypeConfig]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlerStatus = async (item: ConfigType) => {
+    const status =
+      item.status === ActiveStatus.ACTIVE
+        ? ActiveStatus.INACTIVE
+        : ActiveStatus.ACTIVE;
+
+    await updateStatus(item.id, status);
   };
 
   useEffect(() => {
@@ -76,6 +99,7 @@ export const LocalStockConfig = () => {
             pagination={false}
             loading={loading}
             onEdit={(entity) => setSelectedEdit(entity)}
+            onToggleStatus={handlerStatus}
           />
           <BasePagination page={page} setPage={setPage} pageable={resource} />
         </Flex>
