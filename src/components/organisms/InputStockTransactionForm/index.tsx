@@ -4,8 +4,9 @@ import { ItemStock } from "@/services/itemStockService/dto";
 import { LocalStock } from "@/services/localStockService/dto";
 import { InputStockTransactionRequest } from "@/services/stockTransactionService/dto";
 import { transactionCategoryInOptions } from "@/utils/utils";
-import { FormProps } from "antd";
+import { Button, Flex, FormProps, Typography } from "antd";
 import { Col, Form, InputNumber, Row, DatePicker } from "antd";
+import { FiMinusCircle } from "react-icons/fi";
 
 interface Props extends FormProps<InputStockTransactionRequest> {
   onAddItem?: () => void;
@@ -25,153 +26,132 @@ export const InputStockTransactionForm = ({
     <>
       <Form layout="vertical" {...rest}>
         <Row gutter={[16, 16]}>
-          <Col span={24} md={{ span: 12 }}>
-            <Form.Item
-              label="Item"
-              name={"itemId"}
-              key={"itemId"}
-              id="itemId"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
-            >
-              <SelectSearchInput
-                placeholder="Selecione o item"
-                options={itemsStock?.map((item) => ({
-                  value: item.id,
-                  label: item.name,
-                }))}
-                onAdd={onAddItem}
-              />
-            </Form.Item>
-          </Col>
+          <Col span={24} md={18}>
+            <Typography.Title level={5}>Produtos</Typography.Title>
 
-          <Col span={24} md={{ span: 12 }}>
-            <Form.Item
-              label="Local"
-              name={"localId"}
-              key={"localId"}
-              id="localId"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
-            >
-              <SelectSearchInput
-                placeholder="Selecione o local"
-                options={localStock?.map((item) => ({
-                  value: item.id,
-                  label: item.name,
-                }))}
-                onAdd={onAddLocal}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
+            <Form.List name="items">
+              {(fields, { add, remove }) => (
+                <>
+                  <div className="max-h-96 overflow-y-auto overflow-x-hidden">
+                    {fields.map(({ key, name }) => (
+                      <Row gutter={[16, 16]} key={key}>
+                        <Col span={24} md={{ span: 5 }}>
+                          <Form.Item
+                            label="Item"
+                            name={[name, "itemId"]}
+                            key={key + "_itemId"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <SelectSearchInput
+                              placeholder="Selecione o item"
+                              options={itemsStock?.map((item) => ({
+                                value: item.id,
+                                label: item.name,
+                              }))}
+                              onAdd={onAddItem}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 5 }}>
+                          <Form.Item
+                            label="Local"
+                            name={[name, "localId"]}
+                            key={key + "_localId"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <SelectSearchInput
+                              placeholder="Selecione o local"
+                              options={localStock?.map((item) => ({
+                                value: item.id,
+                                label: item.name,
+                              }))}
+                              onAdd={onAddLocal}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 6 }}>
+                          <Form.Item
+                            label="Preço Aquisição (Uni)"
+                            name={[name, "acquisitionUnitPrice"]}
+                            key={key + "_acquisitionUnitPrice"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <InputMoney
+                              min={0}
+                              placeholder="Preço de compra"
+                              style={{ width: "100%" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 6 }}>
+                          <Form.Item
+                            label="Preço Venda (Uni)"
+                            name={[name, "price"]}
+                            key={key + "_price"}
+                            rules={[
+                              { required: true, message: "Campo obrigatório!" },
+                            ]}
+                          >
+                            <InputMoney
+                              min={0}
+                              placeholder="Preço de Venda"
+                              style={{ width: "100%" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col span={24} md={{ span: 2 }}>
+                          <Flex
+                            align="center"
+                            justify="center"
+                            className="h-full"
+                          >
+                            <Button
+                              onClick={() => remove(name)}
+                              block
+                              size="small"
+                              type="text"
+                            >
+                              <FiMinusCircle />
+                            </Button>
+                          </Flex>
+                        </Col>
+                      </Row>
+                    ))}
+                  </div>
 
-        <Row gutter={[16, 16]}>
-          <Col span={24} md={{ span: 8 }}>
-            <Form.Item
-              label="Preço de Aquisição (Unitário)"
-              name={"acquisitionUnitPrice"}
-              key={"acquisitionUnitPrice"}
-              id="acquisitionUnitPrice"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
-            >
-              <InputMoney
-                min={0}
-                placeholder="Preço de compra"
-                style={{ width: "100%" }}
-              />
-            </Form.Item>
+                  <Form.Item>
+                    <Button type="primary" onClick={() => add()} block>
+                      Adicionar novo
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Col>
-
-          <Col span={24} md={{ span: 8 }}>
-            <Form.Item
-              label="Preço de Venda Estimado"
-              name={"price"}
-              key={"price"}
-              id="price"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
-            >
-              <InputMoney
-                min={0}
-                placeholder="Preço de Venda"
-                style={{ width: "100%" }}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={24} md={{ span: 8 }}>
-            <Form.Item
-              label="Quantidade"
-              name={"quantity"}
-              key={"quantity"}
-              id="quantity"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
-            >
-              <InputNumber
-                min={1}
-                placeholder="Quantidade"
-                style={{ width: "100%" }}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={[16, 16]}>
-          <Col span={24} md={{ span: 12 }}>
+          <Col span={24} md={6}>
             <Form.Item
               label="Categoria da Transação"
               name={"category"}
               key={"category"}
-              id="category"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
             >
               <SelectSearchInput
                 placeholder="Selecione a categoria"
                 options={transactionCategoryInOptions}
               />
             </Form.Item>
-          </Col>
-
-          <Col span={24} md={{ span: 12 }}>
             <Form.Item
               label="Data da Transação"
               name={"transactionAt"}
               key={"transactionAt"}
               id="transactionAt"
-              rules={[
-                {
-                  required: true,
-                  message: "Campo obrigatório!",
-                },
-              ]}
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
             >
               <DatePicker
                 showTime

@@ -2,20 +2,28 @@ import { User } from "@/types/authTypes";
 import { Garage } from "../garageService/dto";
 import { StockItem } from "../stockItemService/dto";
 
-export interface OutputStockTransactionRequest {
+export interface OutputStockItemDTO {
   stockItemId: string;
   quantity: number;
   price: number;
+}
+
+export interface OutputStockTransactionRequest {
+  items: OutputStockItemDTO[];
   category: TransactionCategoryOut;
   transactionAt: string;
 }
 
-export interface InputStockTransactionRequest {
+export interface InputStockItemDTO {
   itemId: string;
   localId?: string;
   acquisitionUnitPrice: number;
   price: number;
   quantity: number;
+}
+
+export interface InputStockTransactionRequest {
+  items: InputStockItemDTO[];
   category: TransactionCategoryIn;
   transactionAt: string;
 }
@@ -30,13 +38,18 @@ export interface GetPageStockTransactionRequest {
   query?: string;
 }
 
+export interface TransactionItem {
+  quantity: number;
+  stockItem: StockItem;
+}
+
 export interface StockTransaction {
   id: string;
   transactionType: TransactionType;
   category: TransactionCategoryIn | TransactionCategoryOut;
   garage: Garage;
   owner: User;
-  item: StockItem;
+  items: TransactionItem[];
   quantity: number;
   unitPrice: number;
   transactionDate: string; // ISO 8601 (YYYY-MM-DDTHH:mm:ss)

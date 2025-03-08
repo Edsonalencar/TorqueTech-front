@@ -75,15 +75,19 @@ export const OutputStockTransactionModal = ({
     if (initialData && isOpen) {
       form.setFieldsValue({
         ...initialData,
-        stockItemId: initialData.item.id,
         category: initialData.category as TransactionCategoryOut,
+        items: initialData.items.map((item) => ({
+          stockItemId: item.stockItem.id,
+          quantity: item.quantity,
+          price: item.stockItem.price,
+        })),
       });
     }
   }, [initialData, isOpen]);
 
   return (
     <Modal
-      title={`${initialData ? "Editar" : "Adicionar"} Transação de Estoque`}
+      title={`${initialData ? "Editar" : "Adicionar"} Saída de Estoque`}
       open={isOpen}
       onOk={submit}
       onClose={closeModal}
