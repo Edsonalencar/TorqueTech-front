@@ -20,7 +20,7 @@ export const LayoutTemplate: React.FC = () => {
         collapsed={collapsed}
         style={{ background: colorPrimary }}
       >
-        <div className="flex items-center w-full truncate justify-center p-4 mb-3">
+        <div className="flex items-center w-full truncate justify-center p-3 mt-2 mb-1">
           <span className="font-extrabold text-xl text-[#FFF]">
             {collapsed ? "TCH" : "Torque Tech"}
           </span>
