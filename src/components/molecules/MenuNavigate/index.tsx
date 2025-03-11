@@ -21,7 +21,7 @@ export const MenuNavigate: React.FC<MenuProps> = ({ ...rest }) => {
 
   return (
     <Menu
-      className="h-full border-none"
+      className="border-none"
       theme="light"
       mode="inline"
       selectedKeys={[activePath]}
