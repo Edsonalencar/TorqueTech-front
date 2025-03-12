@@ -72,7 +72,7 @@ export const OutputStockTransactionForm = ({ ...rest }: Props) => {
                               placeholder="Selecione o produto"
                               options={stockItems.map((stock) => ({
                                 value: stock.id,
-                                label: getStockItemName(stock),
+                                label: stock.item.name + " - " + stock.quantity +"un",
                               }))}
                             />
                           </Form.Item>

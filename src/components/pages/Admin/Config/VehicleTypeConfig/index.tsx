@@ -49,7 +49,7 @@ export const VehicleTypeConfig = () => {
     <Card>
       <Flex gap={20} vertical className="overflow-hidden">
         <Flex justify="space-between">
-          <Typography.Title level={4}>Tipos de veículos</Typography.Title>
+          <Typography.Title level={4} className="whitespace-nowrap">Tipos de veículos</Typography.Title>
           <Flex gap={8}>
             <Search
               placeholder="Pesquise um marca ou modelo..."

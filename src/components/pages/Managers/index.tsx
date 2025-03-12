@@ -69,7 +69,7 @@ export const managerPage: React.FC = () => {
     <Card>
       <Flex gap={20} vertical className="overflow-hidden">
         <Flex justify="space-between">
-          <Typography.Title level={4}>Gestores</Typography.Title>
+          <Typography.Title level={4} className="whitespace-nowrap">Gestores</Typography.Title>
           <Flex gap={8}>
             <Radio.Group
               value={status}

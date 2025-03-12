@@ -21,7 +21,7 @@ export const MenuNavigate: React.FC<MenuProps> = ({ ...rest }) => {
       selectedKeys={[location.pathname]}
       items={getNavegateItems({ signOut, hasRole })}
       onClick={handleMenuClick}
-      style={{ borderInlineEnd: "none" }}
+      style={{ borderInlineEnd: "none", color: "#FFF" }}
       {...rest}
     />
   );

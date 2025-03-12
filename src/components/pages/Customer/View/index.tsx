@@ -116,7 +116,9 @@ export const ViewCustomerPage: React.FC = () => {
         <Card>
           <Flex gap={20} vertical>
             <Flex justify="space-between">
-              <Typography.Title level={4}>Veículos</Typography.Title>
+              <Typography.Title level={4} className="whitespace-nowrap">
+                Veículos
+              </Typography.Title>
               <Flex gap={8}>
                 <Search
                   placeholder="Pesquise por placa.."
@@ -155,7 +157,7 @@ export const ViewCustomerPage: React.FC = () => {
         <Card>
           <Flex gap={20} vertical>
             <Flex justify="space-between">
-              <Typography.Title level={4}>
+              <Typography.Title level={4} className="whitespace-nowrap">
                 Histórico de Serviços
               </Typography.Title>
               <Flex gap={8}>

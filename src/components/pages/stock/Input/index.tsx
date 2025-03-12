@@ -123,7 +123,7 @@ export const StockInputPage = () => {
       <Card>
         <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <Typography.Title level={4}>Entrada estoque</Typography.Title>
+            <Typography.Title level={4} className="whitespace-nowrap">Entrada estoque</Typography.Title>
             <Flex gap={8}>
               <SelectSearchInput
                 placeholder="Filtre por catégoria"
