@@ -19,15 +19,13 @@ export const OutputStockTransactionForm = ({ ...rest }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const getStockItemName = (stock: StockItem) => {
-    return (
-      <Flex vertical align="center" gap={8}>
-        <Flex vertical>
-          <p className="text-sm">{stock.item.name}</p>
-          <p className="text-xs">{formatCurrency(stock.acquisitionPrice)}</p>
-        </Flex>
-        <p className="text-sm">{stock.quantity}</p>
-      </Flex>
-    );
+    const itemName = stock.item.name;
+    const itemQuantity = stock.quantity;
+    const acquisitionPrice = stock.acquisitionPrice;
+
+    return `${itemName} ${formatCurrency(
+      acquisitionPrice
+    )} - ${itemQuantity} un`;
   };
 
   const fetchResource = async () => {
@@ -57,55 +55,72 @@ export const OutputStockTransactionForm = ({ ...rest }: Props) => {
               {(fields, { add, remove }) => (
                 <>
                   <div className="max-h-96 overflow-y-auto overflow-x-hidden">
-                    {fields.map(({ key, name }) => (
-                      <Row gutter={[16, 16]} key={key}>
-                        <Col span={24} md={{ span: 8 }}>
+                    {fields.map(({ key, name }, index) => (
+                      <Row
+                        gutter={[16, 16]}
+                        key={key}
+                        className={`${
+                          index % 2 === 0 ? "bg-gray-100" : ""
+                        } p-2`}
+                      >
+                        <Col span={21}>
                           <Form.Item
                             label="Produto"
                             name={[name, "stockItemId"]}
                             key={key + "_stockItemId"}
                             rules={[
-                              { required: true, message: "Campo obrigatório!" },
+                              {
+                                required: true,
+                                message: "Campo obrigatório!",
+                              },
                             ]}
                           >
                             <SelectSearchInput
                               placeholder="Selecione o produto"
                               options={stockItems.map((stock) => ({
                                 value: stock.id,
-                                label: stock.item.name + " - " + stock.quantity +"un",
+                                label: getStockItemName(stock),
                               }))}
                             />
                           </Form.Item>
+                          <Row gutter={[16, 16]} key={key}>
+                            <Col span={12}>
+                              <Form.Item
+                                label="Quantidade"
+                                name={[name, "quantity"]}
+                                key={key + "_quantity"}
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Campo obrigatório!",
+                                  },
+                                ]}
+                              >
+                                <InputNumber
+                                  min={1}
+                                  placeholder="Quantidade"
+                                  style={{ width: "100%" }}
+                                />
+                              </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                              <Form.Item
+                                label="Preço"
+                                name={[name, "price"]}
+                                key={key + "_price"}
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Campo obrigatório!",
+                                  },
+                                ]}
+                              >
+                                <InputMoney placeholder="Preço" />
+                              </Form.Item>
+                            </Col>
+                          </Row>
                         </Col>
-                        <Col span={24} md={{ span: 8 }}>
-                          <Form.Item
-                            label="Quantidade"
-                            name={[name, "quantity"]}
-                            key={key + "_quantity"}
-                            rules={[
-                              { required: true, message: "Campo obrigatório!" },
-                            ]}
-                          >
-                            <InputNumber
-                              min={1}
-                              placeholder="Quantidade"
-                              style={{ width: "100%" }}
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24} md={{ span: 6 }}>
-                          <Form.Item
-                            label="Preço"
-                            name={[name, "price"]}
-                            key={key + "_price"}
-                            rules={[
-                              { required: true, message: "Campo obrigatório!" },
-                            ]}
-                          >
-                            <InputMoney placeholder="Preço" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24} md={{ span: 2 }}>
+                        <Col span={3}>
                           <Flex
                             align="center"
                             justify="center"
