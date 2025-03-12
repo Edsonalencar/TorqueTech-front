@@ -49,6 +49,7 @@ export interface StockTransaction {
   id: string;
   transactionType: TransactionType;
   category: TransactionCategoryIn | TransactionCategoryOut;
+  status: TransactionStatus;
   garage: Garage;
   owner: User;
   items: TransactionItem[];
@@ -74,4 +75,9 @@ export enum TransactionCategoryOut {
   WORK_ORDER = "WORK_ORDER", // Uso de itens em ordens de serviço
   DISPOSAL = "DISPOSAL", // Descarte de itens danificados ou sem utilidade
   TRANSFER = "TRANSFER", // Transferência de itens entre garagens ou unidades (saída)
+}
+
+export enum TransactionStatus {
+  CREATED = "CREATED",
+  CANCELLED = "CANCELLED",
 }

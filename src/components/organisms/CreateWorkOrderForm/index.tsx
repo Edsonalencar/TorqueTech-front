@@ -1,0 +1,209 @@
+import { InputMoney } from "@/components/atoms/Inputs/InputMoney";
+import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
+import { StockItem } from "@/services/stockItemService/dto";
+import { StockItemService } from "@/services/stockItemService/service";
+import { CreateWorkOrderRequestDTO } from "@/services/workService/dto";
+import { formatCurrency } from "@/utils/formaters/formatCurrency";
+import { Button, FormProps, Typography } from "antd";
+import { Col, Form, Input, InputNumber, Row, DatePicker, Select } from "antd";
+import { useEffect, useState } from "react";
+import { FiMinusCircle } from "react-icons/fi";
+
+interface Props extends FormProps<CreateWorkOrderRequestDTO> {}
+
+export const CreateWorkOrderForm = ({ ...rest }: Props) => {
+  const [stockItems, setStockItems] = useState<StockItem[]>([]);
+
+  const [loading, setLoading] = useState(false);
+
+  const getStockItemName = (stock: StockItem) => {
+    const itemName = stock.item.name;
+    const itemQuantity = stock.quantity;
+    const acquisitionPrice = stock.acquisitionPrice;
+
+    return `${itemName} ${formatCurrency(
+      acquisitionPrice
+    )} - ${itemQuantity} un`;
+  };
+
+  const fetchResource = async () => {
+    setLoading(true);
+    try {
+      const { data } = await StockItemService.get();
+      setStockItems(data);
+    } catch (error) {
+      console.error("fetchResource [OutputStockTransactionOutForm]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchResource();
+  }, []);
+
+  return (
+    <Form layout="vertical" {...rest}>
+      <Row gutter={[20, 20]}>
+        <Col span={12}>
+          <Typography.Title level={5}>Itens do Estoque</Typography.Title>
+          <Form.List name="stockItems">
+            {(fields, { add, remove }) => (
+              <>
+                <div
+                  className="overflow-x-hidden overflow-y-auto"
+                  style={{ maxHeight: "25rem" }}
+                >
+                  {fields.map(({ key, name }, index) => (
+                    <Row
+                      gutter={[16, 16]}
+                      key={key}
+                      className={`p-2 ${index % 2 === 0 ? "bg-gray-100" : ""}`}
+                    >
+                      <Col span={21}>
+                        <Form.Item
+                          label="Produto"
+                          name={[name, "stockItemId"]}
+                          rules={[
+                            { required: true, message: "Campo obrigatório!" },
+                          ]}
+                        >
+                          <SelectSearchInput
+                            placeholder="Selecione o produto"
+                            options={stockItems.map((stock) => ({
+                              value: stock.id,
+                              label: getStockItemName(stock),
+                            }))}
+                          />
+                        </Form.Item>
+                        <Row gutter={[16, 16]}>
+                          <Col span={12}>
+                            <Form.Item
+                              label="Quantidade"
+                              name={[name, "quantity"]}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Campo obrigatório!",
+                                },
+                              ]}
+                            >
+                              <InputNumber
+                                min={1}
+                                placeholder="Quantidade"
+                                style={{ width: "100%" }}
+                              />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              label="Preço"
+                              name={[name, "price"]}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Campo obrigatório!",
+                                },
+                              ]}
+                            >
+                              <InputMoney
+                                placeholder="Preço"
+                                style={{ width: "100%" }}
+                              />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span={3} className="flex items-center">
+                        <Button
+                          onClick={() => remove(name)}
+                          block
+                          size="small"
+                          type="text"
+                        >
+                          <FiMinusCircle />
+                        </Button>
+                      </Col>
+                    </Row>
+                  ))}
+                </div>
+
+                <Form.Item>
+                  <Button type="primary" onClick={() => add()} block>
+                    Adicionar Item do Estoque
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            label="Título"
+            name="title"
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          >
+            <Input placeholder="Título da ordem" />
+          </Form.Item>
+          <Form.Item label="Descrição" name="description">
+            <Input.TextArea placeholder="Descrição da ordem" />
+          </Form.Item>
+          <Form.Item label="Nota" name="note">
+            <Input.TextArea placeholder="Notas adicionais" />
+          </Form.Item>
+
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item
+                label="Status"
+                name="status"
+                rules={[{ required: true, message: "Campo obrigatório!" }]}
+              >
+                <Select placeholder="Selecione o status">
+                  <Select.Option value="pending">Pendente</Select.Option>
+                  <Select.Option value="in_progress">
+                    Em andamento
+                  </Select.Option>
+                  <Select.Option value="completed">Concluída</Select.Option>
+                  <Select.Option value="canceled">Cancelada</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Data de Início" name="startAt">
+                <DatePicker
+                  showTime
+                  style={{ width: "100%" }}
+                  format={"DD/MM/YYYY HH:mm"}
+                  placeholder="Data de início"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item label="Data Prevista de Conclusão" name="expectedAt">
+                <DatePicker
+                  showTime
+                  style={{ width: "100%" }}
+                  format={"DD/MM/YYYY HH:mm"}
+                  placeholder="Data prevista"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Custo"
+                name="cost"
+                rules={[{ required: true, message: "Campo obrigatório!" }]}
+              >
+                <InputMoney placeholder="Custo da ordem" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Form>
+  );
+};

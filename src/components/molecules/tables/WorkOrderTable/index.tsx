@@ -1,51 +1,66 @@
-import { Table, TableProps, Typography } from "antd";
+import { Table, TableProps } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
-import { WorkOrder, WorkOrderStatus } from "@/services/workService/dto";
+import { ActionsMenu } from "../../ActionsMenu";
+import { CreateWorkOrderRequestDTO } from "@/services/workService/dto";
 
-interface Props extends TableProps<WorkOrder> {
-  onView?: (order: WorkOrder) => void;
+interface Props extends TableProps<CreateWorkOrderRequestDTO> {
+  onView?: (workOrder: CreateWorkOrderRequestDTO) => void;
+  onEdit?: (workOrder: CreateWorkOrderRequestDTO) => void;
+  onDelete?: (workOrder: CreateWorkOrderRequestDTO) => void;
 }
 
-export const WorkOrderTable = ({ onView, ...rest }: Props) => {
-  const columns: ColumnProps<WorkOrder>[] = [
+export const WorkOrderTable = ({
+  onView,
+  onEdit,
+  onDelete,
+  ...rest
+}: Props) => {
+  const handler = (item: CreateWorkOrderRequestDTO, func?: Function) => {
+    if (!func) return undefined;
+    return () => func(item);
+  };
+
+  const columns: ColumnProps<CreateWorkOrderRequestDTO>[] = [
     {
-      title: "Titulo",
-      dataIndex: "name",
-      key: "name",
+      title: "Título",
+      dataIndex: "title",
+      key: "title",
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: WorkOrderStatus) => WorkOrderStatus[status],
     },
     {
-      title: "Descrição",
-      dataIndex: "description",
-      key: "description",
+      title: "Data de Início",
+      dataIndex: "startAt",
+      key: "startAt",
+      render: (date) => (date ? formatDateAndTime(date) : "-"),
+    },
+    {
+      title: "Data Prevista",
+      dataIndex: "expectedAt",
+      key: "expectedAt",
+      render: (date) => (date ? formatDateAndTime(date) : "-"),
     },
     {
       title: "Custo",
       dataIndex: "cost",
       key: "cost",
-      render: (cost) => formatCurrency(cost),
-    },
-    {
-      title: "Data de Criação",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (date) => formatDateAndTime(date),
+      render: (_, { cost }) => formatCurrency(cost),
     },
     {
       title: "Ações",
       dataIndex: "actions",
       key: "actions",
       render: (_, item) => (
-        <Typography.Link onClick={() => onView?.(item)}>
-          Ver Detalhes
-        </Typography.Link>
+        <ActionsMenu
+          onView={handler(item, onView)}
+          onEdit={handler(item, onEdit)}
+          onDelete={handler(item, onDelete)}
+        />
       ),
     },
   ];

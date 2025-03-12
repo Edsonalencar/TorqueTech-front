@@ -1,14 +1,21 @@
-import { Button, Card, Flex, Radio, Typography } from "antd";
+import { Button, Card, Flex, Typography } from "antd";
 import Search from "antd/es/input/Search";
 import { PlusOutlined } from "@ant-design/icons";
 import { WorkStatus } from "@/services/workService/dto";
 import { useState } from "react";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { workStatusOptions } from "@/utils/utils";
-import { Board } from "@/components/molecules/Board";
+import { WorkTable } from "@/components/molecules/tables/WorkTable";
+import { useNavigate } from "react-router-dom";
 
 export const WorkPage = () => {
   const [status, setStatus] = useState<WorkStatus>();
+
+  const navigate = useNavigate();
+
+  const handlerCreate = () => {
+    navigate(`/app/services/create`);
+  };
 
   return (
     <Card>
@@ -32,13 +39,17 @@ export const WorkPage = () => {
               onSearch={(value) => {}}
               style={{ width: 304 }}
             />
-            <Button type="primary" icon={<PlusOutlined />}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={handlerCreate}
+            >
               Novo Serviço
             </Button>
           </Flex>
         </Flex>
 
-        <Board />
+        <WorkTable />
       </Flex>
     </Card>
   );

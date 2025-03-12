@@ -181,6 +181,15 @@ export const workStatusOptions = [
   { value: "PAID", label: "Pago" },
 ];
 
+export const workOrderStatusOptions = [
+  { value: "PENDING", label: "Aguardando Início" },
+  { value: "IN_PROGRESS", label: "Em Andamento" },
+  { value: "WAITING_PARTS", label: "Aguardando Peças" },
+  { value: "ON_HOLD", label: "Pausado" },
+  { value: "COMPLETED", label: "Concluído" },
+  { value: "OVERDUE", label: "Atrasado" },
+];
+
 export const transactionCategoryInOptions = [
   { value: "PURCHASE", label: "Compra de Estoque" },
   { value: "RETURN", label: "Devolução ao Estoque" },

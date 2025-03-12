@@ -3,6 +3,7 @@ import { ColumnProps } from "antd/es/table";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import {
   StockTransaction,
+  TransactionStatus,
   TransactionType,
 } from "@/services/stockTransactionService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
@@ -107,5 +108,16 @@ export const StockTransactionTable = ({
     },
   ];
 
-  return <Table columns={columns} {...rest} />;
+  return (
+    <Table
+      columns={columns}
+      rowClassName={(record) => {
+        if (record.status === TransactionStatus.CANCELLED) {
+          return " bg-red-50";
+        }
+        return "";
+      }}
+      {...rest}
+    />
+  );
 };
