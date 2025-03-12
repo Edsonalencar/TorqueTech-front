@@ -8,6 +8,7 @@ import {
 } from "@/services/stockTransactionService/dto";
 import { StockTransactionService } from "@/services/stockTransactionService/service";
 import { OutputStockTransactionForm } from "@/components/organisms/OutputStockTransactionForm";
+import dayjs from "dayjs";
 
 export interface Props {
   isOpen: boolean;
@@ -74,8 +75,8 @@ export const OutputStockTransactionModal = ({
   useEffect(() => {
     if (initialData && isOpen) {
       form.setFieldsValue({
-        ...initialData,
         category: initialData.category as TransactionCategoryOut,
+        transactionAt: dayjs(initialData.transactionDate),
         items: initialData.items.map((item) => ({
           stockItemId: item.stockItem.id,
           quantity: item.quantity,

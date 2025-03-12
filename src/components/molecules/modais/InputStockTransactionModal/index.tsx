@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Flex, Form, Modal } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 import {
+  InputStockItemDTO,
   InputStockTransactionRequest,
   StockTransaction,
   TransactionCategoryIn,
@@ -10,6 +11,7 @@ import { StockTransactionService } from "@/services/stockTransactionService/serv
 import { InputStockTransactionForm } from "@/components/organisms/InputStockTransactionForm";
 import { LocalStock } from "@/services/localStockService/dto";
 import { ItemStock } from "@/services/itemStockService/dto";
+import dayjs from "dayjs";
 
 export interface Props {
   isOpen: boolean;
@@ -66,11 +68,24 @@ export const InputStockTransactionModal = ({
     }
   };
 
+  const getStockItem = (item: InputStockItemDTO) => {
+    return initialData?.items.find(
+      (transItem) =>
+        transItem.stockItem.item.id == item.itemId &&
+        transItem.stockItem.local?.id == item.localId &&
+        transItem.stockItem.acquisitionPrice == item.acquisitionUnitPrice
+    );
+  };
+
   const submit = async () => {
     const formValue = await form.validateFields();
 
     const data: ResourceType = {
       ...formValue,
+      items: formValue.items.map((item) => ({
+        ...item,
+        stockItemId: getStockItem(item)?.stockItem.id,
+      })),
     };
 
     if (initialData?.id) update(initialData.id, data);
@@ -85,8 +100,8 @@ export const InputStockTransactionModal = ({
   useEffect(() => {
     if (initialData && isOpen) {
       form.setFieldsValue({
-        ...initialData,
         category: initialData.category as TransactionCategoryIn,
+        transactionAt: dayjs(initialData.transactionDate),
         items: initialData.items.map((item) => ({
           acquisitionUnitPrice: item.stockItem.acquisitionPrice,
           itemId: item.stockItem.item.id,

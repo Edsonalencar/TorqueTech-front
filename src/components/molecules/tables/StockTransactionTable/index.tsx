@@ -70,11 +70,17 @@ export const StockTransactionTable = ({
       title: "Items",
       dataIndex: "item",
       key: "item",
-      render: (_, { items }) => (
-        <div className=" truncate max-w-md">
-          {items.map((item) => item.stockItem.item.name).join(", ")}
-        </div>
-      ),
+      render: (_, { items }) => {
+        const completeName = items
+          .map((item) => `${item.stockItem.item.name} x ${item.quantity}uni`)
+          .join(", ");
+
+        return (
+          <div className=" truncate max-w-40" title={completeName}>
+            {completeName}
+          </div>
+        );
+      },
     },
     {
       title: "Quantidade",

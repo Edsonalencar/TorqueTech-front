@@ -170,6 +170,7 @@ export const OutputStockTransactionForm = ({ ...rest }: Props) => {
               <DatePicker
                 showTime
                 style={{ width: "100%" }}
+                format={"DD/MM/YYYY HH:mm"}
                 placeholder="Selecione a data"
               />
             </Form.Item>

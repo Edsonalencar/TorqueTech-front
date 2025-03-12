@@ -1,6 +1,7 @@
 import { User } from "@/types/authTypes";
 import { Garage } from "../garageService/dto";
 import { StockItem } from "../stockItemService/dto";
+import { Dayjs } from "dayjs";
 
 export interface OutputStockItemDTO {
   stockItemId: string;
@@ -11,10 +12,11 @@ export interface OutputStockItemDTO {
 export interface OutputStockTransactionRequest {
   items: OutputStockItemDTO[];
   category: TransactionCategoryOut;
-  transactionAt: string;
+  transactionAt: string | Dayjs;
 }
 
 export interface InputStockItemDTO {
+  stockItemId?: string;
   itemId: string;
   localId?: string;
   acquisitionUnitPrice: number;
@@ -25,7 +27,7 @@ export interface InputStockItemDTO {
 export interface InputStockTransactionRequest {
   items: InputStockItemDTO[];
   category: TransactionCategoryIn;
-  transactionAt: string;
+  transactionAt: string | Dayjs;
 }
 
 export interface GetPageStockTransactionRequest {
