@@ -58,7 +58,7 @@ export const OutputStockTransactionForm = ({ ...rest }: Props) => {
                 <>
                   <div className="max-h-96 overflow-y-auto overflow-x-hidden">
                     {fields.map(({ key, name }) => (
-                      <Row gutter={[16, 16]}>
+                      <Row gutter={[16, 16]} key={key}>
                         <Col span={24} md={{ span: 8 }}>
                           <Form.Item
                             label="Produto"
