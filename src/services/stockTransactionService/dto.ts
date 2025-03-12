@@ -51,7 +51,7 @@ export interface StockTransaction {
   owner: User;
   items: TransactionItem[];
   quantity: number;
-  unitPrice: number;
+  price: number;
   transactionDate: string; // ISO 8601 (YYYY-MM-DDTHH:mm:ss)
 }
 

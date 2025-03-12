@@ -8,15 +8,18 @@ import {
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { transactionCategorySerialize } from "@/utils/serializers";
 import { ActionsMenu } from "../../ActionsMenu";
+import { User } from "@/types/authTypes";
 
 interface Props extends TableProps<StockTransaction> {
   onView?: (transaction: StockTransaction) => void;
+  onViewOwner?: (user: User) => void;
   onCancel?: (transaction: StockTransaction) => void;
   onEdit?: (transaction: StockTransaction) => void;
 }
 
 export const StockTransactionTable = ({
   onView,
+  onViewOwner,
   onCancel,
   onEdit,
   ...rest
@@ -38,6 +41,20 @@ export const StockTransactionTable = ({
       ),
     },
     {
+      title: "Responsavel",
+      dataIndex: "owner",
+      key: "owner",
+      render: (_, { owner }) => (
+        <Typography.Link
+          className="w-full truncate flex items-center gap-2"
+          title={owner.profile?.name}
+          onClick={() => onViewOwner?.(owner)}
+        >
+          {owner.profile?.name}
+        </Typography.Link>
+      ),
+    },
+    {
       title: "Data da Transação",
       dataIndex: "transactionDate",
       key: "transactionDate",
@@ -50,10 +67,14 @@ export const StockTransactionTable = ({
       render: (_, { category }) => transactionCategorySerialize(category),
     },
     {
-      title: "Item",
+      title: "Items",
       dataIndex: "item",
       key: "item",
-      render: (_, { item }) => item?.item?.name,
+      render: (_, { items }) => (
+        <div className=" truncate max-w-md">
+          {items.map((item) => item.stockItem.item.name).join(", ")}
+        </div>
+      ),
     },
     {
       title: "Quantidade",
@@ -61,18 +82,11 @@ export const StockTransactionTable = ({
       key: "quantity",
     },
     {
-      title: "Preço Unitário",
-      dataIndex: "unitPrice",
-      key: "unitPrice",
-      render: (price) => formatCurrency(price),
-    },
-    {
       title: "Total",
-      dataIndex: "total",
-      key: "total",
-      render: (_, record) => formatCurrency(record.unitPrice * record.quantity),
+      dataIndex: "price",
+      key: "price",
+      render: (_, { price }) => formatCurrency(price),
     },
-
     {
       title: "Ações",
       dataIndex: "actions",
