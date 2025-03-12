@@ -8,6 +8,7 @@ import { FaUsers, FaToolbox } from "react-icons/fa";
 import { IconBaseProps } from "react-icons";
 import { LuFolderSymlink, LuFolderUp } from "react-icons/lu";
 import { FaGear } from "react-icons/fa6";
+import { FaClipboardList } from "react-icons/fa";
 
 export interface NavegateItem {
   key: string;
@@ -60,6 +61,11 @@ export const getNavegateItems = ({
       label: "Estoque",
       icon: React.createElement(FaBox),
       children: [
+        {
+          key: "/app/stocks/acompanhamento",
+          label: "Acompanhamento",
+          icon: React.createElement(FaClipboardList),
+        },
         {
           key: "/app/stocks/entrada",
           label: "Entrada",

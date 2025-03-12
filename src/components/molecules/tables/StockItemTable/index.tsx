@@ -1,7 +1,8 @@
 import { Table, TableProps, Typography } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
-import { StockItem } from "@/services/stockTransactionService/dto";
+import { StockItem } from "@/services/stockItemService/dto";
+import { itemCategorySerialize } from "@/utils/serializers";
 
 interface Props extends TableProps<StockItem> {
   onView?: (item: StockItem) => void;
@@ -11,34 +12,35 @@ export const StockItemTable = ({ onView, ...rest }: Props) => {
   const columns: ColumnProps<StockItem>[] = [
     {
       title: "Nome",
-      dataIndex: "item.name",
-      key: "name",
+      dataIndex: "itemName",
+      render: (_, { item }) => item.name,
+    },
+    {
+      title: "Local",
+      dataIndex: "localName",
+      render: (_, { local }) => local?.name,
     },
     {
       title: "Categoria",
-      dataIndex: "item.category",
-      key: "category",
+      dataIndex: "category",
+      render: (_, { item }) => itemCategorySerialize(item.category),
     },
     {
-      title: "Quantidade",
+      title: "Quantidade em Estoque",
       dataIndex: "quantity",
-      key: "quantity",
+      render: (_, { quantity }) => quantity,
     },
     {
-      title: "Preço Unitário",
+      title: "Preço Aquisição",
+      dataIndex: "acquisitionPrice",
+      key: "acquisitionPrice",
+      render: (_, { acquisitionPrice }) => formatCurrency(acquisitionPrice),
+    },
+    {
+      title: "Preço Venda",
       dataIndex: "price",
       key: "price",
       render: (price) => formatCurrency(price),
-    },
-    {
-      title: "Ações",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, item) => (
-        <Typography.Link onClick={() => onView?.(item)}>
-          Ver Detalhes
-        </Typography.Link>
-      ),
     },
   ];
 

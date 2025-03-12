@@ -14,6 +14,7 @@ import { MechanicPage } from "@/components/pages/Mechanics";
 import { ViewMechanicPage } from "@/components/pages/Mechanics/View";
 import { StockInputPage } from "@/components/pages/stock/Input";
 import { StockOutputPage } from "@/components/pages/stock/Output";
+import { StockItemsPage } from "@/components/pages/stock/StockItems";
 import { StockViewPage } from "@/components/pages/stock/View";
 import { WorkPage } from "@/components/pages/Work";
 import { CreateWorkPage } from "@/components/pages/Work/Create";
@@ -40,6 +41,7 @@ export const routes: RenderRouter[] = [
       { path: "stocks/:uuid", component: StockViewPage },
       { path: "stocks/entrada", component: StockInputPage },
       { path: "stocks/saida", component: StockOutputPage },
+      { path: "stocks/acompanhamento", component: StockItemsPage },
       { path: "config", component: ConfigPage },
     ],
   },
