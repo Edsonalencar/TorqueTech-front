@@ -4,6 +4,7 @@ import { StockItem } from "@/services/stockItemService/dto";
 import { StockItemService } from "@/services/stockItemService/service";
 import { CreateWorkOrderRequestDTO } from "@/services/workService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
+import { workOrderStatusOptions } from "@/utils/utils";
 import { Button, FormProps, Typography } from "antd";
 import { Col, Form, Input, InputNumber, Row, DatePicker, Select } from "antd";
 import { useEffect, useState } from "react";
@@ -159,14 +160,10 @@ export const CreateWorkOrderForm = ({ ...rest }: Props) => {
                 name="status"
                 rules={[{ required: true, message: "Campo obrigatório!" }]}
               >
-                <Select placeholder="Selecione o status">
-                  <Select.Option value="pending">Pendente</Select.Option>
-                  <Select.Option value="in_progress">
-                    Em andamento
-                  </Select.Option>
-                  <Select.Option value="completed">Concluída</Select.Option>
-                  <Select.Option value="canceled">Cancelada</Select.Option>
-                </Select>
+                <Select
+                  placeholder="Selecione o status"
+                  options={workOrderStatusOptions}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>

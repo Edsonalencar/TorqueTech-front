@@ -4,6 +4,7 @@ import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { ActionsMenu } from "../../ActionsMenu";
 import { CreateWorkOrderRequestDTO } from "@/services/workService/dto";
+import { workOrderStatusSerialize } from "@/utils/serializers";
 
 interface Props extends TableProps<CreateWorkOrderRequestDTO> {
   onView?: (workOrder: CreateWorkOrderRequestDTO) => void;
@@ -32,6 +33,7 @@ export const WorkOrderTable = ({
       title: "Status",
       dataIndex: "status",
       key: "status",
+      render: (_, { status }) => workOrderStatusSerialize(status),
     },
     {
       title: "Data de Início",

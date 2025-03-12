@@ -154,3 +154,16 @@ export const itemCategorySerialize = (value?: ItemCategory): string => {
       return "Desconhecido";
   }
 };
+
+export const workOrderStatusSerialize = (status: string): string => {
+  const statusMap: Record<string, string> = {
+    PENDING: "Aguardando Início",
+    IN_PROGRESS: "Em Andamento",
+    WAITING_PARTS: "Aguardando Peças",
+    ON_HOLD: "Pausado",
+    COMPLETED: "Concluído",
+    OVERDUE: "Atrasado",
+  };
+
+  return statusMap[status] || "Status desconhecido";
+};

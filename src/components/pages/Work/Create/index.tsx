@@ -10,9 +10,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { CreateWorkOrderModal } from "@/components/molecules/modais/CreateWorkOrderModal";
 import { useNavigate } from "react-router-dom";
+import { WorkService } from "@/services/workService/service";
+import { LoadingContent } from "@/components/atoms/LoadingContent";
 
 export const CreateWorkPage = () => {
   const [newOrderVisible, setNewOrderVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [form] = Form.useForm<CreateWorkRequestDTO>();
   const [workOrders, setWorkOrders] = useState<CreateWorkOrderRequestDTO[]>([]);
 
@@ -29,17 +32,32 @@ export const CreateWorkPage = () => {
     setWorkOrders([...workOrders, data]);
   };
 
-  const submit = async () => {
+  const submit = async (formData: CreateWorkRequestDTO) => {
+    setLoading(true);
+    try {
+      const { data } = await WorkService.create(formData);
+      toBack();
+    } catch (error) {
+      console.error("CreateWorkPage", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlerSubmit = async () => {
     const data = await form.validateFields();
-    console.log("submit", {
+
+    const formData = {
       ...data,
       workOrders,
-    });
+    };
+
+    await submit(formData);
   };
 
   return (
     <>
-      {/* <LoadingContent isLoading={resourceLoading} /> */}
+      <LoadingContent isLoading={loading} />
 
       <Flex gap={20} vertical>
         <ToBack />
@@ -74,7 +92,11 @@ export const CreateWorkPage = () => {
               </Button>
             </Col>
             <Col span={12} md={6}>
-              <Button type="primary" style={{ width: "100%" }} onClick={submit}>
+              <Button
+                type="primary"
+                style={{ width: "100%" }}
+                onClick={handlerSubmit}
+              >
                 Salvar
               </Button>
             </Col>

@@ -1,15 +1,79 @@
 import { InputMoney } from "@/components/atoms/Inputs/InputMoney";
+import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
+import { ResponseDTO } from "@/services/baseApi/interface";
+import { Customer } from "@/services/customerService/dto";
+import { CustomerService } from "@/services/customerService/service";
+import { Mechanic } from "@/services/mechanicService/dto";
+import { MechanicService } from "@/services/mechanicService/service";
+import { Vehicle } from "@/services/vehicleService/dto";
+import { VehicleService } from "@/services/vehicleService/service";
 import { CreateWorkRequestDTO } from "@/services/workService/dto";
-import { Button, FormProps, Typography } from "antd";
+import { formatLicensePlate } from "@/utils/formaters/format";
+import { FormProps, Typography } from "antd";
 import { Col, Form, Input, Row, DatePicker } from "antd";
-import { useState } from "react";
-import { FiMinusCircle } from "react-icons/fi";
+import { useEffect, useState } from "react";
 
 interface Props extends FormProps<CreateWorkRequestDTO> {}
 
 export const CreateWorkForm = ({ ...rest }: Props) => {
   const [loading, setLoading] = useState(false);
+
+  const [mechanics, setMechanics] = useState<Mechanic[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  const fetchMechanics = async () => {
+    setLoading(true);
+    try {
+      const { data } = await MechanicService.get();
+      setMechanics(data);
+    } catch (error) {
+      console.error("fetchMechanics [CreateWorkForm]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCustomers = async () => {
+    setLoading(true);
+    try {
+      const { data } = await CustomerService.get();
+      setCustomers(data);
+    } catch (error) {
+      console.error("fetchMechanics [CreateWorkForm]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchVehicles = async (customerId: string) => {
+    setLoading(true);
+    try {
+      const { data } = await VehicleService.getAllByCustomer<
+        ResponseDTO<Vehicle[]>
+      >(customerId);
+
+      console.log("fetchVehicles", data);
+
+      setVehicles(data);
+    } catch (error) {
+      console.error("fetchMechanics [CreateWorkForm]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getVehicleName = (vehicle: Vehicle) => {
+    return `${vehicle.vehicleType.brand} ${
+      vehicle.vehicleType.model
+    } - ${formatLicensePlate(vehicle.licensePlate)}`;
+  };
+
+  useEffect(() => {
+    fetchMechanics();
+    fetchCustomers();
+  }, []);
 
   return (
     <>
@@ -18,6 +82,54 @@ export const CreateWorkForm = ({ ...rest }: Props) => {
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <Typography.Title level={5}>Detalhes do Trabalho</Typography.Title>
+            <Form.Item
+              label="Cliente"
+              name="customerId"
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
+            >
+              <SelectSearchInput
+                placeholder="Selecione o cliente"
+                options={customers.map((customer) => ({
+                  value: customer.id,
+                  label: customer.profile.name,
+                }))}
+                onSelect={(customerId) => fetchVehicles(customerId as string)}
+              />
+            </Form.Item>
+
+            <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <Form.Item
+                  label="Veículo"
+                  name="vehicleId"
+                  rules={[{ required: true, message: "Campo obrigatório!" }]}
+                  dependencies={["customerId"]}
+                >
+                  <SelectSearchInput
+                    placeholder="Selecione o veículo"
+                    options={vehicles?.map((vehicle) => ({
+                      value: vehicle.id,
+                      label: getVehicleName(vehicle),
+                    }))}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Mecanico"
+                  name="mechanicId"
+                  rules={[{ required: true, message: "Campo obrigatório!" }]}
+                >
+                  <SelectSearchInput
+                    placeholder="Selecione o mecanico"
+                    options={mechanics.map((mechanic) => ({
+                      value: mechanic.id,
+                      label: mechanic?.user?.profile?.name,
+                    }))}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
             <Form.Item
               label="Título"
               name="title"
