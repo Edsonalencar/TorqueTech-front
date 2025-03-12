@@ -5,9 +5,12 @@ import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { formatDate } from "@/utils/formaters/formatDate";
 import { formatLicensePlate } from "@/utils/formaters/format";
 import { ActionsMenu } from "../../ActionsMenu";
+import { workStatusSerialize } from "@/utils/serializers";
+import { Customer } from "@/services/customerService/dto";
 
 interface Props extends TableProps<Work> {
   onView?: (work: Work) => void;
+  onViewCustomer?: (customer: Customer) => void;
   onUpdateStatus?: (work: Work) => void;
   onEdit?: (work: Work) => void;
   onConclude?: (work: Work) => void;
@@ -20,6 +23,7 @@ export const WorkTable = ({
   onConclude,
   onEdit,
   onUpdateStatus,
+  onViewCustomer,
   ...rest
 }: Props) => {
   const handler = (item: Work, func?: Function) => {
@@ -40,32 +44,47 @@ export const WorkTable = ({
       ),
     },
     {
+      title: "Cliente",
+      dataIndex: "customer",
+      key: "customer",
+      render: (_, { customer }) => (
+        <Typography.Link
+          onClick={() => onViewCustomer?.(customer)}
+          title={customer.profile.name}
+        >
+          {customer.profile.name}
+        </Typography.Link>
+      ),
+    },
+    {
       title: "Titulo",
       dataIndex: "name",
       key: "name",
-    },
-    {
-      title: "Descrição",
-      dataIndex: "description",
-      key: "description",
+      render: (_, { title }) => title,
     },
     {
       title: "Veículo",
       dataIndex: "vehicle",
       key: "vehicle",
       render: (_, { vehicle }) =>
-        `${vehicle?.vehicleType.brand} / ${
-          vehicle?.vehicleType.model
-        } - ${formatLicensePlate(vehicle.licensePlate)}`,
+        `${vehicle?.vehicleType.model}: ${formatLicensePlate(
+          vehicle.licensePlate
+        )}`,
     },
     {
-      title: "Iniciado em",
+      title: "Inicio",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (date) => formatDate(date),
     },
     {
-      title: "Custo Total",
+      title: "Entrega",
+      dataIndex: "expectedAt",
+      key: "expectedAt",
+      render: (_, { expectedAt }) => formatDate(expectedAt),
+    },
+    {
+      title: "Custo",
       dataIndex: "totalCost",
       key: "totalCost",
       render: (cost) => formatCurrency(cost),
@@ -80,7 +99,7 @@ export const WorkTable = ({
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (_, { status }) => WorkStatus[status],
+      render: (_, { status }) => workStatusSerialize(status),
     },
     {
       title: "Ações",

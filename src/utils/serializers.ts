@@ -167,3 +167,19 @@ export const workOrderStatusSerialize = (status: string): string => {
 
   return statusMap[status] || "Status desconhecido";
 };
+
+export const workStatusSerialize = (status: string): string => {
+  const statusMap: Record<string, string> = {
+    PENDING: "Aguardando Início",
+    IN_PROGRESS: "Em Andamento",
+    WAITING_PARTS: "Aguardando Peças",
+    ON_HOLD: "Pausado",
+    COMPLETED: "Concluído",
+    CANCELED: "Cancelado",
+    DELIVERED: "Entregue ao Cliente",
+    INVOICED: "Faturado",
+    PAID: "Pago",
+  };
+
+  return statusMap[status] || "Status desconhecido";
+};
