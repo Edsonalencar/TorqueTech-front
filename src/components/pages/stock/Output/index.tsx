@@ -18,6 +18,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { OutputStockTransactionModal } from "@/components/molecules/modais/OutputStockTransactionModal";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { User } from "@/types/authTypes";
 
 export const StockOutputPage = () => {
   const [resource, setResource] = useState<Pageable<StockTransaction>>();
@@ -35,6 +36,10 @@ export const StockOutputPage = () => {
 
   const handlerView = (item: StockTransaction) => {
     navigate(`/app/stocks/${item?.id}`);
+  };
+
+  const handlerViewOwner = (item: User) => {
+    navigate(`/app/users/${item?.id}`);
   };
 
   const handlerCancel = async (item: StockTransaction) => {
@@ -80,7 +85,9 @@ export const StockOutputPage = () => {
       <Card>
         <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <Typography.Title level={4} className="whitespace-nowrap">Saída estoque</Typography.Title>
+            <Typography.Title level={4} className="whitespace-nowrap">
+              Saída estoque
+            </Typography.Title>
             <Flex gap={8}>
               <SelectSearchInput
                 placeholder="Filtre por catégoria"
@@ -113,6 +120,7 @@ export const StockOutputPage = () => {
               loading={loading}
               onView={handlerView}
               onCancel={handlerCancel}
+              onViewOwner={handlerViewOwner}
               onEdit={(item) => setSelectedStockTransactionManager(item)}
             />
 

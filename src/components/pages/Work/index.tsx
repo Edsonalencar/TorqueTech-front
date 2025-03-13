@@ -80,6 +80,7 @@ export const WorkPage = () => {
             dataSource={resource?.content ?? []}
             pagination={false}
             loading={loading}
+            size="small"
           />
 
           <BasePagination page={page} setPage={setPage} pageable={resource} />

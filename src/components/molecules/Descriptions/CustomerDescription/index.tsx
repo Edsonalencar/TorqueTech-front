@@ -55,7 +55,7 @@ export const CustomerDescription: React.FC<Props> = ({ data, title }) => {
         <Descriptions.Item label="Veículos">
           {data.vehicles.map((vehicle) => (
             <div key={vehicle.id}>
-              {vehicle.model} - {vehicle.licensePlate}
+              {vehicle.vehicleType.model} - {vehicle.licensePlate}
             </div>
           ))}
         </Descriptions.Item>

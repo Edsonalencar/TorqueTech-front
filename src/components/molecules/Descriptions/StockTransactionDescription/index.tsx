@@ -1,6 +1,12 @@
-import { StockTransaction, TransactionType } from "@/services/stockTransactionService/dto";
-import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { Descriptions } from "antd";
+import { formatDateAndTime } from "@/utils/formaters/formatTime";
+import { StockTransaction } from "@/services/stockTransactionService/dto";
+import { formatCurrency } from "@/utils/formaters/formatCurrency";
+import {
+  transactionCategorySerialize,
+  transactionStatusSerialize,
+  transactionTypeSerialize,
+} from "@/utils/serializers";
 
 interface Props {
   data: StockTransaction;
@@ -17,25 +23,26 @@ export const StockTransactionDescription: React.FC<Props> = ({
       layout="vertical"
       column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
     >
-      <Descriptions.Item label="Tipo de Transação">
-        {TransactionType[data.transactionType]}
+      <Descriptions.Item label="Tipo">
+        {transactionTypeSerialize(data.type)}
       </Descriptions.Item>
-      <Descriptions.Item label="Item">
-        {data.item?.item?.name}
+      <Descriptions.Item label="Categoria">
+        {transactionCategorySerialize(data.category)}
       </Descriptions.Item>
-      <Descriptions.Item label="Quantidade">{data.quantity}</Descriptions.Item>
-      <Descriptions.Item label="Preço Unitário">
-        R$ {data.unitPrice.toFixed(2)}
+      <Descriptions.Item label="Status">
+        {transactionStatusSerialize(data.status)}
       </Descriptions.Item>
-      <Descriptions.Item label="Total">
-        R$ {(data.unitPrice * data.quantity).toFixed(2)}
+      <Descriptions.Item label="Responsável">
+        {data.owner.profile?.name}
       </Descriptions.Item>
       <Descriptions.Item label="Data da Transação">
         {formatDateAndTime(data.transactionDate)}
       </Descriptions.Item>
-      <Descriptions.Item label="Garagem">{data.garage?.name}</Descriptions.Item>
-      <Descriptions.Item label="Responsável">
-        {data.owner?.profile?.name}
+      <Descriptions.Item label="Quantidade Total">
+        {data.quantity}
+      </Descriptions.Item>
+      <Descriptions.Item label="Valor Total">
+        {formatCurrency(data.price)}
       </Descriptions.Item>
     </Descriptions>
   );

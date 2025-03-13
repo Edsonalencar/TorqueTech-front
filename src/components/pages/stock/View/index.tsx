@@ -12,10 +12,25 @@ import { StockTransactionService } from "@/services/stockTransactionService/serv
 import { StockTransactionDescription } from "@/components/molecules/Descriptions/StockTransactionDescription";
 import { OutputStockTransactionModal } from "@/components/molecules/modais/OutputStockTransactionModal";
 import { InputStockTransactionModal } from "@/components/molecules/modais/InputStockTransactionModal";
+import { TransactionItemTable } from "@/components/molecules/tables/TransactionItemTable";
+import { ItemStock } from "@/services/itemStockService/dto";
+import { LocalStock } from "@/services/localStockService/dto";
+import { LocalStockService } from "@/services/localStockService/service";
+import { ItemStockService } from "@/services/itemStockService/service";
+import { CreateLocalModal } from "@/components/molecules/modais/CreateLocalModal";
+import { CreateItemStockModal } from "@/components/molecules/modais/CreateItemStockModal";
 
 export const StockViewPage: React.FC = () => {
   const [resourceLoading, setResourceLoading] = useState(false);
   const [resource, setResource] = useState<StockTransaction>();
+  const [itemsStock, setItemsStock] = useState<ItemStock[]>([]);
+  const [localStock, setLocalStock] = useState<LocalStock[]>([]);
+
+  const [addLocalModalVisible, setAddLocalModalVisible] = useState(false);
+  const [addItemModalVisible, setAddItemModalVisible] = useState(false);
+
+  const [localLoading, setLocalLoading] = useState(false);
+  const [itemLoading, setItemLoading] = useState(false);
 
   const [canEditOut, setCanEditOut] = useState(false);
   const [canEditInp, setCanEditInp] = useState(false);
@@ -33,9 +48,33 @@ export const StockViewPage: React.FC = () => {
       const { data } = await StockTransactionService.getById(resourceId);
       setResource(data);
     } catch (error) {
-      console.error("fetchResource [ViewMechanicPage]", error);
+      console.error("fetchResource [StockViewPage]", error);
     } finally {
       setResourceLoading(false);
+    }
+  };
+
+  const fetchLocal = async () => {
+    setLocalLoading(true);
+    try {
+      const { data } = await LocalStockService.get();
+      setLocalStock(data);
+    } catch (error) {
+      console.error("fetchLocal [StockViewPage]", error);
+    } finally {
+      setLocalLoading(false);
+    }
+  };
+
+  const fetchItems = async () => {
+    setItemLoading(true);
+    try {
+      const { data } = await ItemStockService.get();
+      setItemsStock(data);
+    } catch (error) {
+      console.error("fetchItems [StockTransactionInForm]", error);
+    } finally {
+      setItemLoading(false);
     }
   };
 
@@ -45,14 +84,20 @@ export const StockViewPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (uuid) fetchResource(uuid);
+    if (uuid) {
+      fetchResource(uuid);
+      fetchLocal();
+      fetchItems();
+    }
   }, [uuid]);
 
   if (!resource) return <LoadingContent isLoading />;
 
   return (
     <>
-      <LoadingContent isLoading={resourceLoading} />
+      <LoadingContent
+        isLoading={resourceLoading || itemLoading || localLoading}
+      />
 
       <Flex gap={20} vertical>
         <ToBack />
@@ -64,7 +109,7 @@ export const StockViewPage: React.FC = () => {
                   Transação de Estoque
                 </Typography.Title>
                 <Button
-                  onClick={() => openEditByType(resource.transactionType)}
+                  onClick={() => openEditByType(resource.type)}
                   className="flex items-center gap-1"
                   type="text"
                 >
@@ -76,12 +121,24 @@ export const StockViewPage: React.FC = () => {
             data={resource}
           />
         </Card>
+
+        <Card>
+          <Typography.Title level={5}>Items movimentados</Typography.Title>
+          <TransactionItemTable
+            dataSource={resource.items ?? []}
+            pagination={false}
+          />
+        </Card>
       </Flex>
 
       <InputStockTransactionModal
         isOpen={canEditInp}
         onClose={() => setCanEditInp(false)}
         initialData={resource}
+        itemsStock={itemsStock}
+        localStock={localStock}
+        onAddItem={() => setAddItemModalVisible?.(true)}
+        onAddLocal={() => setAddLocalModalVisible?.(true)}
         reload={reload}
       />
 
@@ -90,6 +147,18 @@ export const StockViewPage: React.FC = () => {
         onClose={() => setCanEditOut(false)}
         initialData={resource}
         reload={reload}
+      />
+
+      <CreateLocalModal
+        isOpen={!!addLocalModalVisible}
+        onClose={() => setAddLocalModalVisible?.(false)}
+        reload={fetchLocal}
+      />
+
+      <CreateItemStockModal
+        isOpen={!!addItemModalVisible}
+        onClose={() => setAddItemModalVisible?.(false)}
+        reload={fetchItems}
       />
     </>
   );

@@ -39,7 +39,7 @@ export interface Profile {
   email?: string;
   birthDate?: Date;
   address?: Address;
-  createdAt?: string;
+  createdAt?: string | Date;
 }
 
 export interface Address {

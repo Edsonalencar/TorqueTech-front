@@ -47,7 +47,7 @@ export interface TransactionItem {
 
 export interface StockTransaction {
   id: string;
-  transactionType: TransactionType;
+  type: TransactionType;
   category: TransactionCategoryIn | TransactionCategoryOut;
   status: TransactionStatus;
   garage: Garage;

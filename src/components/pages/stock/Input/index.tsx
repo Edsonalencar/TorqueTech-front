@@ -24,6 +24,7 @@ import { LocalStockService } from "@/services/localStockService/service";
 import { ItemStockService } from "@/services/itemStockService/service";
 import { CreateLocalModal } from "@/components/molecules/modais/CreateLocalModal";
 import { CreateItemStockModal } from "@/components/molecules/modais/CreateItemStockModal";
+import { User } from "@/types/authTypes";
 
 export const StockInputPage = () => {
   const [resource, setResource] = useState<Pageable<StockTransaction>>();
@@ -49,6 +50,10 @@ export const StockInputPage = () => {
 
   const handlerView = (item: StockTransaction) => {
     navigate(`/app/stocks/${item?.id}`);
+  };
+
+  const handlerViewOwner = (item: User) => {
+    navigate(`/app/users/${item?.id}`);
   };
 
   const handlerCancel = async (item: StockTransaction) => {
@@ -119,11 +124,13 @@ export const StockInputPage = () => {
 
   return (
     <>
-      <LoadingContent isLoading={loading} />
+      <LoadingContent isLoading={loading || itemLoading || localLoading} />
       <Card>
         <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <Typography.Title level={4} className="whitespace-nowrap">Entrada estoque</Typography.Title>
+            <Typography.Title level={4} className="whitespace-nowrap">
+              Entrada estoque
+            </Typography.Title>
             <Flex gap={8}>
               <SelectSearchInput
                 placeholder="Filtre por catégoria"
@@ -156,6 +163,7 @@ export const StockInputPage = () => {
               loading={loading}
               onView={handlerView}
               onCancel={handlerCancel}
+              onViewOwner={handlerViewOwner}
               onEdit={(item) => setSelectedStockTransactionManager(item)}
             />
 

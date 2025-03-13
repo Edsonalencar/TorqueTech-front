@@ -2,6 +2,8 @@ import { ItemCategory } from "@/services/itemStockService/dto";
 import {
   TransactionCategoryIn,
   TransactionCategoryOut,
+  TransactionStatus,
+  TransactionType,
 } from "@/services/stockTransactionService/dto";
 import { UserStatus } from "@/types/authTypes";
 
@@ -72,6 +74,28 @@ export const userStatusSerialize = (value?: UserStatus) => {
       return "Inativo";
     default:
       return "Ativo";
+  }
+};
+
+export const transactionTypeSerialize = (value?: TransactionType) => {
+  switch (value) {
+    case TransactionType.INPUT:
+      return "Entrada";
+    case TransactionType.OUTPUT:
+      return "Saída";
+    default:
+      return "Tipo desconhecido";
+  }
+};
+
+export const transactionStatusSerialize = (value?: TransactionStatus) => {
+  switch (value) {
+    case TransactionStatus.CREATED:
+      return "Criado";
+    case TransactionStatus.CANCELLED:
+      return "Cancelado";
+    default:
+      return "Tipo desconhecido";
   }
 };
 
