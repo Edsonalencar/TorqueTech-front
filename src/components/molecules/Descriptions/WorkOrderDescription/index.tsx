@@ -1,7 +1,9 @@
 import { StockTransaction } from "@/services/stockTransactionService/dto";
 import { WorkOrder, WorkOrderStatus } from "@/services/workService/dto";
+import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
-import { Descriptions } from "antd";
+import { workOrderStatusSerialize } from "@/utils/serializers";
+import { Descriptions, Typography } from "antd";
 
 interface Props {
   data: WorkOrder;
@@ -9,32 +11,34 @@ interface Props {
 }
 
 export const WorkOrderDescription: React.FC<Props> = ({ data, title }) => {
+  const handlerViewWork = (id: string) => {};
+
   return (
     <Descriptions
       title={title}
       layout="vertical"
-      column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
+      column={{ xxl: 4, xl: 4, lg: 3, md: 1, sm: 1, xs: 1 }}
     >
-      <Descriptions.Item label="Nome">{data.name}</Descriptions.Item>
+      <Descriptions.Item label="Serviço">
+        <Typography.Link onClick={() => handlerViewWork(data.work.id)}>
+          {data.work.id?.substring(0, 8)}
+        </Typography.Link>
+      </Descriptions.Item>
+      <Descriptions.Item label="Nome">{data.title}</Descriptions.Item>
       <Descriptions.Item label="Status">
-        {WorkOrderStatus[data.status]}
+        {workOrderStatusSerialize(data.status)}
       </Descriptions.Item>
-      <Descriptions.Item label="Descrição">
-        {data.description}
-      </Descriptions.Item>
+
       <Descriptions.Item label="Custo">
-        R$ {data.cost.toFixed(2)}
+        {formatCurrency(data.cost)}
       </Descriptions.Item>
       <Descriptions.Item label="Data da Ordem">
         {formatDateAndTime(data.createdAt)}
       </Descriptions.Item>
-      {data.items && data.items.length > 0 && (
-        <Descriptions.Item label="Itens">
-          {data.items.map((item: StockTransaction) => (
-            <div key={item.id}>
-              {item.item.item.name} - {item.quantity}x
-            </div>
-          ))}
+
+      {data?.description && (
+        <Descriptions.Item label="Descrição" span={4}>
+          {data.description}
         </Descriptions.Item>
       )}
     </Descriptions>

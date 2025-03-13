@@ -2,6 +2,7 @@ import { User } from "@/types/authTypes";
 import { Garage } from "../garageService/dto";
 import { StockItem } from "../stockItemService/dto";
 import { Dayjs } from "dayjs";
+import { WorkOrder } from "../workService/dto";
 
 export interface OutputStockItemDTO {
   stockItemId: string;
@@ -53,6 +54,7 @@ export interface StockTransaction {
   garage: Garage;
   owner: User;
   items: TransactionItem[];
+  workOrder?: WorkOrder
   quantity: number;
   price: number;
   transactionDate: string; // ISO 8601 (YYYY-MM-DDTHH:mm:ss)

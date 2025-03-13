@@ -21,7 +21,7 @@ export const StockTransactionDescription: React.FC<Props> = ({
     <Descriptions
       title={title}
       layout="vertical"
-      column={{ xxl: 4, xl: 3, lg: 2, md: 1, sm: 1, xs: 1 }}
+      column={{ xxl: 4, xl: 4, lg: 3, md: 1, sm: 1, xs: 1 }}
     >
       <Descriptions.Item label="Tipo">
         {transactionTypeSerialize(data.type)}

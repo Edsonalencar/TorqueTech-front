@@ -19,6 +19,7 @@ import { LocalStockService } from "@/services/localStockService/service";
 import { ItemStockService } from "@/services/itemStockService/service";
 import { CreateLocalModal } from "@/components/molecules/modais/CreateLocalModal";
 import { CreateItemStockModal } from "@/components/molecules/modais/CreateItemStockModal";
+import { WorkOrderDescription } from "@/components/molecules/Descriptions/WorkOrderDescription";
 
 export const StockViewPage: React.FC = () => {
   const [resourceLoading, setResourceLoading] = useState(false);
@@ -121,6 +122,13 @@ export const StockViewPage: React.FC = () => {
             data={resource}
           />
         </Card>
+
+        {resource?.workOrder && (
+          <Card>
+            <Typography.Title level={5}>Ordem de serviço</Typography.Title>
+            <WorkOrderDescription data={resource.workOrder} />
+          </Card>
+        )}
 
         <Card>
           <Typography.Title level={5}>Items movimentados</Typography.Title>
