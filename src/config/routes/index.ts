@@ -19,6 +19,7 @@ import { StockViewPage } from "@/components/pages/stock/View";
 import { UserView } from "@/components/pages/UserView";
 import { WorkPage } from "@/components/pages/Work";
 import { CreateWorkPage } from "@/components/pages/Work/Create";
+import { WorkViewPage } from "@/components/pages/Work/View";
 import { LayoutAdminTemplate } from "@/components/templates/LayoutAdminTemplate";
 import { LayoutTemplate } from "@/components/templates/LayoutTemplate";
 import { RenderRouter } from "@/types";
@@ -39,6 +40,7 @@ export const routes: RenderRouter[] = [
       { path: "customers/:uuid", component: ViewCustomerPage },
       { path: "users/:uuid", component: UserView },
       { path: "services", component: WorkPage },
+      { path: "services/:uuid", component: WorkViewPage },
       { path: "services/create", component: CreateWorkPage },
       { path: "stocks/:uuid", component: StockViewPage },
       { path: "stocks/entrada", component: StockInputPage },

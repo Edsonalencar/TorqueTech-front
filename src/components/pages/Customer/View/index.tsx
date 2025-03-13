@@ -3,7 +3,7 @@ import { ToBack } from "@/components/atoms/ToBack";
 import { ProfileWitchEmailDescription } from "@/components/molecules/Descriptions/ProfileWitchEmailDescription";
 import { Button, Card, Flex, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import { Customer } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
@@ -17,9 +17,12 @@ import { BasePagination } from "@/components/atoms/BasePagination";
 import Search from "antd/es/input/Search";
 import { VehicleTable } from "@/components/molecules/tables/VehicleTable";
 import { PlusOutlined } from "@ant-design/icons";
-import { Work } from "@/services/workService/dto";
+import { Work, WorkStatus } from "@/services/workService/dto";
 import { WorkTable } from "@/components/molecules/tables/WorkTable";
 import { formatLicensePlate } from "@/utils/formaters/format";
+import { WorkService } from "@/services/workService/service";
+import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
+import { workStatusOptions } from "@/utils/utils";
 
 export const ViewCustomerPage: React.FC = () => {
   const [resourceLoading, setResourceLoading] = useState(false);
@@ -34,9 +37,39 @@ export const ViewCustomerPage: React.FC = () => {
 
   const [workResource, setWorkResource] = useState<Pageable<Work>>();
   const [workLoading, setWorkLoading] = useState(false);
+  const [workStatus, setWorkStatus] = useState<WorkStatus>();
   const [workPage, setWorkPage] = useState(0);
 
+  const navigate = useNavigate();
   const { uuid } = useParams();
+
+  const handlerWorkView = (value: Work) => {
+    navigate(`/app/services/${value.id}`);
+  };
+
+  const handleCustomerView = (customer: Customer) => {
+    navigate(`/app/customers/${customer?.id}`);
+  };
+
+  const handlerCreate = () => {
+    navigate(`/app/services/create`);
+  };
+
+  const fetchWork = async (query?: string) => {
+    setWorkLoading(true);
+    try {
+      const { data } = await WorkService.getPage(workPage, {
+        customerId: uuid,
+        status: workStatus,
+        query,
+      });
+      setWorkResource(data);
+    } catch (error) {
+      console.error("WorkPage", error);
+    } finally {
+      setWorkLoading(false);
+    }
+  };
 
   const fetchResource = async (resourceId: string) => {
     setResourceLoading(true);
@@ -68,6 +101,7 @@ export const ViewCustomerPage: React.FC = () => {
     if (!uuid) return;
     await fetchResource(uuid);
     await fetchVehicles();
+    await fetchWork();
   };
 
   useEffect(() => {
@@ -77,6 +111,11 @@ export const ViewCustomerPage: React.FC = () => {
   useEffect(() => {
     fetchVehicles();
   }, [vehiclePage]);
+
+  useEffect(() => {
+    if (!uuid) return;
+    fetchWork();
+  }, [workPage, workStatus, uuid]);
 
   return (
     <>
@@ -161,14 +200,26 @@ export const ViewCustomerPage: React.FC = () => {
                 Histórico de Serviços
               </Typography.Title>
               <Flex gap={8}>
-                <Search
-                  placeholder="Pesquise por placa.."
+                <SelectSearchInput
+                  placeholder="Filtre por status"
+                  onSelect={(value) => setWorkStatus(value as WorkStatus)}
+                  options={workStatusOptions}
+                  className="w-48"
+                  onClear={() => setWorkStatus(undefined)}
                   allowClear
-                  onSearch={(value) => fetchVehicles(value)}
+                />
+                <Search
+                  placeholder="Pesquise um titulo ou placa..."
+                  allowClear
+                  onSearch={(value) => fetchWork(value)}
                   style={{ width: 304 }}
                 />
-                <Button type="primary" icon={<PlusOutlined />}>
-                  Novo serviço
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={handlerCreate}
+                >
+                  Novo Serviço
                 </Button>
               </Flex>
             </Flex>
@@ -178,6 +229,8 @@ export const ViewCustomerPage: React.FC = () => {
                 dataSource={workResource?.content ?? []}
                 pagination={false}
                 loading={workLoading}
+                onViewCustomer={handleCustomerView}
+                onView={handlerWorkView}
               />
 
               <BasePagination

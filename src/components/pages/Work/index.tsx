@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Pageable } from "@/types";
 import { WorkService } from "@/services/workService/service";
 import { BasePagination } from "@/components/atoms/BasePagination";
+import { Customer } from "@/services/customerService/dto";
 
 export const WorkPage = () => {
   const [resource, setResource] = useState<Pageable<Work>>();
@@ -20,16 +21,24 @@ export const WorkPage = () => {
 
   const navigate = useNavigate();
 
+  const handleCustomerView = (customer: Customer) => {
+    navigate(`/app/customers/${customer?.id}`);
+  };
+
   const handlerCreate = () => {
     navigate(`/app/services/create`);
   };
 
-  const fetchPage = async (title?: string) => {
+  const handlerView = (value: Work) => {
+    navigate(`/app/services/${value.id}`);
+  };
+
+  const fetchPage = async (query?: string) => {
     setLoading(true);
     try {
       const { data } = await WorkService.getPage(page, {
         status,
-        title,
+        query,
       });
       setResource(data);
     } catch (error) {
@@ -62,7 +71,7 @@ export const WorkPage = () => {
             <Search
               placeholder="Pesquise um produtor..."
               allowClear
-              onSearch={(value) => {}}
+              onSearch={(value) => fetchPage(value)}
               style={{ width: 304 }}
             />
             <Button
@@ -81,6 +90,8 @@ export const WorkPage = () => {
             pagination={false}
             loading={loading}
             size="small"
+            onViewCustomer={handleCustomerView}
+            onView={handlerView}
           />
 
           <BasePagination page={page} setPage={setPage} pageable={resource} />

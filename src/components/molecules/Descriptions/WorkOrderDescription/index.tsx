@@ -19,11 +19,14 @@ export const WorkOrderDescription: React.FC<Props> = ({ data, title }) => {
       layout="vertical"
       column={{ xxl: 4, xl: 4, lg: 3, md: 1, sm: 1, xs: 1 }}
     >
-      <Descriptions.Item label="Serviço">
-        <Typography.Link onClick={() => handlerViewWork(data.work.id)}>
-          {data.work.id?.substring(0, 8)}
-        </Typography.Link>
-      </Descriptions.Item>
+      {data?.work && (
+        <Descriptions.Item label="Serviço">
+          <Typography.Link onClick={() => handlerViewWork(data.work.id)}>
+            {data.work.id?.substring(0, 8)}
+          </Typography.Link>
+        </Descriptions.Item>
+      )}
+
       <Descriptions.Item label="Nome">{data.title}</Descriptions.Item>
       <Descriptions.Item label="Status">
         {workOrderStatusSerialize(data.status)}
