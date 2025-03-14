@@ -49,7 +49,7 @@ export const MechanicPage: React.FC = () => {
 
     try {
       await UserService.updateStatus(
-        value.user!!.id as string,
+        value.user!.id as string,
         value.user?.status == UserStatus.ACTIVE
           ? UserStatus.INACTIVE
           : UserStatus.ACTIVE

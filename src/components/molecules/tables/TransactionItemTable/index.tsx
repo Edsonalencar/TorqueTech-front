@@ -1,4 +1,4 @@
-import { Table, TableProps, Typography } from "antd";
+import { Table, TableProps } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { itemCategorySerialize } from "@/utils/serializers";

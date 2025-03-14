@@ -57,7 +57,7 @@ export function getNextRepetitionDate(
   repetitionNumber: number,
   startDate: Date = new Date() // opcionalmente, você pode fornecer uma data de início
 ): Date {
-  let nextDate = new Date(startDate); // Copia a data de início
+  const nextDate = new Date(startDate); // Copia a data de início
 
   if (repetitionNumber == 0) return nextDate;
 

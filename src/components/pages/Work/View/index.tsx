@@ -77,8 +77,8 @@ export const WorkViewPage: React.FC = () => {
 
   const createWorkOrder = async (form: CreateWorkOrderRequestDTO) => {
     try {
-      const { data } = await WorkOrderService.create(form);
-      fetchResource(resource?.id!!);
+      await WorkOrderService.create(form);
+      fetchResource(resource?.id!);
     } catch (error) {
       console.error("createWorkOrder [WorkViewPage]", error);
     }
@@ -88,11 +88,8 @@ export const WorkViewPage: React.FC = () => {
     if (!selectEditOrder) return;
 
     try {
-      const { data } = await WorkOrderService.update(
-        selectEditOrder.id!!,
-        form
-      );
-      fetchResource(resource?.id!!);
+      await WorkOrderService.update(selectEditOrder.id!, form);
+      fetchResource(resource?.id!);
     } catch (error) {
       console.error("createWorkOrder [WorkViewPage]", error);
     }
@@ -104,7 +101,7 @@ export const WorkViewPage: React.FC = () => {
       workId: resource?.id,
     };
 
-    if (!!selectEditOrder) updateWorkOrder(formData);
+    if (selectEditOrder) updateWorkOrder(formData);
     else createWorkOrder(formData);
   };
 

@@ -28,8 +28,8 @@ export const formatCpfCnpj = (value?: string) => {
 };
 
 export const formatCrp = (crp: string) => {
-  let num = crp?.replace(/[^\d]/g, '');
-  let len = num?.length;
+  const num = crp?.replace(/[^\d]/g, '');
+  const len = num?.length;
 
   if (len <= 2) {
     crp = num;
@@ -107,8 +107,8 @@ export const formatCep = (value: string) => {
 
 export const formatPhone = (phone?: string | null) => {
   if (!phone) return '';
-  let num = phone.replace(/[^\d]/g, '');
-  let len = num.length;
+  const num = phone.replace(/[^\d]/g, '');
+  const len = num.length;
 
   if (len <= 2) phone = num;
   else if (len <= 7) phone = num.replace(/(\d{2})(\d{1,5})/g, '($1) $2');

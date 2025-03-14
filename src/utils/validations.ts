@@ -6,7 +6,7 @@ export function isValidUUID(uuid: string): boolean {
 
 export function isValidPhone(value: string) {
   if (!value) return false;
-  var regex = /^\(\d{2}\) \d{5}-\d{4}$/;
+  const regex = /^\(\d{2}\) \d{5}-\d{4}$/;
   return regex.test(value);
 }
 

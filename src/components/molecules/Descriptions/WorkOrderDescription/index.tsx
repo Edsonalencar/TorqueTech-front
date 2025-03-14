@@ -1,5 +1,4 @@
-import { StockTransaction } from "@/services/stockTransactionService/dto";
-import { WorkOrder, WorkOrderStatus } from "@/services/workService/dto";
+import { WorkOrder } from "@/services/workService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import { workOrderStatusSerialize } from "@/utils/serializers";
@@ -11,7 +10,9 @@ interface Props {
 }
 
 export const WorkOrderDescription: React.FC<Props> = ({ data, title }) => {
-  const handlerViewWork = (id: string) => {};
+  const handlerViewWork = (id: string) => {
+    console.log("View work", id);
+  };
 
   return (
     <Descriptions

@@ -68,6 +68,10 @@ export interface WorkOrder {
   createdAt: string;
 }
 
+export interface WorkStatusRequest {
+  status: WorkStatus;
+}
+
 export interface CreateWorkOrderRequestDTO {
   id?: string;
   title: string;

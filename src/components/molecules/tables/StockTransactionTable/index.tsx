@@ -4,7 +4,6 @@ import { formatDateAndTime } from "@/utils/formaters/formatTime";
 import {
   StockTransaction,
   TransactionStatus,
-  TransactionType,
 } from "@/services/stockTransactionService/dto";
 import { formatCurrency } from "@/utils/formaters/formatCurrency";
 import { transactionCategorySerialize } from "@/utils/serializers";

@@ -4,7 +4,7 @@ import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { CreateVehicleTypeModal } from "@/components/molecules/modais/CreateVehicleTypeModal";
 import { AddressForm } from "@/components/organisms/AddressForm";
 import { UserForm } from "@/components/organisms/UserForm";
-import { CreateCustomerDTO, Customer } from "@/services/customerService/dto";
+import { CreateCustomerDTO } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
 import { VehicleType } from "@/services/vehicleTypeService/dto";
 import { VehicleTypeService } from "@/services/vehicleTypeService/service";
@@ -21,7 +21,6 @@ import {
   Flex,
   Form,
   Row,
-  Space,
   Typography,
 } from "antd";
 import { useEffect, useState } from "react";

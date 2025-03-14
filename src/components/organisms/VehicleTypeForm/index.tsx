@@ -2,7 +2,7 @@ import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { CreateVehicleTypeDTO } from "@/services/vehicleTypeService/dto";
 import { BRANDS } from "@/utils/brandCars";
 import { vehicleCategoryOptions } from "@/utils/utils";
-import { AutoComplete, DatePicker, FormProps, Select } from "antd";
+import { AutoComplete, DatePicker, FormProps } from "antd";
 import { Col, Form, Input, Row } from "antd";
 import { useState } from "react";
 

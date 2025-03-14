@@ -47,7 +47,7 @@ export const LoginForm = () => {
       });
 
       if (values.remember) {
-        let encryptPass = CryptoJS.AES.encrypt(
+        const encryptPass = CryptoJS.AES.encrypt(
           values.password,
           secret
         ).toString();

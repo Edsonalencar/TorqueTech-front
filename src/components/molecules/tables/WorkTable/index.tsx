@@ -15,12 +15,14 @@ interface Props extends TableProps<Work> {
   onEdit?: (work: Work) => void;
   onConclude?: (work: Work) => void;
   onCancel?: (work: Work) => void;
+  onDelete?: (work: Work) => void;
 }
 
 export const WorkTable = ({
   onView,
   onCancel,
   onConclude,
+  onDelete,
   onEdit,
   onUpdateStatus,
   onViewCustomer,
@@ -111,6 +113,7 @@ export const WorkTable = ({
           onEdit={handler(item, onEdit)}
           onCancel={handler(item, onCancel)}
           onConclude={handler(item, onConclude)}
+          onDelete={handler(item, onDelete)}
           actions={[
             {
               label: "Atua. Status",
@@ -123,5 +126,16 @@ export const WorkTable = ({
     },
   ];
 
-  return <Table columns={columns} {...rest} />;
+  return (
+    <Table
+      columns={columns}
+      rowClassName={(record) => {
+        if (record.status == WorkStatus.CANCELLED) {
+          return "bg-red-50";
+        }
+        return "";
+      }}
+      {...rest}
+    />
+  );
 };

@@ -88,7 +88,7 @@ export const CreateGarageModal = ({
       const formValue: CreateGarageDTO = {
         ...initialData,
         ...initialData.owner?.profile,
-        username: initialData.owner?.auth?.username!!,
+        username: initialData.owner?.auth?.username!,
         ownerName: initialData.owner?.profile?.name,
       };
 

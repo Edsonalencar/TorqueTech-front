@@ -15,8 +15,6 @@ interface Props extends FormProps<CreateWorkOrderRequestDTO> {}
 export const CreateWorkOrderForm = ({ ...rest }: Props) => {
   const [stockItems, setStockItems] = useState<StockItem[]>([]);
 
-  const [loading, setLoading] = useState(false);
-
   const getStockItemName = (stock: StockItem) => {
     const itemName = stock.item.name;
     const itemQuantity = stock.quantity;
@@ -28,14 +26,12 @@ export const CreateWorkOrderForm = ({ ...rest }: Props) => {
   };
 
   const fetchResource = async () => {
-    setLoading(true);
     try {
       const { data } = await StockItemService.get();
       setStockItems(data);
     } catch (error) {
       console.error("fetchResource [OutputStockTransactionOutForm]", error);
     } finally {
-      setLoading(false);
     }
   };
 

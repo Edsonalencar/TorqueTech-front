@@ -17,7 +17,6 @@ import { UserService } from "@/services/userService/service";
 import { config } from "@/config/env";
 import { isTokenValid } from "@/utils/helpers";
 import { toast } from "react-toastify";
-import { RoleType } from "@/services/garageService/dto";
 
 type AuthContextType = {
   isAuthenticated: boolean;

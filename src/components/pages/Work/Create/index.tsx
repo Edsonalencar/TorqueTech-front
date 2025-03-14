@@ -35,7 +35,7 @@ export const CreateWorkPage = () => {
   const submit = async (formData: CreateWorkRequestDTO) => {
     setLoading(true);
     try {
-      const { data } = await WorkService.create(formData);
+      await WorkService.create(formData);
       toBack();
     } catch (error) {
       console.error("CreateWorkPage", error);

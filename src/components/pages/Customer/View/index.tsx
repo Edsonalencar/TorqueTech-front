@@ -19,7 +19,6 @@ import { VehicleTable } from "@/components/molecules/tables/VehicleTable";
 import { PlusOutlined } from "@ant-design/icons";
 import { Work, WorkStatus } from "@/services/workService/dto";
 import { WorkTable } from "@/components/molecules/tables/WorkTable";
-import { formatLicensePlate } from "@/utils/formaters/format";
 import { WorkService } from "@/services/workService/service";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { workStatusOptions } from "@/utils/utils";

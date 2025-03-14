@@ -83,8 +83,8 @@ export const DashboardPage = () => {
           value={[dayjs(startAt), dayjs(endAt)]}
           onChange={(dates) => {
             if (dates && dates.length === 2) {
-              setStartAt(dates[0]!!.toDate());
-              setEndAt(dates[1]!!.toDate());
+              setStartAt(dates[0]!.toDate());
+              setEndAt(dates[1]!.toDate());
             }
           }}
           className="w-80"

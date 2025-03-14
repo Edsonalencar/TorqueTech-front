@@ -2,7 +2,7 @@ import { BaseApi } from "../baseApi/baseAPI";
 import { GenericService } from "../genericService/genericService";
 import { IApiService } from "../genericService/interface";
 
-var instance = new BaseApi() as IApiService;
+const instance = new BaseApi() as IApiService;
 
 export class IManagerService extends GenericService {}
 

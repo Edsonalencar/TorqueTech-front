@@ -27,14 +27,14 @@ export const MechanicTable = ({
       title: "Nome",
       dataIndex: "nome",
       key: "nome",
-      render: (_, { user, id }) => (
+      render: (_, mechanic) => (
         <Typography.Link
           className=" w-full truncate flex items-center gap-2"
-          title={user?.profile?.name}
-          onClick={() => onView?.({ id, user })}
+          title={mechanic.user?.profile?.name}
+          onClick={() => onView?.(mechanic)}
         >
-          {user?.profile?.name}
-          <UserStatusTag status={user?.status} />
+          {mechanic.user?.profile?.name}
+          <UserStatusTag status={mechanic.user?.status} />
         </Typography.Link>
       ),
     },

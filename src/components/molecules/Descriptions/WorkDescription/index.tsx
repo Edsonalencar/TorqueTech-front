@@ -38,7 +38,7 @@ export const WorkDescription: React.FC<Props> = ({
       </Descriptions.Item>
       <Descriptions.Item label="Mecânico">
         <Typography.Link
-          onClick={() => onMechanicView?.(data.mechanic!!)}
+          onClick={() => onMechanicView?.(data.mechanic!)}
           title={data.mechanic?.user.profile?.name}
         >
           {data.mechanic?.user.profile?.name}
@@ -46,7 +46,7 @@ export const WorkDescription: React.FC<Props> = ({
       </Descriptions.Item>
       <Descriptions.Item label="Cliente">
         <Typography.Link
-          onClick={() => onCustomerView?.(data.customer!!)}
+          onClick={() => onCustomerView?.(data.customer!)}
           title={data.customer?.profile?.name}
         >
           {data.customer?.profile?.name}

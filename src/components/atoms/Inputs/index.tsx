@@ -1,10 +1,11 @@
 import { InputCep } from "./InputCep";
 import { InputCnpj } from "./InputCnpj";
-import { InputCpf } from "./InputLicensePlate";
+import { InputLicensePlate } from "./InputLicensePlate";
 import { InputCpfCnpj } from "./InputCpfCnpj";
 import { InputMoney } from "./InputMoney";
 import { InputTelephone } from "./InputTelephone";
 import { InputTelephoneWithDdd } from "./InputTelephoneWithDdd";
+import { InputCpf } from "./InputCpf";
 
 export const Input = {
   InputCep,
@@ -14,4 +15,5 @@ export const Input = {
   InputMoney,
   InputTelephone,
   InputTelephoneWithDdd,
+  InputLicensePlate,
 };

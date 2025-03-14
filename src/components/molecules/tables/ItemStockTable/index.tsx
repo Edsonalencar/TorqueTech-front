@@ -1,4 +1,4 @@
-import { Table, TableProps, Typography } from "antd";
+import { Table, TableProps } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { itemCategorySerialize } from "@/utils/serializers"; // Função para converter o enum em texto legível
 import { ItemStock } from "@/services/itemStockService/dto";
