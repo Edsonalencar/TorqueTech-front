@@ -109,3 +109,8 @@ export interface SelectOption extends Map {
   label: string;
   value: string;
 }
+
+export interface MetricRequest {
+  startDate: string;
+  endDate: string;
+}

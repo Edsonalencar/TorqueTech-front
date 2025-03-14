@@ -69,7 +69,7 @@ export const WorkPage = () => {
               allowClear
             />
             <Search
-              placeholder="Pesquise um produtor..."
+              placeholder="Pesquise um produto ou placa..."
               allowClear
               onSearch={(value) => fetchPage(value)}
               style={{ width: 304 }}

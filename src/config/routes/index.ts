@@ -45,7 +45,7 @@ export const routes: RenderRouter[] = [
       { path: "stocks/:uuid", component: StockViewPage },
       { path: "stocks/entrada", component: StockInputPage },
       { path: "stocks/saida", component: StockOutputPage },
-      { path: "stocks/acompanhamento", component: StockItemsPage },
+      { path: "stocks/status", component: StockItemsPage },
       { path: "config", component: ConfigPage },
     ],
   },

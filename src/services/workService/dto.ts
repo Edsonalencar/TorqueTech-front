@@ -2,8 +2,12 @@ import { User } from "@/types/authTypes";
 import { Vehicle } from "../vehicleService/dto";
 import { Customer } from "../customerService/dto";
 import { Garage } from "../garageService/dto";
-import { OutputStockItemDTO, StockTransaction } from "../stockTransactionService/dto";
+import {
+  OutputStockItemDTO,
+  StockTransaction,
+} from "../stockTransactionService/dto";
 import { Mechanic } from "../mechanicService/dto";
+import { Dayjs } from "dayjs";
 
 export enum WorkOrderStatus {
   PENDING = "PENDING",
@@ -65,15 +69,16 @@ export interface WorkOrder {
 }
 
 export interface CreateWorkOrderRequestDTO {
+  id?: string;
   title: string;
   description: string;
   note: string;
   status: WorkOrderStatus;
-  startAt?: string;
-  expectedAt?: string;
+  startAt?: string | Dayjs;
+  expectedAt?: string | Dayjs;
   cost: number;
   stockItems: OutputStockItemDTO[];
-  workId: string;
+  workId?: string;
 }
 
 export interface CreateWorkRequestDTO {

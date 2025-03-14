@@ -62,8 +62,8 @@ export const getNavegateItems = ({
       icon: React.createElement(FaBox),
       children: [
         {
-          key: "/app/stocks/acompanhamento",
-          label: "Acompanhamento",
+          key: "/app/stocks/status",
+          label: "Status",
           icon: React.createElement(FaClipboardList),
         },
         {
