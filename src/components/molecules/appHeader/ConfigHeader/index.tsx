@@ -1,7 +1,7 @@
 import { Badge, Button, Flex, Popover } from "antd";
-import { IoNotifications } from "react-icons/io5";
+import { FaGear } from "react-icons/fa6";
 
-export const NotificationsHeader: React.FC = () => {
+export const ConfigHeader: React.FC = () => {
   return (
     <Popover
       content={
@@ -10,10 +10,11 @@ export const NotificationsHeader: React.FC = () => {
         </Flex>
       }
       placement="bottomLeft"
+      trigger={["click"]}
     >
-      <Button type="text" size="small">
+      <Button type="text" className=" size-8 rounded-full">
         <Badge count={0} size="small">
-          <IoNotifications size={20} />
+          <FaGear size={17} />
         </Badge>
       </Button>
     </Popover>

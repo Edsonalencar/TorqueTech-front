@@ -3,25 +3,27 @@ import type { ThemeConfig } from "antd";
 export const theme: ThemeConfig = {
   token: {
     fontSize: 16,
-    colorPrimary: "#49682F",
-    borderRadius: 4,
+    colorPrimary: "#5D9C59",
+    borderRadius: 8,
+    colorTextBase: "#474d5a00",
   },
-  components:{
-    Menu:{
-      iconSize:25,
-      colorBgContainer: "#49682F",
-      colorPrimary: "#49682F",
-      colorText: "#FFF",
+  components: {
+    Menu: {
+      iconSize: 15,
+      fontSize: 15,
+      colorBgBase: "transparent",
+      colorBgContainer: "transparent",
     },
-    Button:{
-      borderRadius:2,
+    Button: {
+      borderRadius: 8,
     },
-    Input:{
-      borderRadius:2
+    Input: {
+      borderRadius: 8,
     },
-    Layout:{
+    Layout: {
       headerBg: "#fff",
       headerColor: "#fff",
+      bodyBg: "#fff",
     },
-  }
+  },
 };

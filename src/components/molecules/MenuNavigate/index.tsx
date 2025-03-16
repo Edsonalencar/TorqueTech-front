@@ -15,13 +15,11 @@ export const MenuNavigate: React.FC<MenuProps> = ({ ...rest }) => {
 
   return (
     <Menu
-      className="border-none"
-      theme="light"
       mode="inline"
       selectedKeys={[location.pathname]}
       items={getNavegateItems({ signOut, hasRole })}
       onClick={handleMenuClick}
-      style={{ borderInlineEnd: "none", color: "#FFF" }}
+      style={{ borderInlineEnd: "none" }}
       {...rest}
     />
   );

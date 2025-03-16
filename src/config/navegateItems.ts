@@ -63,7 +63,7 @@ export const getNavegateItems = ({
       children: [
         {
           key: "/app/stocks/status",
-          label: "Status",
+          label: "Catálogo de produtos",
           icon: React.createElement(FaClipboardList),
         },
         {
