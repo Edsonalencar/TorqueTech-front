@@ -1,14 +1,16 @@
 import { MenuProps } from "antd";
 
 import React from "react";
-import { FaSignOutAlt } from "react-icons/fa";
-import { MdHome } from "react-icons/md";
-import { FaUsersGear, FaUsersLine, FaBox } from "react-icons/fa6";
-import { FaUsers, FaToolbox } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
+import { BsGear } from "react-icons/bs";
+import { TfiLayoutListThumb } from "react-icons/tfi";
 import { IconBaseProps } from "react-icons";
 import { LuFolderSymlink, LuFolderUp } from "react-icons/lu";
-import { FaGear } from "react-icons/fa6";
-import { FaClipboardList } from "react-icons/fa";
+import { LuClipboardList } from "react-icons/lu";
+import { HiOutlineHome } from "react-icons/hi2";
+import { RiUserSearchLine, RiUserSettingsLine } from "react-icons/ri";
+import { LuUsers } from "react-icons/lu";
+import { BsBoxSeam } from "react-icons/bs";
 
 export interface NavegateItem {
   key: string;
@@ -33,38 +35,38 @@ export const getNavegateItems = ({
     {
       key: "/app/dashboard",
       label: "Dashboard",
-      icon: React.createElement(MdHome),
+      icon: React.createElement(HiOutlineHome),
     },
     {
       key: "/app/managers",
       label: "Gestores",
-      icon: React.createElement(FaUsersLine),
+      icon: React.createElement(RiUserSearchLine),
       show: hasRole("ADMIN"),
     },
     {
       key: "/app/mechanics",
       label: "Mecanicos",
-      icon: React.createElement(FaUsersGear),
+      icon: React.createElement(RiUserSettingsLine),
     },
     {
       key: "/app/customers",
       label: "Clientes",
-      icon: React.createElement(FaUsers),
+      icon: React.createElement(LuUsers),
     },
     {
       key: "/app/services",
       label: "Serviços",
-      icon: React.createElement(FaToolbox),
+      icon: React.createElement(TfiLayoutListThumb),
     },
     {
       key: "/app/stocks",
       label: "Estoque",
-      icon: React.createElement(FaBox),
+      icon: React.createElement(BsBoxSeam),
       children: [
         {
           key: "/app/stocks/status",
           label: "Catálogo de produtos",
-          icon: React.createElement(FaClipboardList),
+          icon: React.createElement(LuClipboardList),
         },
         {
           key: "/app/stocks/entrada",
@@ -81,12 +83,12 @@ export const getNavegateItems = ({
     {
       key: "/app/config",
       label: "Configurações",
-      icon: React.createElement(FaGear),
+      icon: React.createElement(BsGear),
     },
     {
       key: "/login",
       label: "Sair",
-      icon: React.createElement(FaSignOutAlt),
+      icon: React.createElement(MdLogout),
       onClick: signOut,
     },
   ];

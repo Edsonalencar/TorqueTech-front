@@ -1,5 +1,5 @@
 import { Badge, Button, Flex, Popover } from "antd";
-import { FaGear } from "react-icons/fa6";
+import { BsGear } from "react-icons/bs";
 
 export const ConfigHeader: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ export const ConfigHeader: React.FC = () => {
     >
       <Button type="text" className=" size-8 rounded-full">
         <Badge count={0} size="small">
-          <FaGear size={17} />
+          <BsGear size={17} />
         </Badge>
       </Button>
     </Popover>
