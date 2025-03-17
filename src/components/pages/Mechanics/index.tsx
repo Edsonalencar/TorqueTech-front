@@ -67,10 +67,12 @@ export const MechanicPage: React.FC = () => {
   }, [page, status]);
 
   return (
-    <Card>
-      <Flex gap={20} vertical className="overflow-hidden">
+    <Card
+      title={
         <Flex justify="space-between">
-          <Typography.Title level={4} className="whitespace-nowrap">Mecânicos</Typography.Title>
+          <Typography.Title level={4} className="whitespace-nowrap">
+            Mecânicos
+          </Typography.Title>
           <Flex gap={8}>
             <Radio.Group
               value={status}
@@ -95,7 +97,9 @@ export const MechanicPage: React.FC = () => {
             </Button>
           </Flex>
         </Flex>
-
+      }
+    >
+      <Flex gap={20} vertical className="overflow-hidden">
         <Flex gap={20} vertical>
           <MechanicTable
             dataSource={resource?.content ?? []}

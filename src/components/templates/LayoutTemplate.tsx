@@ -1,4 +1,4 @@
-import { Divider, Layout } from "antd";
+import { Layout } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { GiSergeant } from "react-icons/gi";
 
@@ -17,7 +17,7 @@ export const LayoutTemplate: React.FC = () => {
       >
         <div className=" pl-7 p-2.5 mt-2 mb-2">
           <span className="font-extrabold text-xl flex items-center gap-2">
-            <GiSergeant />
+            <GiSergeant className="text-primary" />
             Torque Tech
           </span>
         </div>

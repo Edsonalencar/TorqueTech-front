@@ -1,9 +1,9 @@
-import { Badge, Button, Flex, Popover, Tooltip } from "antd";
-import { BsGear } from "react-icons/bs";
+import { Button, Flex, Popover, Tooltip } from "antd";
+import { BsPlusCircleFill } from "react-icons/bs";
 
-export const ConfigHeader: React.FC = () => {
+export const AddHeader: React.FC = () => {
   return (
-    <Tooltip title="Configurações">
+    <Tooltip title="Novo">
       <Popover
         content={
           <Flex justify="center" align="center" vertical className="w-52 p-2">
@@ -14,9 +14,9 @@ export const ConfigHeader: React.FC = () => {
         trigger={["click"]}
       >
         <Button
-          type="text"
           className=" size-8 rounded-full"
-          icon={<BsGear size={17} />}
+          icon={<BsPlusCircleFill className="text-primary" size={17} />}
+          type="text"
         />
       </Popover>
     </Tooltip>

@@ -51,10 +51,12 @@ export const CustomerPage: React.FC = () => {
   }, [page, status]);
 
   return (
-    <Card>
-      <Flex gap={20} vertical className="overflow-hidden">
+    <Card
+      title={
         <Flex justify="space-between">
-          <Typography.Title level={4} className="whitespace-nowrap">Clientes</Typography.Title>
+          <Typography.Title level={5} className="whitespace-nowrap">
+            Clientes
+          </Typography.Title>
           <Flex gap={8}>
             <Radio.Group
               value={status}
@@ -79,7 +81,9 @@ export const CustomerPage: React.FC = () => {
             </Button>
           </Flex>
         </Flex>
-
+      }
+    >
+      <Flex gap={20} vertical className="overflow-hidden">
         <Flex gap={20} vertical>
           <CustomerTable
             dataSource={resource?.content ?? []}

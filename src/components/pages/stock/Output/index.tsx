@@ -82,10 +82,10 @@ export const StockOutputPage = () => {
   return (
     <>
       <LoadingContent isLoading={loading} />
-      <Card>
-        <Flex gap={20} vertical className="overflow-hidden">
+      <Card
+        title={
           <Flex justify="space-between">
-            <Typography.Title level={4} className="whitespace-nowrap">
+            <Typography.Title level={5} className="whitespace-nowrap">
               Saída estoque
             </Typography.Title>
             <Flex gap={8}>
@@ -112,7 +112,9 @@ export const StockOutputPage = () => {
               </Button>
             </Flex>
           </Flex>
-
+        }
+      >
+        <Flex gap={20} vertical className="overflow-hidden">
           <Flex gap={20} vertical>
             <StockTransactionTable
               dataSource={resource?.content ?? []}

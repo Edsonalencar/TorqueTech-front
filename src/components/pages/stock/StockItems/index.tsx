@@ -34,11 +34,11 @@ export const StockItemsPage = () => {
   return (
     <>
       <LoadingContent isLoading={loading} />
-      <Card>
-        <Flex gap={20} vertical className="overflow-hidden">
+      <Card
+        title={
           <Flex justify="space-between">
-            <Typography.Title level={4} className="whitespace-nowrap">
-              Acompanhamento de estoque
+            <Typography.Title level={5} className="whitespace-nowrap">
+              Catálogo de produtos
             </Typography.Title>
             <Flex gap={8}>
               <Search
@@ -49,7 +49,9 @@ export const StockItemsPage = () => {
               />
             </Flex>
           </Flex>
-
+        }
+      >
+        <Flex gap={20} vertical className="overflow-hidden">
           <Flex gap={20} vertical>
             <StockItemTable
               dataSource={resource?.content ?? []}

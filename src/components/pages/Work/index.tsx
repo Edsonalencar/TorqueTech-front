@@ -70,10 +70,10 @@ export const WorkPage = () => {
 
   return (
     <>
-      <Card>
-        <Flex gap={20} vertical>
+      <Card
+        title={
           <Flex justify="space-between">
-            <Typography.Title level={4} className="whitespace-nowrap">
+            <Typography.Title level={5} className="whitespace-nowrap">
               Serviços
             </Typography.Title>
             <Flex gap={8}>
@@ -100,7 +100,9 @@ export const WorkPage = () => {
               </Button>
             </Flex>
           </Flex>
-
+        }
+      >
+        <Flex gap={20} vertical>
           <Flex gap={20} vertical>
             <WorkTable
               dataSource={resource?.content ?? []}
