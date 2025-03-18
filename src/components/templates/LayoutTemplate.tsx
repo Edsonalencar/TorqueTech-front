@@ -26,7 +26,7 @@ export const LayoutTemplate: React.FC = () => {
       </Sider>
       <Layout>
         <AppHeader />
-        <section className="p-4">
+        <section className="p-8">
           {/* Renderiza as paginas do react router dom */}
           <Outlet />
         </section>

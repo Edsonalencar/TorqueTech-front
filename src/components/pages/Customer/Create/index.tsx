@@ -18,6 +18,7 @@ import {
   Button,
   Card,
   Col,
+  DatePicker,
   Flex,
   Form,
   Row,
@@ -124,112 +125,147 @@ export const CreateCustomerPage: React.FC<Props> = ({}) => {
 
       <Flex gap={20} vertical>
         <ToBack />
-        <Card>
-          <Flex gap={15} vertical className="mt-5">
-            <Typography.Title level={5}>Dados do Cliente</Typography.Title>
-            <UserForm form={profileForm} />
 
-            <Typography.Title level={5}>Endereço</Typography.Title>
-            <AddressForm form={addressForm} />
+        <Flex gap={15} vertical className="mt-5">
+          <Typography.Title level={5}>Dados do Cliente</Typography.Title>
+          <UserForm form={profileForm} />
 
-            <Form form={vehiclesForm} layout="vertical">
-              <Typography.Title level={5}>Veiculos</Typography.Title>
-              <Form.List name="vehicles">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map(({ key, name }) => (
-                      <Row gutter={[16, 16]}>
-                        <Col span={24} md={{ span: 8 }}>
-                          <Form.Item
-                            label="Veículo"
-                            name={[name, "vehicleTypeId"]}
-                            key={key + "_vehicleTypeId"}
-                            rules={[
-                              { required: true, message: "Campo obrigatório!" },
-                            ]}
-                          >
-                            <SelectSearchInput
-                              placeholder="Selecione a categoria do veículo"
-                              options={vehicleTypes.map((vehicleType) => ({
-                                value: vehicleType.id,
-                                label: formatVehicleType(vehicleType),
-                              }))}
-                              onAdd={() => setNewVehicleTypeOpen?.(true)}
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24} md={{ span: 8 }}>
-                          <Form.Item
-                            label="Placa"
-                            name={[name, "licensePlate"]}
-                            key={key + "_licensePlate"}
-                            rules={[
-                              { required: true, message: "Campo obrigatório!" },
-                            ]}
-                          >
-                            <InputLicensePlate placeholder="Placa do veículo" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24} md={{ span: 6 }}>
-                          <Form.Item
-                            label="Cor"
-                            name={[name, "color"]}
-                            key={key + "_color"}
-                            rules={[
-                              { required: true, message: "Campo obrigatório!" },
-                            ]}
-                          >
-                            <AutoComplete
-                              style={{ width: "100%" }}
-                              options={colorOptions}
-                              onSearch={handleSearch}
-                              placeholder="Cor do veículo"
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24} md={{ span: 2 }}>
-                          <Flex
-                            align="center"
-                            justify="center"
-                            className="h-full"
-                          >
-                            <Button
-                              onClick={() => remove(name)}
-                              block
-                              size="small"
-                              type="text"
+          <Typography.Title level={5}>Endereço</Typography.Title>
+          <AddressForm form={addressForm} />
+
+          <Form form={vehiclesForm} layout="vertical">
+            <Typography.Title level={5}>Veiculos</Typography.Title>
+            <Form.List name="vehicles">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name }, index) => (
+                    <Row
+                      gutter={[16, 16]}
+                      key={key}
+                      className={`${index % 2 === 0 ? "bg-gray-100" : ""} p-2`}
+                    >
+                      <Col span={22}>
+                        <Row gutter={[16, 16]}>
+                          <Col span={6}>
+                            <Form.Item
+                              label="Veículo"
+                              name={[name, "vehicleTypeId"]}
+                              key={key + "_vehicleTypeId"}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Campo obrigatório!",
+                                },
+                              ]}
                             >
-                              <FiMinusCircle />
-                            </Button>
-                          </Flex>
-                        </Col>
-                      </Row>
-                    ))}
+                              <SelectSearchInput
+                                placeholder="Selecione a categoria do veículo"
+                                options={vehicleTypes.map((vehicleType) => ({
+                                  value: vehicleType.id,
+                                  label: formatVehicleType(vehicleType),
+                                }))}
+                                onAdd={() => setNewVehicleTypeOpen?.(true)}
+                              />
+                            </Form.Item>
+                          </Col>
 
-                    <Form.Item>
-                      <Button type="primary" onClick={() => add()} block>
-                        Adicionar Veículo
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List>
-            </Form>
+                          <Col span={6}>
+                            <Form.Item
+                              label="Placa"
+                              name={[name, "licensePlate"]}
+                              key={key + "_licensePlate"}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Campo obrigatório!",
+                                },
+                              ]}
+                            >
+                              <InputLicensePlate placeholder="Placa do veículo" />
+                            </Form.Item>
+                          </Col>
+                          <Col span={6}>
+                            <Form.Item
+                              label="Cor"
+                              name={[name, "color"]}
+                              key={key + "_color"}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Campo obrigatório!",
+                                },
+                              ]}
+                            >
+                              <AutoComplete
+                                style={{ width: "100%" }}
+                                options={colorOptions}
+                                onSearch={handleSearch}
+                                placeholder="Cor do veículo"
+                              />
+                            </Form.Item>
+                          </Col>
+                          <Col span={6}>
+                            <Form.Item
+                              label="Ano"
+                              name={"year"}
+                              key={"year"}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Campo obrigatório!",
+                                },
+                              ]}
+                            >
+                              <DatePicker
+                                picker="year"
+                                placeholder="Ano do veículo"
+                              />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span={2}>
+                        <Flex
+                          align="center"
+                          justify="center"
+                          className="h-full"
+                        >
+                          <Button
+                            onClick={() => remove(name)}
+                            block
+                            size="small"
+                            type="text"
+                          >
+                            <FiMinusCircle />
+                          </Button>
+                        </Flex>
+                      </Col>
+                    </Row>
+                  ))}
 
-            <Row gutter={[16, 16]} justify="end">
-              <Col span={24} md={6} lg={3}>
-                <Button onClick={toList} className=" w-full">
-                  Cancelar
-                </Button>
-              </Col>
-              <Col span={24} md={6} lg={3}>
-                <Button type="primary" onClick={submit} className=" w-full">
-                  Salvar
-                </Button>
-              </Col>
-            </Row>
-          </Flex>
-        </Card>
+                  <Form.Item>
+                    <Button type="primary" onClick={() => add()} block>
+                      Adicionar Veículo
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </Form>
+
+          <Row gutter={[16, 16]} justify="end">
+            <Col span={24} md={6} lg={3}>
+              <Button onClick={toList} className=" w-full">
+                Cancelar
+              </Button>
+            </Col>
+            <Col span={24} md={6} lg={3}>
+              <Button type="primary" onClick={submit} className=" w-full">
+                Salvar
+              </Button>
+            </Col>
+          </Row>
+        </Flex>
       </Flex>
 
       <CreateVehicleTypeModal

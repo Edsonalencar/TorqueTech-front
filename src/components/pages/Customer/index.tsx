@@ -51,8 +51,8 @@ export const CustomerPage: React.FC = () => {
   }, [page, status]);
 
   return (
-    <Card
-      title={
+    <>
+      <Flex gap={20} vertical className="overflow-hidden">
         <Flex justify="space-between">
           <Typography.Title level={5} className="whitespace-nowrap">
             Clientes
@@ -81,9 +81,7 @@ export const CustomerPage: React.FC = () => {
             </Button>
           </Flex>
         </Flex>
-      }
-    >
-      <Flex gap={20} vertical className="overflow-hidden">
+
         <Flex gap={20} vertical>
           <CustomerTable
             dataSource={resource?.content ?? []}
@@ -105,6 +103,6 @@ export const CustomerPage: React.FC = () => {
         initialData={selectedEditCustomer}
         reload={fetchPage}
       />
-    </Card>
+    </>
   );
 };

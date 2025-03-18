@@ -64,10 +64,12 @@ export const ItemStockConfig = () => {
   }, [page, status]);
 
   return (
-    <Card>
+    <>
       <Flex gap={20} vertical className="overflow-hidden">
         <Flex justify="space-between">
-          <Typography.Title level={4} className="whitespace-nowrap">Items de estoque</Typography.Title>
+          <Typography.Title level={4} className="whitespace-nowrap">
+            Items de estoque
+          </Typography.Title>
           <Flex gap={8}>
             <Radio.Group
               value={status}
@@ -114,6 +116,6 @@ export const ItemStockConfig = () => {
         initialData={selectedEdit}
         reload={fetchPage}
       />
-    </Card>
+    </>
   );
 };

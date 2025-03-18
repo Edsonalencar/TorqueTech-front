@@ -18,5 +18,5 @@ export const ConfigPage: React.FC<Props> = ({}) => {
     },
   ];
 
-  return <Tabs defaultActiveKey="1" items={items} type="card" size="middle" />;
+  return <Tabs defaultActiveKey="1" items={items} />;
 };
