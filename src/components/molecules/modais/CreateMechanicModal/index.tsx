@@ -67,7 +67,6 @@ export const CreateMechanicModal = ({
 
     if (initialData?.id) update(initialData.id, formValue);
     else create(formValue);
-    closeModal();
   };
 
   const closeModal = () => {

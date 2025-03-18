@@ -62,7 +62,6 @@ export const CreateLocalModal = ({
 
     if (initialData?.id) update(initialData.id, data);
     else create(data);
-    closeModal();
   };
 
   const closeModal = () => {

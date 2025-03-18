@@ -21,7 +21,7 @@ export const CreateWorkOrderModal = ({
   const submit = async () => {
     const data = await form.validateFields();
     onSubmit(data);
-    onClose();
+    closeModal();
   };
 
   const closeModal = () => {
