@@ -1,4 +1,4 @@
-import { InputProductCode } from "@/components/atoms/Inputs/InputProductCode";
+import { InputProductCode } from "@/components/atoms/Inputs/InputCep copy";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { CreateItemStockRequest } from "@/services/itemStockService/dto";
 import { VehicleType } from "@/services/vehicleTypeService/dto";

@@ -25,5 +25,8 @@ export const theme: ThemeConfig = {
       headerColor: "#fff",
       bodyBg: "#fff",
     },
+    Table: {
+      fontSize: 15,
+    },
   },
 };
