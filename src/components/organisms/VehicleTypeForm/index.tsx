@@ -49,33 +49,19 @@ export const VehicleTypeForm = ({ ...rest }: Props) => {
         />
       </Form.Item>
 
-      <Row gutter={[16, 16]}>
-        <Col span={24} md={12}>
-          <Form.Item
-            label="Marca"
-            name={"brand"}
-            key={"brand"}
-            rules={[{ required: true, message: "Campo obrigatório!" }]}
-          >
-            <AutoComplete
-              style={{ width: "100%" }}
-              options={options}
-              onSearch={handleSearch}
-              placeholder="Marca do veículo"
-            />
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item
-            label="Ano"
-            name={"year"}
-            key={"year"}
-            rules={[{ required: true, message: "Campo obrigatório!" }]}
-          >
-            <DatePicker picker="year" placeholder="Ano do veículo" />
-          </Form.Item>
-        </Col>
-      </Row>
+      <Form.Item
+        label="Marca"
+        name={"brand"}
+        key={"brand"}
+        rules={[{ required: true, message: "Campo obrigatório!" }]}
+      >
+        <AutoComplete
+          style={{ width: "100%" }}
+          options={options}
+          onSearch={handleSearch}
+          placeholder="Marca do veículo"
+        />
+      </Form.Item>
     </Form>
   );
 };

@@ -7,6 +7,7 @@ import {
 } from "@/services/itemStockService/dto";
 import { ItemStockService } from "@/services/itemStockService/service";
 import { ItemStockForm } from "@/components/organisms/itemStockForm";
+import { CreateVehicleTypeModal } from "../CreateVehicleTypeModal";
 
 export interface Props {
   isOpen: boolean;
@@ -24,6 +25,7 @@ export const CreateItemStockModal = ({
   initialData,
   reload,
 }: Props) => {
+  const [newVehicleTypeOpen, setNewVehicleTypeOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm<ResourceType>();
 
@@ -78,20 +80,30 @@ export const CreateItemStockModal = ({
   }, [initialData, isOpen]);
 
   return (
-    <Modal
-      title={`${initialData ? "Editar" : "Adicionar"} Item`}
-      open={isOpen}
-      onOk={submit}
-      onClose={closeModal}
-      onCancel={closeModal}
-      okText="Salvar"
-      width={400}
-    >
-      <LoadingContent isLoading={loading} />
+    <>
+      <Modal
+        title={`${initialData ? "Editar" : "Adicionar"} Item`}
+        open={isOpen && !newVehicleTypeOpen}
+        onOk={submit}
+        onClose={closeModal}
+        onCancel={closeModal}
+        okText="Salvar"
+        width={400}
+      >
+        <LoadingContent isLoading={loading} />
 
-      <Flex gap={15} vertical className="mt-5">
-        <ItemStockForm form={form} />
-      </Flex>
-    </Modal>
+        <Flex gap={15} vertical className="mt-5">
+          <ItemStockForm
+            form={form}
+            onAddVhiclType={() => setNewVehicleTypeOpen(true)}
+          />
+        </Flex>
+      </Modal>
+
+      <CreateVehicleTypeModal
+        isOpen={!!newVehicleTypeOpen}
+        onClose={() => setNewVehicleTypeOpen?.(false)}
+      />
+    </>
   );
 };

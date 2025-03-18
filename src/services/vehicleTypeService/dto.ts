@@ -1,11 +1,9 @@
 import { User } from "@/types/authTypes";
-import { Dayjs } from "dayjs";
 
 export interface VehicleType {
   id: string;
   model: string;
   brand: string;
-  year: number;
   owner: User;
   createdAt?: string;
 }
@@ -13,7 +11,6 @@ export interface VehicleType {
 export interface CreateVehicleTypeDTO {
   model: string;
   brand: string;
-  year: string | Dayjs;
   category: VehicleTypeCategory;
 }
 

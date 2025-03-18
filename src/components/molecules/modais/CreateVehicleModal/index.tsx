@@ -4,6 +4,7 @@ import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { CreateVehicleDTO, Vehicle } from "@/services/vehicleService/dto";
 import { VehicleService } from "@/services/vehicleService/service";
 import { VehicleForm } from "@/components/organisms/VehicleForm";
+import dayjs from "dayjs";
 
 export interface Props {
   isOpen: boolean;
@@ -56,6 +57,7 @@ export const CreateVehicleModal = ({
     const data: CreateVehicleDTO = {
       ...formValue,
       customerId,
+      year: dayjs(formValue.year).format("YYYY"),
     };
 
     if (initialData?.id) update(initialData.id, data);
@@ -73,6 +75,7 @@ export const CreateVehicleModal = ({
         ...initialData,
         vehicleTypeId: initialData.vehicleType.id,
         customerId: initialData?.customer?.id,
+        year: dayjs(initialData.year),
       });
     }
   }, [initialData, isOpen]);

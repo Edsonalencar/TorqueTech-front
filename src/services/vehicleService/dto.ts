@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { Customer } from "../customerService/dto";
 import { VehicleType } from "../vehicleTypeService/dto";
 
@@ -8,6 +9,7 @@ export interface Vehicle {
   vehicleType: VehicleType;
   customer: Customer;
   createdAt?: string;
+  year: string;
 }
 
 export interface CreateVehicleDTO {
@@ -15,4 +17,5 @@ export interface CreateVehicleDTO {
   color: string; // A cor do veículo é obrigatória
   vehicleTypeId?: string; // Opcional, pois em Java UUID pode ser null
   customerId?: string;
+  year: string | Dayjs;
 }

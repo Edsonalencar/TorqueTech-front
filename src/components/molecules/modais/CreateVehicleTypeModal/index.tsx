@@ -52,13 +52,7 @@ export const CreateVehicleTypeModal = ({
   };
 
   const submit = async () => {
-    const formValue = await form.validateFields();
-
-    const data: CreateVehicleTypeDTO = {
-      ...formValue,
-      year: dayjs(formValue.year).format("YYYY"),
-    };
-
+    const data = await form.validateFields();
     if (initialData?.id) update(initialData.id, data);
     else create(data);
   };
@@ -70,10 +64,7 @@ export const CreateVehicleTypeModal = ({
 
   useEffect(() => {
     if (initialData && isOpen) {
-      form.setFieldsValue({
-        ...initialData,
-        year: dayjs(initialData.year),
-      });
+      form.setFieldsValue(initialData);
     }
   }, [initialData, isOpen]);
 

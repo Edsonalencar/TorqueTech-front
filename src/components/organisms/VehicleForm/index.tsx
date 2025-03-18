@@ -10,7 +10,7 @@ import { VehicleTypeService } from "@/services/vehicleTypeService/service";
 import { BRANDS } from "@/utils/brandCars";
 import { formatVehicleType } from "@/utils/formaters";
 import { vehicleColorOptions } from "@/utils/utils";
-import { AutoComplete, FormProps } from "antd";
+import { AutoComplete, DatePicker, FormProps } from "antd";
 import { Col, Form, Row } from "antd";
 import { useEffect, useState } from "react";
 
@@ -102,21 +102,36 @@ export const VehicleForm = ({
           </Form.Item>
         )}
 
-        <Form.Item
-          label="Veículo"
-          name={"vehicleTypeId"}
-          key={"vehicleTypeId"}
-          rules={[{ required: true, message: "Campo obrigatório!" }]}
-        >
-          <SelectSearchInput
-            placeholder="Selecione a categoria do veículo"
-            options={vehicleTypes.map((vehicleType) => ({
-              value: vehicleType.id,
-              label: formatVehicleType(vehicleType),
-            }))}
-            onAdd={() => setNewVehicleTypeOpen?.(true)}
-          />
-        </Form.Item>
+        <Row gutter={[16, 16]}>
+          <Col span={24} md={12}>
+            <Form.Item
+              label="Veículo"
+              name={"vehicleTypeId"}
+              key={"vehicleTypeId"}
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
+            >
+              <SelectSearchInput
+                placeholder="Selecione a categoria do veículo"
+                options={vehicleTypes.map((vehicleType) => ({
+                  value: vehicleType.id,
+                  label: formatVehicleType(vehicleType),
+                }))}
+                onAdd={() => setNewVehicleTypeOpen?.(true)}
+              />
+            </Form.Item>
+          </Col>
+
+          <Col span={24} md={12}>
+            <Form.Item
+              label="Ano"
+              name={"year"}
+              key={"year"}
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
+            >
+              <DatePicker picker="year" placeholder="Ano do veículo" />
+            </Form.Item>
+          </Col>
+        </Row>
 
         <Row gutter={[16, 16]}>
           <Col span={24} md={12}>
