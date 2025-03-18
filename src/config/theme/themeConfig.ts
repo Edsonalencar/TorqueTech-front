@@ -5,7 +5,7 @@ export const theme: ThemeConfig = {
     fontSize: 16,
     colorPrimary: "#5D9C59",
     borderRadius: 8,
-    colorTextBase: "#474d5a00",
+    colorTextBase: "#474d5a",
   },
   components: {
     Menu: {
@@ -27,6 +27,9 @@ export const theme: ThemeConfig = {
     },
     Table: {
       fontSize: 15,
+    },
+    Typography: {
+      colorText: "#000",
     },
   },
 };

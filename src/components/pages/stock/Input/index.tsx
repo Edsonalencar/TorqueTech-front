@@ -125,12 +125,12 @@ export const StockInputPage = () => {
   return (
     <>
       <LoadingContent isLoading={loading || itemLoading || localLoading} />
-      <Card
-        title={
+      <>
+        <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <Typography.Title level={5} className="whitespace-nowrap">
+            <h2 className="whitespace-nowrap font-semibold text-2xl">
               Entrada estoque
-            </Typography.Title>
+            </h2>
             <Flex gap={8}>
               <SelectSearchInput
                 placeholder="Filtre por catégoria"
@@ -155,9 +155,7 @@ export const StockInputPage = () => {
               </Button>
             </Flex>
           </Flex>
-        }
-      >
-        <Flex gap={20} vertical className="overflow-hidden">
+
           <Flex gap={20} vertical>
             <StockTransactionTable
               dataSource={resource?.content ?? []}
@@ -172,7 +170,7 @@ export const StockInputPage = () => {
             <BasePagination page={page} setPage={setPage} pageable={resource} />
           </Flex>
         </Flex>
-      </Card>
+      </>
 
       <InputStockTransactionModal
         isOpen={

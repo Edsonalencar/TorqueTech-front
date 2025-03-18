@@ -15,8 +15,8 @@ export const LayoutTemplate: React.FC = () => {
         width={256}
         className="border-r border-gray-200 border-solid"
       >
-        <div className=" pl-7 p-2.5 mt-2 mb-2">
-          <span className="font-extrabold text-xl flex items-center gap-2">
+        <div className=" pl-7 p-2.5 my-2">
+          <span className="font-extrabold text-lg flex items-center gap-2">
             <GiSergeant className="text-primary" />
             Torque Tech
           </span>
@@ -26,7 +26,7 @@ export const LayoutTemplate: React.FC = () => {
       </Sider>
       <Layout>
         <AppHeader />
-        <section className="p-8">
+        <section className="px-8 py-4">
           {/* Renderiza as paginas do react router dom */}
           <Outlet />
         </section>

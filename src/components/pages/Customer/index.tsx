@@ -54,9 +54,7 @@ export const CustomerPage: React.FC = () => {
     <>
       <Flex gap={20} vertical className="overflow-hidden">
         <Flex justify="space-between">
-          <Typography.Title level={5} className="whitespace-nowrap">
-            Clientes
-          </Typography.Title>
+          <h2 className="whitespace-nowrap font-semibold text-2xl">Clientes</h2>
           <Flex gap={8}>
             <Radio.Group
               value={status}

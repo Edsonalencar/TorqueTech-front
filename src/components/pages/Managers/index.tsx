@@ -66,12 +66,10 @@ export const managerPage: React.FC = () => {
   }, [page, status]);
 
   return (
-    <Card
-      title={
+    <>
+      <Flex gap={20} vertical className="overflow-hidden">
         <Flex justify="space-between">
-          <Typography.Title level={5} className="whitespace-nowrap">
-            Gestores
-          </Typography.Title>
+          <h2 className="whitespace-nowrap font-semibold text-2xl">Gestores</h2>
           <Flex gap={8}>
             <Radio.Group
               value={status}
@@ -96,9 +94,7 @@ export const managerPage: React.FC = () => {
             </Button>
           </Flex>
         </Flex>
-      }
-    >
-      <Flex gap={20} vertical className="overflow-hidden">
+
         <Flex gap={20} vertical>
           <ManagerTable
             dataSource={resource?.content ?? []}
@@ -130,6 +126,6 @@ export const managerPage: React.FC = () => {
         initialData={selectedEditManager}
         reload={fetchPage}
       />
-    </Card>
+    </>
   );
 };
