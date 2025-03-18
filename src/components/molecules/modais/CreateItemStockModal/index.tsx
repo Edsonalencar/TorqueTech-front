@@ -8,6 +8,8 @@ import {
 import { ItemStockService } from "@/services/itemStockService/service";
 import { ItemStockForm } from "@/components/organisms/itemStockForm";
 import { CreateVehicleTypeModal } from "../CreateVehicleTypeModal";
+import { VehicleType } from "@/services/vehicleTypeService/dto";
+import { VehicleTypeService } from "@/services/vehicleTypeService/service";
 
 export interface Props {
   isOpen: boolean;
@@ -26,8 +28,21 @@ export const CreateItemStockModal = ({
   reload,
 }: Props) => {
   const [newVehicleTypeOpen, setNewVehicleTypeOpen] = useState<boolean>(false);
+  const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm<ResourceType>();
+
+  const fetchResource = async () => {
+    setLoading(true);
+    try {
+      const { data } = await VehicleTypeService.get();
+      setVehicleTypes(data);
+    } catch (error) {
+      console.error("fetchResource", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const create = async (data: ResourceType) => {
     try {
@@ -75,9 +90,14 @@ export const CreateItemStockModal = ({
     if (initialData && isOpen) {
       form.setFieldsValue({
         ...initialData,
+        vehicleTypeId: initialData.vehicleType.id,
       });
     }
   }, [initialData, isOpen]);
+
+  useEffect(() => {
+    fetchResource();
+  }, []);
 
   return (
     <>
@@ -95,6 +115,7 @@ export const CreateItemStockModal = ({
         <Flex gap={15} vertical className="mt-5">
           <ItemStockForm
             form={form}
+            vehicleTypes={vehicleTypes}
             onAddVhiclType={() => setNewVehicleTypeOpen(true)}
           />
         </Flex>
@@ -102,7 +123,8 @@ export const CreateItemStockModal = ({
 
       <CreateVehicleTypeModal
         isOpen={!!newVehicleTypeOpen}
-        onClose={() => setNewVehicleTypeOpen?.(false)}
+        onClose={() => setNewVehicleTypeOpen(false)}
+        reload={fetchResource}
       />
     </>
   );

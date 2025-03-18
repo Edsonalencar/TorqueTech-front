@@ -1,53 +1,31 @@
+import { InputProductCode } from "@/components/atoms/Inputs/InputProductCode";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
-import { LoadingContent } from "@/components/atoms/LoadingContent";
-import { CreateLocalStockRequest } from "@/services/localStockService/dto";
+import { CreateItemStockRequest } from "@/services/itemStockService/dto";
 import { VehicleType } from "@/services/vehicleTypeService/dto";
-import { VehicleTypeService } from "@/services/vehicleTypeService/service";
 import { formatVehicleType } from "@/utils/formaters";
 import { itemCategoryOptions } from "@/utils/utils";
 import { FormProps } from "antd";
 import { Form, Input } from "antd";
-import { useEffect, useState } from "react";
 
-interface Props extends FormProps<CreateLocalStockRequest> {
+interface Props extends FormProps<CreateItemStockRequest> {
+  vehicleTypes?: VehicleType[];
   onAddVhiclType?: () => void;
 }
 
-export const ItemStockForm = ({ onAddVhiclType, ...rest }: Props) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([]);
-
-  const fetchResource = async () => {
-    setLoading(true);
-    try {
-      const { data } = await VehicleTypeService.get();
-      setVehicleTypes(data);
-    } catch (error) {
-      console.error("fetchResource", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchResource();
-  }, []);
-
+export const ItemStockForm = ({
+  onAddVhiclType,
+  vehicleTypes,
+  ...rest
+}: Props) => {
   return (
     <>
-      <LoadingContent isLoading={loading} />
       <Form layout="vertical" {...rest}>
         <Form.Item
           label="Nome do Item"
           name={"name"}
           key={"name"}
           id="name"
-          rules={[
-            {
-              required: true,
-              message: "Campo obrigatório!",
-            },
-          ]}
+          rules={[{ required: true, message: "Campo obrigatório!" }]}
         >
           <Input placeholder="Digite o nome do item de estoque" />
         </Form.Item>
@@ -61,23 +39,30 @@ export const ItemStockForm = ({ onAddVhiclType, ...rest }: Props) => {
           <SelectSearchInput
             placeholder="Selecione a categoria"
             options={itemCategoryOptions}
+            allowClear
           />
         </Form.Item>
 
-        <Form.Item
-          label="Veículo"
-          name={"vehicleTypeId"}
-          key={"vehicleTypeId"}
-          rules={[{ required: true, message: "Campo obrigatório!" }]}
-        >
+        <Form.Item label="Veículo" name={"vehicleTypeId"} key={"vehicleTypeId"}>
           <SelectSearchInput
             placeholder="Selecione a categoria do veículo"
-            options={vehicleTypes.map((vehicleType) => ({
+            options={vehicleTypes?.map((vehicleType) => ({
               value: vehicleType.id,
               label: formatVehicleType(vehicleType),
             }))}
             onAdd={() => onAddVhiclType?.()}
+            allowClear
           />
+        </Form.Item>
+
+        <Form.Item
+          label="Código"
+          name={"code"}
+          key={"code"}
+          id="code"
+          rules={[{ required: true, message: "Campo obrigatório!" }]}
+        >
+          <InputProductCode placeholder="AAA-XXXX" />
         </Form.Item>
 
         <Form.Item

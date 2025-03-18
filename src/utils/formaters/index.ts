@@ -15,5 +15,5 @@ export const formatDateIso = (date?: Dayjs | Date) => {
 };
 
 export const formatVehicleType = (vehicle: VehicleType) => {
-  return `${vehicle.brand} ${vehicle.model} ${vehicle.year}`;
+  return `${vehicle.brand} ${vehicle.model}`;
 };

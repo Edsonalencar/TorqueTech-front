@@ -1,4 +1,5 @@
 import { ActiveStatus } from "@/types/authTypes";
+import { VehicleType } from "../vehicleTypeService/dto";
 
 export enum ItemCategory {
   ENGINE_PARTS = "ENGINE_PARTS", // Peças do motor
@@ -31,6 +32,8 @@ export interface CreateItemStockRequest {
   name: string;
   description?: string;
   category?: ItemCategory;
+  vehicleTypeId: string;
+  code: string;
 }
 
 export interface ItemStock {
@@ -40,5 +43,7 @@ export interface ItemStock {
   status: ActiveStatus;
   category?: ItemCategory;
   garageId: string;
+  vehicleType: VehicleType;
+  code: string;
   createdAt: string;
 }

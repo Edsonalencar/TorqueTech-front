@@ -4,6 +4,8 @@ import { itemCategorySerialize } from "@/utils/serializers"; // Função para co
 import { ItemStock } from "@/services/itemStockService/dto";
 import { ActionsMenu } from "../../ActionsMenu";
 import { ActiveStatus } from "@/types/authTypes";
+import { formatProductCode } from "@/utils/formaters/formatProductCode";
+import { formatVehicleType } from "@/utils/formaters";
 
 interface Props extends TableProps<ItemStock> {
   onEdit?: (item: ItemStock) => void;
@@ -19,14 +21,28 @@ export const ItemStockTable = ({ onEdit, onToggleStatus, ...rest }: Props) => {
 
   const columns: ColumnProps<ItemStock>[] = [
     {
+      title: "Código",
+      dataIndex: "code",
+      key: "code",
+      render: (_, { code }) => formatProductCode(code),
+    },
+    {
       title: "Nome",
       dataIndex: "name",
       key: "name",
+      render: (_, { name, description }) => (
+        <div>
+          <p>{name}</p>
+          <small>{description}</small>
+        </div>
+      ),
     },
     {
-      title: "Descrição",
-      dataIndex: "description",
-      key: "description",
+      title: "Veículo",
+      dataIndex: "vehicleType",
+      key: "vehicleType",
+
+      render: (_, { vehicleType }) => formatVehicleType(vehicleType),
     },
     {
       title: "Categoria",
