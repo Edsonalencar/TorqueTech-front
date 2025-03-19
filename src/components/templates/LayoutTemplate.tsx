@@ -16,7 +16,7 @@ export const LayoutTemplate: React.FC = () => {
         className="border-r border-gray-200 border-solid"
       >
         <div className=" pl-7 p-2.5 my-2">
-          <span className="font-extrabold text-lg flex items-center gap-2">
+          <span className="font-semibold text-lg flex items-center gap-2">
             <GiSergeant className="text-primary" />
             Torque Tech
           </span>

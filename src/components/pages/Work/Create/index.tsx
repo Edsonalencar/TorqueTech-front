@@ -5,7 +5,7 @@ import {
   CreateWorkOrderRequestDTO,
   CreateWorkRequestDTO,
 } from "@/services/workService/dto";
-import { Button, Card, Col, Flex, Form, Row, Typography } from "antd";
+import { Button, Col, Flex, Form, Row, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { CreateWorkOrderModal } from "@/components/molecules/modais/CreateWorkOrderModal";
@@ -59,49 +59,49 @@ export const CreateWorkPage = () => {
     <>
       <LoadingContent isLoading={loading} />
 
-      <Flex gap={20} vertical>
+      <Flex gap={15} vertical>
         <ToBack />
-        <Card>
-          <CreateWorkForm form={form} />
-        </Card>
 
-        <Card>
-          <Flex justify="space-between">
-            <Typography.Title level={4} className="whitespace-nowrap">
-              Entrada estoque
-            </Typography.Title>
-            <Flex gap={8}>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => setNewOrderVisible(true)}
-              >
-                Novo
-              </Button>
-            </Flex>
+        <CreateWorkForm form={form} />
+
+        <Flex justify="space-between">
+          <Typography.Title level={4} className="whitespace-nowrap">
+            Ordens de Serviço e Produtos
+          </Typography.Title>
+          <Flex gap={8}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => setNewOrderVisible(true)}
+            >
+              Novo
+            </Button>
           </Flex>
+        </Flex>
 
-          <WorkOrderTable dataSource={workOrders ?? []} />
-        </Card>
+        <WorkOrderTable dataSource={workOrders ?? []} size="small" />
 
-        <Card>
-          <Row gutter={[16, 16]} justify={"end"} style={{ width: "100%" }}>
-            <Col span={12} md={6}>
-              <Button type="default" style={{ width: "100%" }} onClick={toBack}>
-                Cancelar
-              </Button>
-            </Col>
-            <Col span={12} md={6}>
-              <Button
-                type="primary"
-                style={{ width: "100%" }}
-                onClick={handlerSubmit}
-              >
-                Salvar
-              </Button>
-            </Col>
-          </Row>
-        </Card>
+        <Row
+          gutter={[16, 16]}
+          justify={"end"}
+          style={{ width: "100%" }}
+          className="mt-4"
+        >
+          <Col span={12} md={6}>
+            <Button type="default" style={{ width: "100%" }} onClick={toBack}>
+              Cancelar
+            </Button>
+          </Col>
+          <Col span={12} md={6}>
+            <Button
+              type="primary"
+              style={{ width: "100%" }}
+              onClick={handlerSubmit}
+            >
+              Salvar
+            </Button>
+          </Col>
+        </Row>
       </Flex>
 
       <CreateWorkOrderModal
