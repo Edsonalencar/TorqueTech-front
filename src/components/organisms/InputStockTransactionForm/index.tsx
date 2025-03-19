@@ -2,10 +2,14 @@ import { InputMoney } from "@/components/atoms/Inputs/InputMoney";
 import { SelectSearchInput } from "@/components/atoms/Inputs/SelectSearchInput";
 import { ItemStock } from "@/services/itemStockService/dto";
 import { LocalStock } from "@/services/localStockService/dto";
-import { InputStockTransactionRequest } from "@/services/stockTransactionService/dto";
+import {
+  InputStockTransactionRequest,
+  TransactionCategoryIn,
+} from "@/services/stockTransactionService/dto";
 import { transactionCategoryInOptions } from "@/utils/utils";
 import { Button, Flex, FormProps, Typography } from "antd";
 import { Col, Form, InputNumber, Row, DatePicker } from "antd";
+import dayjs from "dayjs";
 import { FiMinusCircle } from "react-icons/fi";
 
 interface Props extends FormProps<InputStockTransactionRequest> {
@@ -37,7 +41,9 @@ export const InputStockTransactionForm = ({
                       <Row
                         gutter={[16, 16]}
                         key={key}
-                        className={`${index % 2 === 0 ? "bg-gray-100" : ""} p-2`}
+                        className={`${
+                          index % 2 === 0 ? "bg-gray-100" : ""
+                        } p-2`}
                       >
                         <Col span={22}>
                           <Row gutter={[16, 16]}>
@@ -68,12 +74,6 @@ export const InputStockTransactionForm = ({
                                 label="Local"
                                 name={[name, "localId"]}
                                 key={key + "_localId"}
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: "Campo obrigatório!",
-                                  },
-                                ]}
                               >
                                 <SelectSearchInput
                                   placeholder="Selecione o local"
@@ -177,6 +177,7 @@ export const InputStockTransactionForm = ({
               name={"category"}
               key={"category"}
               rules={[{ required: true, message: "Campo obrigatório!" }]}
+              initialValue={TransactionCategoryIn.PURCHASE}
             >
               <SelectSearchInput
                 placeholder="Selecione a categoria"
@@ -189,6 +190,7 @@ export const InputStockTransactionForm = ({
               key={"transactionAt"}
               id="transactionAt"
               rules={[{ required: true, message: "Campo obrigatório!" }]}
+              initialValue={dayjs()}
             >
               <DatePicker
                 showTime

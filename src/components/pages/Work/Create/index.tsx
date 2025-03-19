@@ -4,10 +4,11 @@ import { CreateWorkForm } from "@/components/organisms/CreateWorkForm";
 import {
   CreateWorkOrderRequestDTO,
   CreateWorkRequestDTO,
+  WorkType,
 } from "@/services/workService/dto";
-import { Button, Col, Flex, Form, Row, Typography } from "antd";
+import { Button, Col, Flex, Form, Radio, Row, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CreateWorkOrderModal } from "@/components/molecules/modais/CreateWorkOrderModal";
 import { useNavigate } from "react-router-dom";
 import { WorkService } from "@/services/workService/service";
@@ -18,7 +19,7 @@ export const CreateWorkPage = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm<CreateWorkRequestDTO>();
   const [workOrders, setWorkOrders] = useState<CreateWorkOrderRequestDTO[]>([]);
-
+  const [workType, setWorkType] = useState<WorkType>(WorkType.WORK);
   const navigate = useNavigate();
 
   const toBack = () => {
@@ -55,6 +56,21 @@ export const CreateWorkPage = () => {
     await submit(formData);
   };
 
+  useEffect(() => {
+    const calcWorkCost = workOrders.reduce((acc, curr) => acc + curr.cost, 0);
+    const price = workOrders.reduce(
+      (acc, curr) =>
+        acc +
+        curr.stockItems.reduce(
+          (acc, curr) => acc + curr.price * curr.quantity,
+          0
+        ),
+      0
+    );
+
+    form.setFieldsValue({ totalCost: calcWorkCost, price });
+  }, [workOrders]);
+
   return (
     <>
       <LoadingContent isLoading={loading} />
@@ -62,24 +78,44 @@ export const CreateWorkPage = () => {
       <Flex gap={15} vertical>
         <ToBack />
 
-        <CreateWorkForm form={form} />
-
         <Flex justify="space-between">
-          <Typography.Title level={4} className="whitespace-nowrap">
-            Ordens de Serviço e Produtos
-          </Typography.Title>
-          <Flex gap={8}>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => setNewOrderVisible(true)}
-            >
-              Novo
-            </Button>
-          </Flex>
+          <Typography.Title level={4}>Cadastro de Serviço</Typography.Title>
+
+          <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            value={workType}
+            onChange={(e) => setWorkType(e.target.value)}
+          >
+            <Radio.Button value="QUOTE">Orçamento</Radio.Button>
+            <Radio.Button value="WORK">Serviço</Radio.Button>
+          </Radio.Group>
         </Flex>
 
-        <WorkOrderTable dataSource={workOrders ?? []} size="small" />
+        <CreateWorkForm form={form}>
+          <Flex vertical className="my-8" gap={16}>
+            <Flex justify="space-between">
+              <Typography.Title level={4} className="whitespace-nowrap">
+                Ordens de Serviço e Produtos
+              </Typography.Title>
+              <Flex gap={8}>
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => setNewOrderVisible(true)}
+                >
+                  Adiciona novo
+                </Button>
+              </Flex>
+            </Flex>
+
+            <WorkOrderTable
+              dataSource={workOrders ?? []}
+              size="small"
+              pagination={false}
+            />
+          </Flex>
+        </CreateWorkForm>
 
         <Row
           gutter={[16, 16]}

@@ -10,13 +10,15 @@ import { Vehicle } from "@/services/vehicleService/dto";
 import { VehicleService } from "@/services/vehicleService/service";
 import { CreateWorkRequestDTO } from "@/services/workService/dto";
 import { formatLicensePlate } from "@/utils/formaters/format";
-import { FormProps, Typography } from "antd";
+import { FormProps } from "antd";
 import { Col, Form, Input, Row, DatePicker } from "antd";
 import { useEffect, useState } from "react";
 
-interface Props extends FormProps<CreateWorkRequestDTO> {}
+interface Props extends FormProps<CreateWorkRequestDTO> {
+  children?: React.ReactNode;
+}
 
-export const CreateWorkForm = ({ ...rest }: Props) => {
+export const CreateWorkForm = ({ children, ...rest }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const [mechanics, setMechanics] = useState<Mechanic[]>([]);
@@ -53,9 +55,6 @@ export const CreateWorkForm = ({ ...rest }: Props) => {
       const { data } = await VehicleService.getAllByCustomer<
         ResponseDTO<Vehicle[]>
       >(customerId);
-
-      console.log("fetchVehicles", data);
-
       setVehicles(data);
     } catch (error) {
       console.error("fetchMechanics [CreateWorkForm]", error);
@@ -81,7 +80,6 @@ export const CreateWorkForm = ({ ...rest }: Props) => {
       <Form layout="vertical" {...rest}>
         <Row gutter={[16, 16]}>
           <Col span={24}>
-            <Typography.Title level={5}>Detalhes do Trabalho</Typography.Title>
             <Form.Item
               label="Cliente"
               name="customerId"
@@ -115,11 +113,7 @@ export const CreateWorkForm = ({ ...rest }: Props) => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item
-                  label="Mecanico"
-                  name="mechanicId"
-                  rules={[{ required: true, message: "Campo obrigatório!" }]}
-                >
+                <Form.Item label="Mecanico" name="mechanicId">
                   <SelectSearchInput
                     placeholder="Selecione o mecanico"
                     options={mechanics.map((mechanic) => ({
@@ -144,9 +138,16 @@ export const CreateWorkForm = ({ ...rest }: Props) => {
             >
               <Input.TextArea placeholder="Descrição do trabalho" />
             </Form.Item>
+
+            <>{children}</>
+
             <Row gutter={[16, 16]}>
               <Col span={12}>
-                <Form.Item label="Início Previsto" name="startAt">
+                <Form.Item
+                  label="Início Previsto"
+                  name="startAt"
+                  rules={[{ required: true, message: "Campo obrigatório!" }]}
+                >
                   <DatePicker
                     showTime
                     style={{ width: "100%" }}

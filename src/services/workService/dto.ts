@@ -32,6 +32,11 @@ export enum WorkStatus {
   CANCELLED = "CANCELLED",
 }
 
+export enum WorkType {
+  QUOTE = "QUOTE",
+  WORK = "WORK",
+}
+
 export interface Work {
   id: string;
   title: string;
