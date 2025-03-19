@@ -45,7 +45,7 @@ export const ItemStockForm = ({
 
         <Form.Item label="Veículo" name={"vehicleTypeId"} key={"vehicleTypeId"}>
           <SelectSearchInput
-            placeholder="Selecione a categoria do veículo"
+            placeholder="Modelo do veículo"
             options={vehicleTypes?.map((vehicleType) => ({
               value: vehicleType.id,
               label: formatVehicleType(vehicleType),
