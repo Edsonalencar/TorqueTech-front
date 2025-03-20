@@ -80,17 +80,17 @@ export const LocalStockConfig = () => {
               <Radio.Button value="INACTIVE">Inativos</Radio.Button>
             </Radio.Group>
             <Search
-              placeholder="Pesquise pelo nome..."
+              placeholder="Busque por nome.."
               allowClear
               onSearch={(value) => fetchPage(value)}
-              style={{ width: 304 }}
+              style={{ width: 325 }}
             />
             <Button
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => setCreateModalIsOpen(true)}
             >
-              Novo
+              Adicionar novo
             </Button>
           </Flex>
         </Flex>
