@@ -131,11 +131,8 @@ export const CreateWorkForm = ({ children, ...rest }: Props) => {
             >
               <Input placeholder="Título do trabalho" />
             </Form.Item>
-            <Form.Item
-              label="Descrição"
-              name="description"
-              rules={[{ required: true, message: "Campo obrigatório!" }]}
-            >
+            
+            <Form.Item label="Descrição" name="description">
               <Input.TextArea placeholder="Descrição do trabalho" />
             </Form.Item>
 

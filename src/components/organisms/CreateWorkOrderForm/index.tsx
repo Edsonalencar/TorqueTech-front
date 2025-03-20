@@ -45,9 +45,10 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
     fetchResource();
   }, []);
 
-  const calcCost = () => {
+  const calcCostAndPrice = () => {
     const formItems = baseFom.getFieldValue("stockItems");
     var itemCosts: number[] = [];
+    var itemPrice: number[] = [];
 
     formItems.forEach((item: any) => {
       const stockItem = stockItems.find(
@@ -55,12 +56,17 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
       );
       if (stockItem) {
         const cost = stockItem.acquisitionPrice * (item.quantity ?? 1);
+        const price = (item.price ?? 0) * (item.quantity ?? 1);
+
+        itemPrice.push(price);
         itemCosts.push(cost);
       }
     });
 
     const totalCost = itemCosts.reduce((acc, curr) => acc + curr, 0);
-    baseFom.setFieldsValue({ cost: totalCost });
+    const totalPrice = itemPrice.reduce((acc, curr) => acc + curr, 0);
+
+    baseFom.setFieldsValue({ cost: totalCost, price: totalPrice });
   };
 
   return (
@@ -95,7 +101,7 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
                               value: stock.id,
                               label: getStockItemName(stock),
                             }))}
-                            onChange={calcCost}
+                            onChange={calcCostAndPrice}
                           />
                         </Form.Item>
                         <Row gutter={[16, 16]}>
@@ -114,7 +120,7 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
                                 min={1}
                                 placeholder="Quantidade"
                                 style={{ width: "100%" }}
-                                onChange={calcCost}
+                                onChange={calcCostAndPrice}
                               />
                             </Form.Item>
                           </Col>
@@ -144,7 +150,7 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
                           type="text"
                           onClick={() => {
                             remove(name);
-                            calcCost();
+                            calcCostAndPrice();
                           }}
                         >
                           <FiMinusCircle />
@@ -178,20 +184,19 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
             <Input.TextArea placeholder="Notas adicionais" />
           </Form.Item>
 
+          <Form.Item
+            label="Status"
+            name="status"
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+            initialValue={WorkOrderStatus.PENDING}
+          >
+            <Select
+              placeholder="Selecione o status"
+              options={workOrderStatusOptions}
+            />
+          </Form.Item>
+
           <Row gutter={[16, 16]}>
-            <Col span={12}>
-              <Form.Item
-                label="Status"
-                name="status"
-                rules={[{ required: true, message: "Campo obrigatório!" }]}
-                initialValue={WorkOrderStatus.PENDING}
-              >
-                <Select
-                  placeholder="Selecione o status"
-                  options={workOrderStatusOptions}
-                />
-              </Form.Item>
-            </Col>
             <Col span={12}>
               <Form.Item
                 label="Data de Início"
@@ -206,9 +211,6 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
                 />
               </Form.Item>
             </Col>
-          </Row>
-
-          <Row gutter={[16, 16]}>
             <Col span={12}>
               <Form.Item label="Data Prevista de Conclusão" name="expectedAt">
                 <DatePicker
@@ -219,13 +221,21 @@ export const CreateWorkOrderForm = ({ form, ...rest }: Props) => {
                 />
               </Form.Item>
             </Col>
+          </Row>
+
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item label="Custo" name="cost">
+                <InputMoney placeholder="00,00" />
+              </Form.Item>
+            </Col>
             <Col span={12}>
               <Form.Item
-                label="Custo"
-                name="cost"
+                label="Preço"
+                name="price"
                 rules={[{ required: true, message: "Campo obrigatório!" }]}
               >
-                <InputMoney placeholder="Custo da ordem" />
+                <InputMoney placeholder="00,00" />
               </Form.Item>
             </Col>
           </Row>

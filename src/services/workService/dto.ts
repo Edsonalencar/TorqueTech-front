@@ -86,6 +86,7 @@ export interface CreateWorkOrderRequestDTO {
   startAt?: string | Dayjs;
   expectedAt?: string | Dayjs;
   cost: number;
+  price: number;
   stockItems: OutputStockItemDTO[];
   workId?: string;
 }
