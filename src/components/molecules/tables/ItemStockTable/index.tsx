@@ -42,7 +42,8 @@ export const ItemStockTable = ({ onEdit, onToggleStatus, ...rest }: Props) => {
       dataIndex: "vehicleType",
       key: "vehicleType",
 
-      render: (_, { vehicleType }) => formatVehicleType(vehicleType),
+      render: (_, { vehicleType }) =>
+        vehicleType ? formatVehicleType(vehicleType) : "-",
     },
     {
       title: "Categoria",

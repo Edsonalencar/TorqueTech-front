@@ -43,7 +43,7 @@ export interface ItemStock {
   status: ActiveStatus;
   category?: ItemCategory;
   garageId: string;
-  vehicleType: VehicleType;
+  vehicleType?: VehicleType;
   code: string;
   createdAt: string;
 }
