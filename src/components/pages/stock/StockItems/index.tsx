@@ -37,9 +37,9 @@ export const StockItemsPage = () => {
       <>
         <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <h2 className="whitespace-nowrap font-semibold text-2xl">
+            <Typography.Title level={3} className="whitespace-nowrap">
               Catálogo de produtos
-            </h2>
+           </Typography.Title>
             <Flex gap={8}>
               <Search
                 placeholder="Pesquise um item..."

@@ -3,7 +3,7 @@ import { Flex, Form, Modal } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { CreateVehicleDTO, Vehicle } from "@/services/vehicleService/dto";
 import { VehicleService } from "@/services/vehicleService/service";
-import { VehicleForm } from "@/components/organisms/VehicleForm";
+import { VehicleForm } from "@/components/organisms/forms/VehicleForm";
 import dayjs from "dayjs";
 
 export interface Props {

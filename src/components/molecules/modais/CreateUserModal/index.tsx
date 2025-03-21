@@ -5,10 +5,10 @@ import { Flex, Form, Modal, Typography } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 
 import { cleanMask } from "@/utils/formaters/format";
-import { AddressForm } from "@/components/organisms/AddressForm";
+import { AddressForm } from "@/components/organisms/forms/AddressForm";
 import { validateFormIsEmpty } from "@/utils/validations";
 import { Address, User } from "@/types/authTypes";
-import { UserForm } from "@/components/organisms/UserForm";
+import { UserForm } from "@/components/organisms/forms/UserForm";
 import { UserType } from "@/types";
 import { CreateOrUpdateUserDTO } from "@/services/userService/dto";
 import { UserService } from "@/services/userService/service";

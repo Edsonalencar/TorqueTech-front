@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Form, Modal } from "antd";
-import { CreateWorkOrderForm } from "@/components/organisms/CreateWorkOrderForm";
+import { CreateWorkOrderForm } from "@/components/organisms/forms/CreateWorkOrderForm";
 import { CreateWorkOrderRequestDTO } from "@/services/workService/dto";
 
 export interface Props {

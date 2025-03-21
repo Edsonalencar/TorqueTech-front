@@ -1,4 +1,4 @@
-import { Col, Flex } from "antd";
+import { Col, Flex, Typography } from "antd";
 import { Droppable } from "@hello-pangea/dnd";
 import { BoardItem } from "../BoardItem";
 import { BoardColumnType } from "./interfaces";
@@ -25,7 +25,9 @@ export const BoardColumn: React.FC<ColumnProps> = ({
         <Col span={6}>
           <Flex vertical gap={10}>
             <Flex vertical>
-              <h2 className=" font-semibold">{title}</h2>
+              <Typography.Title level={5} className=" font-semibold">
+                {title}
+              </Typography.Title>
               <Flex gap={8} className=" text-sm">
                 <p>{items.length}</p> <span>-</span>
                 <p>{formatCurrency(calcItemsValue(items))}</p>

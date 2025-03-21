@@ -1,3 +1,4 @@
+import { ItemStock } from "@/services/itemStockService/dto";
 import { VehicleType } from "@/services/vehicleTypeService/dto";
 import dayjs, { Dayjs } from "dayjs";
 
@@ -16,4 +17,13 @@ export const formatDateIso = (date?: Dayjs | Date) => {
 
 export const formatVehicleType = (vehicle: VehicleType) => {
   return `${vehicle.brand} ${vehicle.model}`;
+};
+
+export const formatItemStock = (item: ItemStock) => {
+  const base = `${item.code} ${item.name}`;
+  const vehicle = item.vehicleType
+    ? ` - ${formatVehicleType(item.vehicleType)}`
+    : "";
+
+  return base + vehicle;
 };

@@ -4,7 +4,7 @@ import { Flex, Form, Modal } from "antd";
 
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 
-import { UserForm } from "@/components/organisms/UserForm";
+import { UserForm } from "@/components/organisms/forms/UserForm";
 import { UserType } from "@/types";
 import { cleanMask } from "@/utils/formaters/format";
 import { Mechanic } from "@/services/mechanicService/dto";

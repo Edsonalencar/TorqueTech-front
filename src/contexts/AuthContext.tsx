@@ -21,10 +21,12 @@ import { toast } from "react-toastify";
 type AuthContextType = {
   isAuthenticated: boolean;
   user: UserType | null;
+  darkMode: boolean;
   signIn: ({ username, password }: LoginType) => any;
   signOut: () => void;
   setUser: Function;
   verifyPermission: (permission: string) => boolean;
+  toggleTheme: () => void;
   hasRole: (role: string) => boolean;
 };
 
@@ -50,7 +52,7 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
   const location = useLocation();
 
   const pathName = useMemo(() => location.pathname, [location]);
-
+  const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState<UserType | null>(null);
 
   const nextAuthTokenName = config.NEXT_AUTH_TOKEN_NAME;
@@ -58,6 +60,12 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
   const isAuthenticated = !!user;
 
   const noValidAuthPaths = ["/login", "/register"];
+
+  const toggleTheme = () => {
+    const isDark = !darkMode;
+    setDarkMode(isDark);
+    localStorage.setItem("torque_tech_theme", isDark.valueOf().toString());
+  };
 
   useEffect(() => {
     const token = localStorage.getItem(nextAuthTokenName);
@@ -77,6 +85,11 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
       toast.error("Ação não autorizada, favor fazer login!");
     }
   }, [pathName]);
+
+  useEffect(() => {
+    const theme = localStorage.getItem("torque_tech_theme");
+    if (theme) setDarkMode(theme === "true");
+  }, []);
 
   const handleJWTToken = async (token: string) => {
     const { sub, UUID, ROLE, AUTHORITIES, name } = decodeJwt(token);
@@ -133,13 +146,15 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
   return (
     <AuthContext.Provider
       value={{
-        user,
-        isAuthenticated,
-        setUser,
-        signIn,
-        signOut,
         verifyPermission,
+        isAuthenticated,
+        toggleTheme,
+        darkMode,
+        setUser,
         hasRole,
+        signOut,
+        signIn,
+        user,
       }}
     >
       {children}

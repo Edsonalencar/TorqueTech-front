@@ -6,7 +6,7 @@ import {
   LocalStock,
 } from "@/services/localStockService/dto";
 import { LocalStockService } from "@/services/localStockService/service";
-import { LocalStockForm } from "@/components/organisms/localStockForm";
+import { LocalStockForm } from "@/components/organisms/forms/localStockForm";
 
 export interface Props {
   isOpen: boolean;

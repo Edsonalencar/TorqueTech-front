@@ -1,6 +1,6 @@
 import { ToBack } from "@/components/atoms/ToBack";
 import { WorkOrderTable } from "@/components/molecules/tables/WorkOrderTable";
-import { CreateWorkForm } from "@/components/organisms/CreateWorkForm";
+import { CreateWorkForm } from "@/components/organisms/forms/CreateWorkForm";
 import {
   CreateWorkOrderRequestDTO,
   CreateWorkRequestDTO,

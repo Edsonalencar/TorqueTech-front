@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Flex, Form, Modal, Typography } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
-import { UserForm } from "@/components/organisms/UserForm";
+import { UserForm } from "@/components/organisms/forms/UserForm";
 import { UserType } from "@/types";
 import { cleanMask } from "@/utils/formaters/format";
 import { CreateCustomerDTO, Customer } from "@/services/customerService/dto";
 import { CustomerService } from "@/services/customerService/service";
-import { AddressForm } from "@/components/organisms/AddressForm";
+import { AddressForm } from "@/components/organisms/forms/AddressForm";
 import { Address } from "@/types/authTypes";
 import { validateFormIsEmpty } from "@/utils/validations";
 

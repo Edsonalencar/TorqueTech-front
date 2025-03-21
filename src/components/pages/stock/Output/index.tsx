@@ -85,9 +85,9 @@ export const StockOutputPage = () => {
       <>
         <Flex gap={20} vertical className="overflow-hidden">
           <Flex justify="space-between">
-            <h2 className="whitespace-nowrap font-semibold text-2xl">
+            <Typography.Title level={3} className="whitespace-nowrap">
               Saída estoque
-            </h2>
+           </Typography.Title>
             <Flex gap={8}>
               <SelectSearchInput
                 placeholder="Filtre por catégoria"

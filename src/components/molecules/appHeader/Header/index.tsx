@@ -2,7 +2,8 @@ import { NotificationsHeader } from "@/components/molecules/appHeader/Notificati
 import { Flex, theme } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { ConfigHeader } from "../ConfigHeader";
-import { AddHeader } from "../AddHeader";
+import { SelectActiveGarage } from "../SelectActiveGarage";
+import { ToggleTheme } from "../ToggleTheme";
 
 export const AppHeader: React.FC = () => {
   const {
@@ -13,8 +14,9 @@ export const AppHeader: React.FC = () => {
     <Header style={{ background: colorBgContainer }} className="px-4 h-14">
       <Flex justify="end" align="center" gap={8} className=" h-full w-full">
         <NotificationsHeader />
+        <ToggleTheme />
         <ConfigHeader />
-        <AddHeader />
+        <SelectActiveGarage />
       </Flex>
     </Header>
   );

@@ -8,7 +8,7 @@ import {
   TransactionCategoryIn,
 } from "@/services/stockTransactionService/dto";
 import { StockTransactionService } from "@/services/stockTransactionService/service";
-import { InputStockTransactionForm } from "@/components/organisms/InputStockTransactionForm";
+import { InputStockTransactionForm } from "@/components/organisms/forms/InputStockTransactionForm";
 import { LocalStock } from "@/services/localStockService/dto";
 import { ItemStock } from "@/services/itemStockService/dto";
 import dayjs from "dayjs";

@@ -7,8 +7,8 @@ import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { cleanMask } from "@/utils/formaters/format";
 import { CreateGarageDTO, Garage } from "@/services/garageService/dto";
 import { GarageService } from "@/services/garageService/service";
-import { GarageForm } from "@/components/organisms/GarageForm";
-import { AddressForm } from "@/components/organisms/AddressForm";
+import { GarageForm } from "@/components/organisms/forms/GarageForm";
+import { AddressForm } from "@/components/organisms/forms/AddressForm";
 import { validateFormIsEmpty } from "@/utils/validations";
 
 export interface Props {

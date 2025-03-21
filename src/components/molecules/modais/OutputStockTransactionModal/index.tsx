@@ -7,7 +7,7 @@ import {
   TransactionCategoryOut,
 } from "@/services/stockTransactionService/dto";
 import { StockTransactionService } from "@/services/stockTransactionService/service";
-import { OutputStockTransactionForm } from "@/components/organisms/OutputStockTransactionForm";
+import { OutputStockTransactionForm } from "@/components/organisms/forms/OutputStockTransactionForm";
 import dayjs from "dayjs";
 
 export interface Props {

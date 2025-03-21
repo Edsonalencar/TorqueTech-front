@@ -6,6 +6,7 @@ import {
   InputStockTransactionRequest,
   TransactionCategoryIn,
 } from "@/services/stockTransactionService/dto";
+import { formatItemStock } from "@/utils/formaters";
 import { transactionCategoryInOptions } from "@/utils/utils";
 import { Button, Flex, FormProps, Typography } from "antd";
 import { Col, Form, InputNumber, Row, DatePicker } from "antd";
@@ -63,7 +64,7 @@ export const InputStockTransactionForm = ({
                                   placeholder="Selecione o item"
                                   options={itemsStock?.map((item) => ({
                                     value: item.id,
-                                    label: item.name,
+                                    label: formatItemStock(item),
                                   }))}
                                   onAdd={onAddItem}
                                 />

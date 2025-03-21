@@ -6,7 +6,7 @@ import {
   ItemStock,
 } from "@/services/itemStockService/dto";
 import { ItemStockService } from "@/services/itemStockService/service";
-import { ItemStockForm } from "@/components/organisms/itemStockForm";
+import { ItemStockForm } from "@/components/organisms/forms/itemStockForm";
 import { CreateVehicleTypeModal } from "../CreateVehicleTypeModal";
 import { VehicleType } from "@/services/vehicleTypeService/dto";
 import { VehicleTypeService } from "@/services/vehicleTypeService/service";

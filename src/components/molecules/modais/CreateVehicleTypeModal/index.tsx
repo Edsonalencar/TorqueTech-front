@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Flex, Form, Modal } from "antd";
 import { LoadingContent } from "@/components/atoms/LoadingContent";
 import { VehicleTypeService } from "@/services/vehicleTypeService/service";
-import { VehicleTypeForm } from "@/components/organisms/VehicleTypeForm";
+import { VehicleTypeForm } from "@/components/organisms/forms/VehicleTypeForm";
 import {
   CreateVehicleTypeDTO,
   VehicleType,
