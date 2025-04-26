@@ -1,5 +1,5 @@
-import { BaseApi } from "../baseApi/baseAPI";
-import { DefaultEndpointResolver } from "./DefaultEndpointResolver";
+import { defaultApiService } from "./defaultApiService";
+import { DefaultEndpointResolver } from "./defaultEndpointResolver";
 import { IApiService, IEndpointResolver, Page, ResponseDTO } from "./interface";
 
 export class GenericService {
@@ -11,7 +11,12 @@ export class GenericService {
     api?: IApiService,
     resolver?: IEndpointResolver // Opcional, usa DefaultEndpointResolver se não fornecido
   ) {
-    this.api = api ?? new BaseApi();
+    if (!api && !defaultApiService)
+      throw new Error(
+        "API service is not provided and defaultApiService is not available."
+      );
+
+    this.api = api ?? defaultApiService;
     this.resolver = resolver ?? new DefaultEndpointResolver(this.url);
   }
 

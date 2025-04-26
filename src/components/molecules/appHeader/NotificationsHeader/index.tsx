@@ -1,5 +1,6 @@
 import { Badge, Button, Flex, Popover, Tooltip } from "antd";
-import { FaRegBell } from "react-icons/fa";
+import { IoNotificationsOutline } from "react-icons/io5";
+
 
 export const NotificationsHeader: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ export const NotificationsHeader: React.FC = () => {
       >
         <Button type="text" className=" size-8 rounded-full">
           <Badge count={0} size="small">
-            <FaRegBell size={17} />
+            <IoNotificationsOutline size={18} />
           </Badge>
         </Button>
       </Popover>

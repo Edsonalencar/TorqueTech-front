@@ -90,7 +90,7 @@ export const CreateItemStockModal = ({
     if (initialData && isOpen) {
       form.setFieldsValue({
         ...initialData,
-        vehicleTypeId: initialData.vehicleType.id,
+        vehicleTypeId: initialData?.vehicleType?.id,
       });
     }
   }, [initialData, isOpen]);
